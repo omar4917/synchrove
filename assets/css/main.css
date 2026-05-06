@@ -308,11 +308,11 @@ h6 {
   }
 
   .header .header-social-links {
-    order: 2;
+    display: none !important;
   }
 
   .header .navmenu {
-    order: 3;
+    order: 2;
   }
 }
 
@@ -861,12 +861,23 @@ section,
 }
 
 @media (max-width: 768px) {
+  .hero {
+    min-height: 60vh;
+    padding: 40px 0;
+  }
+
   .hero h2 {
-    font-size: 32px;
+    font-size: 28px;
+    line-height: 1.2;
   }
 
   .hero p {
-    font-size: 18px;
+    font-size: 16px;
+  }
+
+  .hero .btn-get-started {
+    padding: 10px 30px;
+    font-size: 11px;
   }
 }
 
@@ -1978,8 +1989,14 @@ body.theme-sl1 .main-services .service-detail {
 .services-showcase .services-grid {
   margin-top: 45px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 25px;
+}
+
+@media (max-width: 575px) {
+  .services-showcase .services-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .services-showcase .service-card {
