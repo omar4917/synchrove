@@ -1996,6 +1996,29 @@ body.theme-sl1 .main-services .service-detail {
 @media (max-width: 575px) {
   .services-showcase .services-grid {
     grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .services-showcase .service-card {
+    padding: 20px 18px;
+    border-radius: 16px;
+  }
+
+  .services-showcase .service-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .services-showcase h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .services-showcase p {
+    font-size: 14px;
   }
 }
 
