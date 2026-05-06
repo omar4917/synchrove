@@ -65,6 +65,11 @@
   if (preloader) {
     window.addEventListener('load', () => {
       preloader.remove();
+      document.documentElement.classList.remove('fouc-hidden');
+    });
+  } else {
+    window.addEventListener('load', () => {
+      document.documentElement.classList.remove('fouc-hidden');
     });
   }
 
