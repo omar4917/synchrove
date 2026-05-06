@@ -1,0 +1,413 @@
+<header id="header" class="header d-flex align-items-center light-background sticky-top">
+  <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
+
+    <a href="index-2.html" class="logo d-flex align-items-center me-auto me-xl-0">
+      <img src="assets/img/synchrove_logo.png" alt="Synchrove Logo">
+    </a>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="index-2.html" class="">Home</a></li>
+        <li><a href="about.html" class="">About</a></li>
+        <li><a href="resume.html" class="">Resume</a></li>
+        <li><a href="services.html" class="">Services</a></li>
+        <li><a href="portfolio.html" class="">Portfolio</a></li>
+        <li class="dropdown">
+          <a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <ul>
+            <li><a href="#">Dropdown 1</a></li>
+            <li class="dropdown">
+              <a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+                <li><a href="#">Deep Dropdown 1</a></li>
+                <li><a href="#">Deep Dropdown 2</a></li>
+                <li><a href="#">Deep Dropdown 3</a></li>
+                <li><a href="#">Deep Dropdown 4</a></li>
+                <li><a href="#">Deep Dropdown 5</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Dropdown 2</a></li>
+            <li><a href="#">Dropdown 3</a></li>
+            <li><a href="#">Dropdown 4</a></li>
+          </ul>
+        </li>
+        <li><a href="contact.html" class="">Contact</a></li>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+
+    <div class="header-social-links d-flex align-items-center gap-3">
+      <div class="theme-toggle" role="group" aria-label="Color theme toggle">
+        <button type="button" class="theme-btn active" data-theme="peacock" aria-pressed="true">Peacock-P</button>
+        <button type="button" class="theme-btn" data-theme="whale" aria-pressed="false">Whale-W</button>
+        <button type="button" class="theme-btn" data-theme="d1" aria-pressed="false">D1</button>
+        <button type="button" class="theme-btn" data-theme="d2" aria-pressed="false">D2</button>
+        <button type="button" class="theme-btn" data-theme="sl1" aria-pressed="false">SL1</button>
+      </div>
+      <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+      <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+      <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+    </div>
+</header>
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Services - Synchrove</title>
+  <meta name="description" content="Our professional services and offerings.">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/" rel="preconnect">
+  <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- =======================================================
+  * Template Name: Kelly
+  * Template URL: https://bootstrapmade.com/kelly-free-bootstrap-cv-resume-html-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="theme-peacock services-page">
+  <script>
+    (function () {
+      try {
+        var storedTheme = localStorage.getItem('synch-theme');
+        if (storedTheme && storedTheme !== 'peacock') {
+          var targetClass = 'theme-' + storedTheme;
+          document.body.classList.remove('theme-peacock');
+          document.body.classList.add(targetClass);
+        }
+      } catch (error) {
+        /* Local storage unavailable; default theme remains */
+      }
+    })();
+  </script>
+
+
+  <main class="main">
+
+    <section class="services-intro section">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2>Our Services</h2>
+          <p>Innovative software, infrastructure, and growth services inspired by the SoftsStudio stack.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="main-services section">
+      <div class="container">
+        <div class="services-list">
+          <article class="service-detail" id="website-design-development">
+            <div class="service-content">
+              <div class="service-icon">
+                <i class="fas fa-laptop-code" aria-hidden="true"></i>
+              </div>
+              <div class="service-info">
+                <h3>Website Design &amp; Development</h3>
+                <p>Responsive websites engineered for credibility, performance, and measurable business results.</p>
+                <ul class="service-features">
+                  <li><i class="fas fa-check"></i> Custom Web Design</li>
+                  <li><i class="fas fa-check"></i> Responsive &amp; Mobile-Friendly</li>
+                  <li><i class="fas fa-check"></i> CMS Development (WordPress, Drupal)</li>
+                  <li><i class="fas fa-check"></i> E-commerce Experiences</li>
+                  <li><i class="fas fa-check"></i> Secure Architecture &amp; Hosting</li>
+                  <li><i class="fas fa-check"></i> Performance Optimization</li>
+                </ul>
+              </div>
+            </div>
+            <div class="service-image">
+              <div class="image-placeholder">
+                <i class="fas fa-code" aria-hidden="true"></i>
+                <p>Website Design &amp; Development</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-detail reverse" id="mobile-app-development">
+            <div class="service-content">
+              <div class="service-icon">
+                <i class="fas fa-mobile-alt" aria-hidden="true"></i>
+              </div>
+              <div class="service-info">
+                <h3>Mobile App Development</h3>
+                <p>Native and cross-platform applications crafted to engage users across iOS and Android.</p>
+                <ul class="service-features">
+                  <li><i class="fas fa-check"></i> Native iOS &amp; Android Apps</li>
+                  <li><i class="fas fa-check"></i> Cross-Platform (React Native, Flutter)</li>
+                  <li><i class="fas fa-check"></i> User-Centered UI/UX</li>
+                  <li><i class="fas fa-check"></i> API &amp; Cloud Integration</li>
+                  <li><i class="fas fa-check"></i> Secure Payments</li>
+                  <li><i class="fas fa-check"></i> App Store Deployment</li>
+                </ul>
+              </div>
+            </div>
+            <div class="service-image">
+              <div class="image-placeholder">
+                <i class="fas fa-tablet-alt" aria-hidden="true"></i>
+                <p>Mobile App Development</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-detail" id="ui-ux-design">
+            <div class="service-content">
+              <div class="service-icon">
+                <i class="fas fa-pencil-ruler" aria-hidden="true"></i>
+              </div>
+              <div class="service-info">
+                <h3>UI/UX Design</h3>
+                <p>Research-driven interfaces that keep audiences engaged and drive conversions.</p>
+                <ul class="service-features">
+                  <li><i class="fas fa-check"></i> Wireframes &amp; Prototypes</li>
+                  <li><i class="fas fa-check"></i> Web &amp; Mobile Interfaces</li>
+                  <li><i class="fas fa-check"></i> Usability Testing</li>
+                  <li><i class="fas fa-check"></i> Conversion-Ready Layouts</li>
+                  <li><i class="fas fa-check"></i> Branding Systems</li>
+                  <li><i class="fas fa-check"></i> Interactive Prototyping</li>
+                </ul>
+              </div>
+            </div>
+            <div class="service-image">
+              <div class="image-placeholder">
+                <i class="fas fa-drafting-compass" aria-hidden="true"></i>
+                <p>UI/UX Design</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-detail reverse" id="server-sales-solutions">
+            <div class="service-content">
+              <div class="service-icon">
+                <i class="fas fa-server" aria-hidden="true"></i>
+              </div>
+              <div class="service-info">
+                <h3>Server Sales &amp; Solutions</h3>
+                <p>Reliable infrastructure deployments with ongoing support and optimization.</p>
+                <ul class="service-features">
+                  <li><i class="fas fa-check"></i> Consultation &amp; Architecture</li>
+                  <li><i class="fas fa-check"></i> High-Availability Installations</li>
+                  <li><i class="fas fa-check"></i> Virtualization &amp; Clustering</li>
+                  <li><i class="fas fa-check"></i> Cloud &amp; On-Prem Options</li>
+                  <li><i class="fas fa-check"></i> Integration Support</li>
+                  <li><i class="fas fa-check"></i> Cost-Efficient Packages</li>
+                </ul>
+              </div>
+            </div>
+            <div class="service-image">
+              <div class="image-placeholder">
+                <i class="fas fa-cogs" aria-hidden="true"></i>
+                <p>Server Sales &amp; Solutions</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-detail" id="cyber-security-data-backup">
+            <div class="service-content">
+              <div class="service-icon">
+                <i class="fas fa-shield-alt" aria-hidden="true"></i>
+              </div>
+              <div class="service-info">
+                <h3>Cyber Security &amp; Data Backup</h3>
+                <p>Defense-in-depth strategies with resilient backups to minimize risk.</p>
+                <ul class="service-features">
+                  <li><i class="fas fa-check"></i> Network Security &amp; Firewalls</li>
+                  <li><i class="fas fa-check"></i> Threat Monitoring</li>
+                  <li><i class="fas fa-check"></i> Data Encryption</li>
+                  <li><i class="fas fa-check"></i> Cloud Backup Solutions</li>
+                  <li><i class="fas fa-check"></i> Disaster Recovery Planning</li>
+                  <li><i class="fas fa-check"></i> Compliance Management</li>
+                </ul>
+              </div>
+            </div>
+            <div class="service-image">
+              <div class="image-placeholder">
+                <i class="fas fa-lock" aria-hidden="true"></i>
+                <p>Cyber Security &amp; Data Backup</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-detail reverse" id="digital-marketing">
+            <div class="service-content">
+              <div class="service-icon">
+                <i class="fas fa-bullhorn" aria-hidden="true"></i>
+              </div>
+              <div class="service-info">
+                <h3>Digital Marketing</h3>
+                <p>Campaigns that grow your brand’s reach through data-driven creative.</p>
+                <ul class="service-features">
+                  <li><i class="fas fa-check"></i> Social Media Campaigns</li>
+                  <li><i class="fas fa-check"></i> PPC &amp; Paid Ads</li>
+                  <li><i class="fas fa-check"></i> Content Marketing</li>
+                  <li><i class="fas fa-check"></i> Influencer Partnerships</li>
+                  <li><i class="fas fa-check"></i> Performance Analytics</li>
+                  <li><i class="fas fa-check"></i> Brand Growth Strategy</li>
+                </ul>
+              </div>
+            </div>
+            <div class="service-image">
+              <div class="image-placeholder">
+                <i class="fas fa-ad" aria-hidden="true"></i>
+                <p>Digital Marketing</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-detail" id="seo">
+            <div class="service-content">
+              <div class="service-icon">
+                <i class="fas fa-search" aria-hidden="true"></i>
+              </div>
+              <div class="service-info">
+                <h3>SEO</h3>
+                <p>Organic growth programs that improve ranking, speed, and relevance.</p>
+                <ul class="service-features">
+                  <li><i class="fas fa-check"></i> On-Page &amp; Technical SEO</li>
+                  <li><i class="fas fa-check"></i> Keyword Strategy</li>
+                  <li><i class="fas fa-check"></i> Link Building</li>
+                  <li><i class="fas fa-check"></i> Local SEO</li>
+                  <li><i class="fas fa-check"></i> SEO Audits</li>
+                  <li><i class="fas fa-check"></i> Continuous Tracking</li>
+                </ul>
+              </div>
+            </div>
+            <div class="service-image">
+              <div class="image-placeholder">
+                <i class="fas fa-chart-line" aria-hidden="true"></i>
+                <p>SEO</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-detail reverse" id="email-marketing">
+            <div class="service-content">
+              <div class="service-icon">
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+              </div>
+              <div class="service-info">
+                <h3>Email Marketing</h3>
+                <p>Targeted conversations that nurture leads and accelerate conversions.</p>
+                <ul class="service-features">
+                  <li><i class="fas fa-check"></i> Automated Journeys</li>
+                  <li><i class="fas fa-check"></i> Segmented Campaigns</li>
+                  <li><i class="fas fa-check"></i> Newsletter Design</li>
+                  <li><i class="fas fa-check"></i> A/B Testing</li>
+                  <li><i class="fas fa-check"></i> CRM Integration</li>
+                  <li><i class="fas fa-check"></i> Analytics &amp; Reporting</li>
+                </ul>
+              </div>
+            </div>
+            <div class="service-image">
+              <div class="image-placeholder">
+                <i class="fas fa-mail-bulk" aria-hidden="true"></i>
+                <p>Email Marketing</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-detail" id="bpo">
+            <div class="service-content">
+              <div class="service-icon">
+                <i class="fas fa-headset" aria-hidden="true"></i>
+              </div>
+              <div class="service-info">
+                <h3>BPO</h3>
+                <p>Reliable back-office support and customer care so you can scale with confidence.</p>
+                <ul class="service-features">
+                  <li><i class="fas fa-check"></i> Customer Support</li>
+                  <li><i class="fas fa-check"></i> Data Processing &amp; Entry</li>
+                  <li><i class="fas fa-check"></i> Technical Helpdesk</li>
+                  <li><i class="fas fa-check"></i> HR &amp; Payroll Outsourcing</li>
+                  <li><i class="fas fa-check"></i> Finance &amp; Accounting</li>
+                  <li><i class="fas fa-check"></i> 24/7 Multichannel Support</li>
+                </ul>
+              </div>
+            </div>
+            <div class="service-image">
+              <div class="image-placeholder">
+                <i class="fas fa-users-cog" aria-hidden="true"></i>
+                <p>BPO</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <footer id="footer" class="footer light-background">
+
+    <div class="container">
+      <div class="copyright text-center">
+        <p>© <span>Copyright</span> 
+          <strong class="px-1 sitename">Synchrove</strong> 
+          <span>All Rights Reserved<br></span>
+        </p>
+      </div>
+      <div class="social-links d-flex justify-content-center">
+        <a href="#"><i class="bi bi-twitter-x"></i></a>
+        <a href="#"><i class="bi bi-facebook"></i></a>
+        <a href="#"><i class="bi bi-instagram"></i></a>
+        <a href="#"><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="credits">
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        Distributed by <a href="https://themewagon.com/">ThemeWagon</a>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/gsap/gsap.min.js"></script>
+  <script src="assets/vendor/gsap/ScrollTrigger.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
