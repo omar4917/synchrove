@@ -1,0 +1,8 @@
+node_modules/
+hub-backend/node_modules/
+.wrangler/
+hub-backend/.wrangler/
+.dev.vars
+*.log
+.vscode/
+.idea/
