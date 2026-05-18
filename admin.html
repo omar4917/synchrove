@@ -1196,6 +1196,80 @@
       return role ? `${userType} | ${role}` : userType;
     }
 
+    function slugifyWorkspaceValue(value) {
+      return (value || 'workspace')
+        .toString()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '') || 'workspace';
+    }
+
+    function hydrateWorkspaceRecord(workspace, index) {
+      const normalized = Object.assign({}, workspace);
+      normalized.userType = normalizeUserType(normalized.userType, normalized.role);
+      normalized.workspaceId = normalized.workspaceId || `${slugifyWorkspaceValue(normalized.email)}-${slugifyWorkspaceValue(normalized.project)}-${index}`;
+      return normalized;
+    }
+
+    function getWorkspaceScopedKey(prefix, workspace) {
+      if (!workspace) return `${prefix}_default`;
+      return `${prefix}_${workspace.workspaceId || `${workspace.email}_${workspace.project}`}`;
+    }
+
+    function checkSuperadminPermission() {
+      const adminProfile = JSON.parse(localStorage.getItem('synchrove_admin_profile'));
+      const userType = normalizeUserType(adminProfile ? adminProfile.userType : '', adminProfile ? adminProfile.role : '');
+      return userType === 'Super User';
+    }
+
+    function applyRoleBasedAccessControl(profile) {
+      const userType = normalizeUserType(profile.userType, profile.role);
+      const isSuperadmin = userType === 'Super User';
+
+      // 1. Filter Sub-Navigation Tabs visibility
+      const tabs = document.querySelectorAll('.sub-nav-tab');
+      tabs.forEach(tab => {
+        const onClickAttr = tab.getAttribute('onclick') || '';
+        if (onClickAttr.includes("'users'") || onClickAttr.includes("'invoices'") || onClickAttr.includes("'testimonials'")) {
+          tab.style.display = isSuperadmin ? '' : 'none';
+        }
+      });
+
+      // 2. Enforce restricted tab redirection if Creator attempts manual navigation/hash trigger
+      if (!isSuperadmin) {
+        const activeTab = document.querySelector('.sub-nav-tab.active');
+        if (activeTab) {
+          const onClickAttr = activeTab.getAttribute('onclick') || '';
+          if (onClickAttr.includes("'users'") || onClickAttr.includes("'invoices'") || onClickAttr.includes("'testimonials'")) {
+            switchAdminTab('workspaces');
+          }
+        }
+
+        // 3. Hide Launch Workspace button
+        const launchBtn = document.querySelector('button[onclick="showNewWorkspaceCard()"]');
+        if (launchBtn) launchBtn.style.display = 'none';
+
+        // 4. Secure the Creator Selection in Projects tab
+        const creatorSelect = document.getElementById('project-edit-creator');
+        if (creatorSelect) {
+          creatorSelect.value = profile.email;
+          creatorSelect.disabled = true;
+          creatorSelect.style.opacity = '0.8';
+          creatorSelect.style.pointerEvents = 'none';
+        }
+      } else {
+        const launchBtn = document.querySelector('button[onclick="showNewWorkspaceCard()"]');
+        if (launchBtn) launchBtn.style.display = '';
+
+        const creatorSelect = document.getElementById('project-edit-creator');
+        if (creatorSelect) {
+          creatorSelect.disabled = false;
+          creatorSelect.style.opacity = '';
+          creatorSelect.style.pointerEvents = '';
+        }
+      }
+    }
+
     function getDefaultRoleForType(userType) {
       if (userType === 'Super User') {
         return 'Super User';
@@ -1425,6 +1499,10 @@
     }
 
     function deleteManagedUser(email) {
+      if (!checkSuperadminPermission()) {
+        alert("Permission Denied: Only Super Users are permitted to delete accounts from the directory.");
+        return;
+      }
       const adminEmail = localStorage.getItem('synchrove_admin_email') || 'omar@synchrove.com';
       if (email === adminEmail) {
         alert('The active Super User account cannot be deleted.');
@@ -1455,6 +1533,11 @@
 
     function saveManagedUser(event) {
       event.preventDefault();
+
+      if (!checkSuperadminPermission()) {
+        alert("Permission Denied: Only Super Users are permitted to create or modify accounts in the directory.");
+        return;
+      }
 
       const originalEmail = document.getElementById('user-edit-email-original').value.trim();
       const name = document.getElementById('user-form-name').value.trim();
@@ -1625,9 +1708,7 @@
           workspaces = JSON.parse(stored);
         }
 
-        workspaces = workspaces.map((ws) => Object.assign({}, ws, {
-          userType: normalizeUserType(ws.userType, ws.role)
-        }));
+        workspaces = workspaces.map((ws, index) => hydrateWorkspaceRecord(ws, index));
         localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
 
         renderWorkspacesList();
@@ -1673,6 +1754,8 @@
         resetUserForm();
         renderProjectsManager();
 
+        applyRoleBasedAccessControl(adminProfile);
+
       } catch (err) {
         console.error(err);
       }
@@ -1686,13 +1769,17 @@
 
     // Switch between admin tabs
     function switchAdminTab(tabId) {
+      if (!checkSuperadminPermission() && (tabId === 'users' || tabId === 'invoices' || tabId === 'testimonials')) {
+        tabId = 'workspaces'; // Restrict creators from manually loading other views
+      }
+
       const tabs = document.querySelectorAll('.sub-nav-tab');
       tabs.forEach(t => t.classList.remove('active'));
 
       const contents = document.querySelectorAll('.dash-tab-content');
       contents.forEach(c => c.classList.remove('active'));
 
-      const activeTab = Array.from(tabs).find(t => t.outerHTML.includes("'" + tabId + "'") || t.getAttribute('onclick').includes(tabId));
+      const activeTab = Array.from(tabs).find(t => t.outerHTML.includes("'" + tabId + "'") || (t.getAttribute('onclick') && t.getAttribute('onclick').includes(tabId)));
       if (activeTab) activeTab.classList.add('active');
 
       const activeContent = document.getElementById('admin-tab-' + tabId);
@@ -1953,7 +2040,7 @@
 
       if (!ws) return;
 
-      const chatKey = `synchrove_chats_${ws.email}`;
+      const chatKey = getWorkspaceScopedKey('synchrove_chats', ws);
       let history = [];
       const stored = localStorage.getItem(chatKey);
 
@@ -1993,7 +2080,7 @@
       const text = input.value.trim();
       if (!text) return;
 
-      const chatKey = `synchrove_chats_${ws.email}`;
+      const chatKey = getWorkspaceScopedKey('synchrove_chats', ws);
       let history = JSON.parse(localStorage.getItem(chatKey)) || [];
 
       history.push({ sender: "pm", text: text });
@@ -2027,7 +2114,7 @@
       tbody.innerHTML = '';
 
       workspaces.forEach(ws => {
-        const invoicesKey = `synchrove_invoices_${ws.email}`;
+        const invoicesKey = getWorkspaceScopedKey('synchrove_invoices', ws);
         let clientInvoices = [];
         const stored = localStorage.getItem(invoicesKey);
         if (stored) {
@@ -2064,6 +2151,11 @@
 
     function generateInvoice(e) {
       e.preventDefault();
+
+      if (!checkSuperadminPermission()) {
+        alert("Permission Denied: Only Super Users are permitted to generate invoices.");
+        return;
+      }
       
       const wsIdx = parseInt(document.getElementById('invoice-client-select').value);
       const ws = workspaces[wsIdx];
@@ -2082,7 +2174,7 @@
         date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' })
       };
 
-      const invoicesKey = `synchrove_invoices_${ws.email}`;
+      const invoicesKey = getWorkspaceScopedKey('synchrove_invoices', ws);
       let clientInvoices = JSON.parse(localStorage.getItem(invoicesKey)) || [];
       clientInvoices.unshift(newInv);
       localStorage.setItem(invoicesKey, JSON.stringify(clientInvoices));
@@ -2144,14 +2236,14 @@
     }
 
     function approveTestimonial(idx) {
+      if (!checkSuperadminPermission()) {
+        alert("Permission Denied: Only Super Users are permitted to moderate and approve testimonials.");
+        return;
+      }
       let testimonials = [];
       try {
         testimonials = JSON.parse(localStorage.getItem('synchrove_testimonials')) || [];
-        if (!Array.isArray(testimonials)) {
-          testimonials = [];
-        }
-      } catch (e) {
-        console.error("Error reading testimonials for approval:", e);
+      } catch(e) {
         testimonials = [];
       }
 

@@ -627,6 +627,22 @@
           </div>
         </div>
 
+        <div class="section-box mb-4">
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+            <div>
+              <div class="box-title mb-1">
+                <i class="bi bi-kanban"></i>
+                <span>Active Project Workspaces</span>
+              </div>
+              <p class="small opacity-75 mb-0">Switch between all live Synchrove projects attached to this client account.</p>
+            </div>
+            <span id="workspace-count-badge" class="status-badge" style="margin-top: 0;">1 Active Project</span>
+          </div>
+          <div id="workspace-switcher-list" class="d-flex flex-column gap-3">
+            <!-- Loaded dynamically -->
+          </div>
+        </div>
+
         <!-- Sub-navigation Tabs -->
         <div class="dash-sub-nav">
           <button type="button" class="sub-nav-tab active" onclick="switchDashTab('overview')">
@@ -644,10 +660,6 @@
           <button type="button" class="sub-nav-tab" onclick="switchDashTab('settings')">
             <i class="bi bi-gear"></i>
             <span>System Settings</span>
-          </button>
-          <button type="button" class="sub-nav-tab" onclick="switchDashTab('showcases')">
-            <i class="bi bi-journal-code"></i>
-            <span>My Showcases</span>
           </button>
         </div>
 
@@ -912,8 +924,11 @@
                   <i class="bi bi-box-seam"></i>
                   <span>Active Project Packages</span>
                 </div>
+                <div id="client-project-packages-list" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px;">
+                  <!-- Loaded dynamically -->
+                </div>
                 
-                <div class="d-flex align-items-start gap-3 p-3 mb-3" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent); border-radius: 16px;">
+                <div id="legacy-package-card-1" class="d-flex align-items-start gap-3 p-3 mb-3" style="display: none; background: color-mix(in srgb, var(--background-color) 40%, transparent); border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent); border-radius: 16px;">
                   <div class="deliverable-icon" style="font-size: 24px; padding: 25px;"><i class="bi bi-code-slash"></i></div>
                   <div class="flex-grow-1">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
@@ -928,7 +943,7 @@
                   </div>
                 </div>
 
-                <div class="d-flex align-items-start gap-3 p-3" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent); border-radius: 16px;">
+                <div id="legacy-package-card-2" class="d-flex align-items-start gap-3 p-3" style="display: none; background: color-mix(in srgb, var(--background-color) 40%, transparent); border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent); border-radius: 16px;">
                   <div class="deliverable-icon" style="font-size: 24px; padding: 25px;"><i class="bi bi-shield-check"></i></div>
                   <div class="flex-grow-1">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
@@ -1406,8 +1421,10 @@
 
   <script>
     // Client profile and validation checks
+    let clientWorkspaces = [];
     let clientWorkspace = null;
     let clientEmail = 'client@example.com';
+    let activeClientWorkspaceIndex = 0;
 
     function normalizeUserType(userType, fallbackRole) {
       if (userType === 'Super User' || userType === 'Team Synchrove' || userType === 'Clients') {
@@ -1425,6 +1442,166 @@
       const userType = normalizeUserType(profile && profile.userType, profile && profile.role);
       const role = (profile && profile.role) ? profile.role : '';
       return role ? `${userType} | ${role}` : userType;
+    }
+
+    function slugifyWorkspaceValue(value) {
+      return (value || 'workspace')
+        .toString()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '') || 'workspace';
+    }
+
+    function hydrateWorkspaceRecord(workspace, index) {
+      const normalized = Object.assign({}, workspace);
+      normalized.userType = normalizeUserType(normalized.userType, normalized.role);
+      normalized.workspaceId = normalized.workspaceId || `${slugifyWorkspaceValue(normalized.email)}-${slugifyWorkspaceValue(normalized.project)}-${index}`;
+      return normalized;
+    }
+
+    function getWorkspaceScopedKey(prefix, workspace) {
+      if (!workspace) return `${prefix}_${clientEmail}`;
+      return `${prefix}_${workspace.workspaceId || `${clientEmail}_${workspace.project}`}`;
+    }
+
+    function persistActiveWorkspaceIndex() {
+      localStorage.setItem(`synchrove_client_active_workspace_${clientEmail}`, String(activeClientWorkspaceIndex));
+    }
+
+    function renderWorkspaceSwitcher() {
+      const list = document.getElementById('workspace-switcher-list');
+      const badge = document.getElementById('workspace-count-badge');
+      if (!list || !badge) return;
+
+      const count = clientWorkspaces.length;
+      badge.innerText = `${count} Active Project${count === 1 ? '' : 's'}`;
+
+      list.innerHTML = clientWorkspaces.map((workspace, index) => {
+        const isActive = index === activeClientWorkspaceIndex;
+        const border = isActive ? 'var(--accent-color)' : 'color-mix(in srgb, var(--default-color) 8%, transparent)';
+        const background = isActive ? 'color-mix(in srgb, var(--accent-color) 6%, transparent)' : 'color-mix(in srgb, var(--background-color) 40%, transparent)';
+        return `
+          <button type="button" onclick="setActiveWorkspace(${index})" style="text-align: left; width: 100%; background: ${background}; border: 1px solid ${border}; border-radius: 18px; padding: 18px 20px; color: var(--default-color); transition: all 0.3s ease;">
+            <div style="display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: center;">
+              <div>
+                <div style="font-size: 18px; font-weight: 700; color: var(--heading-color);">${workspace.project}</div>
+                <div class="small opacity-75 mt-1">${workspace.role || 'Client Partner'} | ${workspace.phase || 'Discovery'}</div>
+              </div>
+              <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+                <span class="status-badge" style="margin-top: 0;">${workspace.progress || 0}% Progress</span>
+                <span class="small opacity-75">${workspace.targetDate || 'TBD'}</span>
+              </div>
+            </div>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderClientProjectPackages() {
+      const container = document.getElementById('client-project-packages-list');
+      if (!container) return;
+
+      container.innerHTML = clientWorkspaces.map((workspace, index) => {
+        const isActive = index === activeClientWorkspaceIndex;
+        const icon = workspace.phase === 'Deploy & Launch'
+          ? 'bi-rocket-takeoff'
+          : workspace.phase === 'Review & QA'
+            ? 'bi-search'
+            : workspace.phase === 'Development'
+              ? 'bi-code-slash'
+              : 'bi-kanban';
+
+        return `
+          <div class="d-flex align-items-start gap-3 p-3 ${isActive ? 'mb-0' : 'mb-0'}" style="background: ${isActive ? 'color-mix(in srgb, var(--accent-color) 6%, transparent)' : 'color-mix(in srgb, var(--background-color) 40%, transparent)'}; border: 1px solid ${isActive ? 'var(--accent-color)' : 'color-mix(in srgb, var(--default-color) 8%, transparent)'}; border-radius: 16px;">
+            <div class="deliverable-icon" style="font-size: 24px; padding: 25px;"><i class="bi ${icon}"></i></div>
+            <div class="flex-grow-1">
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                <h5 style="font-weight: 700; color: var(--heading-color); margin-bottom: 4px;">${workspace.project}</h5>
+                <span class="status-badge" style="margin-top: 0;">${workspace.phase || 'Discovery'}</span>
+              </div>
+              <p class="small opacity-75" style="margin-bottom: 12px;">Next milestone: ${workspace.milestone || 'Detailed Scope Gathering'}</p>
+              <div style="display: flex; gap: 20px; font-size: 12px; font-weight: 600; flex-wrap: wrap;">
+                <span>${workspace.progress || 0}% complete</span>
+                <span>Target: ${workspace.targetDate || 'TBD'}</span>
+                ${isActive ? '<span style="color: var(--accent-color);">Currently selected in overview</span>' : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function applyActiveWorkspace() {
+      clientWorkspace = clientWorkspaces[activeClientWorkspaceIndex] || clientWorkspaces[0] || null;
+      if (!clientWorkspace) return;
+
+      document.getElementById('profile-name').innerText = clientWorkspace.name;
+      document.getElementById('profile-role').innerText = formatUserRole(clientWorkspace);
+      document.getElementById('project-name').innerText = clientWorkspace.project;
+      if (clientWorkspace.avatar) {
+          document.getElementById('profile-avatar').src = clientWorkspace.avatar;
+      }
+
+      localStorage.setItem('synchrove_client_profile', JSON.stringify({
+        name: clientWorkspace.name,
+        userType: clientWorkspace.userType,
+        role: clientWorkspace.role,
+        project: clientWorkspace.project,
+        avatar: clientWorkspace.avatar
+      }));
+
+      document.getElementById('progress-pct-number').innerText = clientWorkspace.progress + '%';
+      document.getElementById('circle-container').innerHTML = drawCircle(clientWorkspace.progress);
+      document.getElementById('active-phase-badge-text').innerText = clientWorkspace.phase;
+      document.getElementById('next-milestone-title').innerText = clientWorkspace.milestone;
+      document.getElementById('next-milestone-date').innerText = clientWorkspace.targetDate;
+
+      try {
+        const target = new Date(clientWorkspace.targetDate);
+        if (!isNaN(target.getTime())) {
+          const diffTime = target - new Date();
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          if (diffDays > 0) {
+            document.getElementById('milestone-days-remaining-label').innerHTML = `<i class="bi bi-exclamation-triangle"></i> ${diffDays} Days Remaining`;
+            document.getElementById('milestone-days-remaining-label').className = 'small text-warning';
+          } else if (diffDays === 0) {
+            document.getElementById('milestone-days-remaining-label').innerHTML = `<i class="bi bi-exclamation-triangle"></i> Target is Today!`;
+            document.getElementById('milestone-days-remaining-label').className = 'small text-warning';
+          } else {
+            document.getElementById('milestone-days-remaining-label').innerHTML = `<i class="bi bi-check-circle"></i> Launch Target Reached`;
+            document.getElementById('milestone-days-remaining-label').className = 'small text-success';
+          }
+        } else {
+          document.getElementById('milestone-days-remaining-label').innerHTML = `<i class="bi bi-clock"></i> Project Initialized`;
+          document.getElementById('milestone-days-remaining-label').className = 'small opacity-75';
+        }
+      } catch (e) {
+        console.error(e);
+      }
+
+      renderMilestoneRoadmapNodes(clientWorkspace.phase);
+
+      if (clientWorkspace.deliverables) {
+        if (clientWorkspace.deliverables.figma) {
+          document.getElementById('link-figma-deliverable').href = clientWorkspace.deliverables.figma;
+        }
+        if (clientWorkspace.deliverables.git) {
+          document.getElementById('link-git-deliverable').href = clientWorkspace.deliverables.git;
+        }
+      }
+
+      renderWorkspaceSwitcher();
+      renderClientProjectPackages();
+      loadClientInvoicesAndFinancials();
+      loadClientChatHistory();
+      loadProfileIntoEditForm();
+    }
+
+    function setActiveWorkspace(index) {
+      if (index < 0 || index >= clientWorkspaces.length) return;
+      activeClientWorkspaceIndex = index;
+      persistActiveWorkspaceIndex();
+      applyActiveWorkspace();
     }
 
     (function () {
@@ -1466,15 +1643,13 @@
           localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
         }
 
-        workspaces = workspaces.map((ws) => Object.assign({}, ws, {
-          userType: normalizeUserType(ws.userType, ws.role)
-        }));
+        workspaces = workspaces.map((ws, index) => hydrateWorkspaceRecord(ws, index));
         localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
 
-        clientWorkspace = workspaces.find(w => w.email === clientEmail);
-        if (!clientWorkspace) {
+        clientWorkspaces = workspaces.filter(w => w.email === clientEmail);
+        if (clientWorkspaces.length === 0) {
           // If not found in workspaces (e.g. newly signed up client), seed a dynamic one
-          clientWorkspace = {
+          clientWorkspace = hydrateWorkspaceRecord({
             name: "Client Partner",
             email: clientEmail,
             userType: "Clients",
@@ -1491,70 +1666,18 @@
               staging: "index.html",
               invoice: ""
             }
-          };
+          }, workspaces.length);
           workspaces.push(clientWorkspace);
           localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
+          clientWorkspaces = [clientWorkspace];
         }
 
-        // Apply profile widgets
-        document.getElementById('profile-name').innerText = clientWorkspace.name;
-        document.getElementById('profile-role').innerText = formatUserRole(clientWorkspace);
-        document.getElementById('project-name').innerText = clientWorkspace.project;
-        if (clientWorkspace.avatar) {
-          document.getElementById('profile-avatar').src = clientWorkspace.avatar;
-        }
+        const storedActiveIndex = parseInt(localStorage.getItem(`synchrove_client_active_workspace_${clientEmail}`) || '0', 10);
+        activeClientWorkspaceIndex = Number.isFinite(storedActiveIndex) && storedActiveIndex >= 0 && storedActiveIndex < clientWorkspaces.length
+          ? storedActiveIndex
+          : 0;
 
-        // Apply Project progress circle
-        document.getElementById('progress-pct-number').innerText = clientWorkspace.progress + '%';
-        document.getElementById('circle-container').innerHTML = drawCircle(clientWorkspace.progress);
-
-        // Apply Phase & Milestones
-        document.getElementById('active-phase-badge-text').innerText = clientWorkspace.phase;
-        document.getElementById('next-milestone-title').innerText = clientWorkspace.milestone;
-        document.getElementById('next-milestone-date').innerText = clientWorkspace.targetDate;
-
-        // Calculate countdown days remaining
-        try {
-          const target = new Date(clientWorkspace.targetDate);
-          if (!isNaN(target.getTime())) {
-            const diffTime = target - new Date();
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            if (diffDays > 0) {
-              document.getElementById('milestone-days-remaining-label').innerHTML = `<i class="bi bi-exclamation-triangle"></i> ${diffDays} Days Remaining`;
-            } else if (diffDays === 0) {
-              document.getElementById('milestone-days-remaining-label').innerHTML = `<i class="bi bi-exclamation-triangle"></i> Target is Today!`;
-            } else {
-              document.getElementById('milestone-days-remaining-label').innerHTML = `<i class="bi bi-check-circle"></i> Launch Target Reached`;
-              document.getElementById('milestone-days-remaining-label').className = "small text-success";
-            }
-          } else {
-            document.getElementById('milestone-days-remaining-label').innerHTML = `<i class="bi bi-clock"></i> Project Initialized`;
-          }
-        } catch (e) {
-          console.error(e);
-        }
-
-        // Render dynamic Milestone Roadmap
-        renderMilestoneRoadmapNodes(clientWorkspace.phase);
-
-        // Render deliverable href URLs
-        if (clientWorkspace.deliverables) {
-          if (clientWorkspace.deliverables.figma) {
-            document.getElementById('link-figma-deliverable').href = clientWorkspace.deliverables.figma;
-          }
-          if (clientWorkspace.deliverables.git) {
-            document.getElementById('link-git-deliverable').href = clientWorkspace.deliverables.git;
-          }
-        }
-
-        // Load invoices list and calculate financial summary
-        loadClientInvoicesAndFinancials();
-
-        // Render chat history
-        loadClientChatHistory();
-
-        loadProfileIntoEditForm();
-        renderClientProjectsManager();
+        applyActiveWorkspace();
       } catch (e) {
         console.error(e);
       }
@@ -1608,7 +1731,7 @@
       if (!tbody) return;
 
       tbody.innerHTML = '';
-      const invoicesKey = `synchrove_invoices_${clientEmail}`;
+      const invoicesKey = getWorkspaceScopedKey('synchrove_invoices', clientWorkspace);
       let clientInvoices = [];
       const stored = localStorage.getItem(invoicesKey);
 
@@ -1679,7 +1802,7 @@
     
     function loadClientChatHistory() {
       scroller.innerHTML = '';
-      const chatKey = `synchrove_chats_${clientEmail}`;
+      const chatKey = getWorkspaceScopedKey('synchrove_chats', clientWorkspace);
       let history = [];
       const stored = localStorage.getItem(chatKey);
 
@@ -1722,7 +1845,7 @@
       const val = input.value.trim();
       if (!val) return;
 
-      const chatKey = `synchrove_chats_${clientEmail}`;
+      const chatKey = getWorkspaceScopedKey('synchrove_chats', clientWorkspace);
       let history = JSON.parse(localStorage.getItem(chatKey)) || [];
 
       // Append Client Msg
@@ -1879,15 +2002,15 @@
 
         const profile = JSON.parse(localStorage.getItem('synchrove_client_profile'));
         if (profile) {
-          document.getElementById('edit-name').value = profile.name;
-          document.getElementById('edit-role').value = profile.role;
-          document.getElementById('edit-project').value = profile.project;
-          document.getElementById('edit-avatar-url').value = profile.avatar || '';
+          document.getElementById('edit-name').value = (clientWorkspace && clientWorkspace.name) || profile.name;
+          document.getElementById('edit-role').value = (clientWorkspace && clientWorkspace.role) || profile.role;
+          document.getElementById('edit-project').value = (clientWorkspace && clientWorkspace.project) || profile.project;
+          document.getElementById('edit-avatar-url').value = ((clientWorkspace && clientWorkspace.avatar) || profile.avatar || '');
           
           // Select corresponding avatar in presets if matching
           const presets = document.querySelectorAll('.preset-avatar-img');
           presets.forEach(p => {
-            if (p.getAttribute('src') === profile.avatar) {
+            if (p.getAttribute('src') === (((clientWorkspace && clientWorkspace.avatar) || profile.avatar || ''))) {
               p.style.borderColor = 'var(--accent-color)';
             } else {
               p.style.borderColor = 'transparent';
@@ -1967,11 +2090,28 @@
           workspaces = [];
         }
 
-        const idx = workspaces.findIndex(item => item.email === clientEmail);
-        if (idx !== -1) {
-          workspaces[idx] = Object.assign({}, workspaces[idx], clientWorkspace);
-          localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
-        }
+        workspaces = workspaces.map((item) => {
+          if (item.email !== clientEmail) {
+            return item;
+          }
+
+          const updatedItem = Object.assign({}, item, {
+            name: name,
+            userType: userType,
+            role: role,
+            avatar: avatar
+          });
+
+          if (item.workspaceId === clientWorkspace.workspaceId) {
+            updatedItem.project = project;
+          }
+
+          return updatedItem;
+        });
+
+        localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
+        clientWorkspaces = workspaces.filter((item) => item.email === clientEmail);
+        clientWorkspace = clientWorkspaces.find((item) => item.workspaceId === clientWorkspace.workspaceId) || clientWorkspace;
       }
 
       // Instantly update header widgets
@@ -1979,6 +2119,8 @@
       document.getElementById('profile-role').innerText = formatUserRole(updatedProfile);
       document.getElementById('project-name').innerText = project;
       document.getElementById('profile-avatar').src = avatar;
+      renderWorkspaceSwitcher();
+      renderClientProjectPackages();
 
       // Show success message
       const success = document.getElementById('profile-success-msg');
