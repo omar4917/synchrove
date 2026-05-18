@@ -1,0 +1,446 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Portal - Synchrove</title>
+  <meta name="description" content="Access your project dashboard, track milestones, and communicate with your project team.">
+  <meta name="keywords" content="">
+  <meta property="og:site_name" content="Synchrove">
+
+  <!-- Favicons -->
+  <link href="assets/favicon.ico" rel="icon">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/" rel="preconnect">
+  <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/synchrove-core.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Kelly
+  * Template URL: https://bootstrapmade.com/kelly-free-bootstrap-cv-resume-html-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+  <style id="fouc-fix">.fouc-hidden { display: none !important; }</style>
+  <script>document.documentElement.classList.add("fouc-hidden");</script>
+</head>
+
+<body class="theme-peacock portal-page">
+<header id="header" class="header d-flex align-items-center light-background sticky-top">
+  <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
+
+    <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+      <img src="assets/logo-v2.png" alt="Synchrove Logo">
+    </a>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="index.html" class="">Home</a></li>
+        <li><a href="about.html" class="">About</a></li>
+        <li><a href="resume.html" class="">Resume</a></li>
+        <li><a href="services.html" class="">Services</a></li>
+        <li><a href="portfolio.html" class="">Portfolio</a></li>
+        
+        <li><a href="contact.html" class="">Contact</a></li>
+        <li><a href="portal.html" class="active">Portal</a></li>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+
+    <div class="header-social-links d-flex align-items-center gap-3">
+      <div class="theme-toggle" role="group" aria-label="Color theme toggle">
+        <button type="button" class="theme-btn active" data-theme="peacock" aria-pressed="true">Peacock-P</button>
+        <button type="button" class="theme-btn" data-theme="whale" aria-pressed="false">Whale-W</button>
+        <button type="button" class="theme-btn" data-theme="d1" aria-pressed="false">D1</button>
+        <button type="button" class="theme-btn" data-theme="d2" aria-pressed="false">D2</button>
+        <button type="button" class="theme-btn" data-theme="sl1" aria-pressed="false">SL1</button>
+      </div>
+      <a href="#" class="twitter" data-info="social_twitter"><i class="bi bi-twitter-x"></i></a>
+      <a href="#" class="facebook" data-info="social_facebook"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="instagram" data-info="social_instagram"><i class="bi bi-instagram"></i></a>
+      <a href="https://www.linkedin.com/in/omarkhayam4917/" class="linkedin" data-info="social_linkedin"><i class="bi bi-linkedin"></i></a>
+    </div>
+</div>
+</header>
+  <script>
+    (function () {
+      try {
+        var storedTheme = localStorage.getItem('synch-theme');
+        if (storedTheme && storedTheme !== 'peacock') {
+          var targetClass = 'theme-' + storedTheme;
+          document.body.classList.remove('theme-peacock');
+          document.body.classList.add(targetClass);
+        }
+      } catch (error) {
+        /* Local storage unavailable; default theme remains */
+      }
+    })();
+  </script>
+
+
+<main class="main">
+
+ <section id="portal" class="contact section">
+
+ <div class="container section-title" data-aos="fade-up">
+ <h2>Portal</h2>
+ <p>Log in to track your project progress, access deliverables, and communicate with your team.</p>
+ </div>
+
+ <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+ <div class="row gy-4 justify-content-center">
+
+ <div class="col-lg-6">
+
+ <!-- Portal Card using standard Synchrove styling -->
+ <div class="php-email-form" style="border-radius: 12px;">
+
+    <!-- Tab Switcher -->
+    <div style="display: flex; gap: 0; margin-bottom: 25px; border-radius: 8px; overflow: hidden; border: 1px solid color-mix(in srgb, var(--default-color) 15%, transparent);">
+      <button type="button" id="tab-login" onclick="toggleFormView('login')" style="flex: 1; padding: 10px 15px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: all 0.3s ease; background: var(--accent-color); color: var(--contrast-color);">Sign In</button>
+      <button type="button" id="tab-signup" onclick="toggleFormView('signup')" style="flex: 1; padding: 10px 15px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: all 0.3s ease; background: var(--surface-color); color: var(--default-color);">Sign Up</button>
+    </div>
+
+    <!-- Login View -->
+    <div id="login-view">
+      <h3 style="text-align: center; margin-bottom: 5px;">Sign In</h3>
+      <p style="text-align: center; font-size: 13px; color: color-mix(in srgb, var(--default-color) 70%, transparent); margin-bottom: 25px;">Enter your details to track project progress live</p>
+
+      <div id="login-error-msg" style="display: none; background: rgba(230, 57, 70, 0.08); border: 1px solid rgba(230, 57, 70, 0.25); border-radius: 12px; padding: 14px; margin-bottom: 20px; color: #e63946; font-size: 13px; font-weight: 600; text-align: center;">
+        ❌ Invalid credentials! Use client@example.com / password, or click "Quick Test Drive".
+      </div>
+
+      <form id="login-form" onsubmit="handleLogin(event)">
+        <div class="form-group" style="margin-bottom: 18px;">
+          <label style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-color); margin-bottom: 6px; display: block;">Email Address</label>
+          <input type="email" id="login-email" class="form-control" placeholder="name@company.com" required style="font-size: 14px; padding: 10px 15px; color: var(--default-color); background-color: var(--surface-color); border-color: color-mix(in srgb, var(--default-color), transparent 80%);">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 18px;">
+          <label style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-color); margin-bottom: 6px; display: block;">Password</label>
+          <input type="password" id="login-password" class="form-control" placeholder="••••••••" required style="font-size: 14px; padding: 10px 15px; color: var(--default-color); background-color: var(--surface-color); border-color: color-mix(in srgb, var(--default-color), transparent 80%);">
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; margin-bottom: 22px;">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--default-color);">
+            <input type="checkbox" id="remember-me"> Keep me logged in
+          </label>
+          <a href="#" onclick="alert('Demo feature: Reset instructions simulated!')" style="font-weight: 600;">Forgot password?</a>
+        </div>
+
+        <div class="text-center">
+          <button type="submit" style="width: 100%; border-radius: 50px;">Sign In &rarr;</button>
+        </div>
+      </form>
+
+      <!-- Quick Demo -->
+      <div onclick="autoFillDemo()" style="margin-top: 22px; background: color-mix(in srgb, var(--accent-color) 8%, transparent); border: 1px dashed color-mix(in srgb, var(--accent-color) 30%, transparent); border-radius: 10px; padding: 14px; text-align: center; font-size: 12px; cursor: pointer; transition: all 0.3s ease;">
+        <strong style="display: block; margin-bottom: 3px; color: var(--heading-color); font-size: 13px;">💡 Quick Test Drive</strong>
+        <span style="color: color-mix(in srgb, var(--default-color) 70%, transparent);">Click here to autofill with demo client credentials</span>
+      </div>
+    </div>
+
+    <!-- Signup View (Sign Up) -->
+    <div id="signup-view" style="display: none;">
+      <h3 style="text-align: center; margin-bottom: 5px;">Sign Up</h3>
+      <p style="text-align: center; font-size: 13px; color: color-mix(in srgb, var(--default-color) 70%, transparent); margin-bottom: 25px;">Create a new project tracking account</p>
+
+      <form id="signup-form" onsubmit="handleSignUp(event)">
+        <div class="form-group" style="margin-bottom: 18px;">
+          <label style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-color); margin-bottom: 6px; display: block;">Your Full Name</label>
+          <input type="text" id="signup-name" class="form-control" placeholder="John Doe" required style="font-size: 14px; padding: 10px 15px; color: var(--default-color); background-color: var(--surface-color); border-color: color-mix(in srgb, var(--default-color), transparent 80%);">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 18px;">
+          <label style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-color); margin-bottom: 6px; display: block;">Business Email</label>
+          <input type="email" id="signup-email" class="form-control" placeholder="john@company.com" required style="font-size: 14px; padding: 10px 15px; color: var(--default-color); background-color: var(--surface-color); border-color: color-mix(in srgb, var(--default-color), transparent 80%);">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 18px;">
+          <label style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-color); margin-bottom: 6px; display: block;">Password</label>
+          <input type="password" id="signup-password" class="form-control" placeholder="••••••••" required style="font-size: 14px; padding: 10px 15px; color: var(--default-color); background-color: var(--surface-color); border-color: color-mix(in srgb, var(--default-color), transparent 80%);">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 18px;">
+          <label style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-color); margin-bottom: 6px; display: block;">User Type</label>
+          <select id="signup-user-type" class="form-control" required style="font-size: 14px; padding: 10px 15px; color: var(--default-color); background-color: var(--surface-color); border-color: color-mix(in srgb, var(--default-color), transparent 80%);">
+            <option value="Clients">Clients</option>
+            <option value="Team Synchrove">Team Synchrove (Creators)</option>
+            <option value="Super User">Super User</option>
+          </select>
+        </div>
+
+        <div class="text-center">
+          <button type="submit" style="width: 100%; border-radius: 50px;">Sign Up &rarr;</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+ </div>
+
+ </div>
+
+ </div>
+
+ </section>
+
+</main>
+
+          <footer id="footer" class="footer">
+    <div class="container">
+      <div class="row gy-4">
+        <!-- Column 1: About Agency -->
+        <div class="col-lg-7 col-md-12 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <img src="assets/logo-v2.png" alt="Synchrove" style="height: 35px; margin-bottom: 12px;">
+          </a>
+          <p data-info="company_tagline">Innovative software and digital solutions to empower your business</p>
+          <div class="footer-contact pt-2">
+            <p><strong>Phone:</strong> <span data-info="phone">+1 5589 55488 55</span></p>
+            <p><strong>Email:</strong> <span data-info="email">contact@synchrove.com</span></p>
+          </div>
+        </div>
+
+        <!-- Column 2: Location / Hours -->
+        <div class="col-lg-5 col-md-12 footer-contact">
+          <h4>Contact Information</h4>
+          <p data-info="address">A108 Awesome Street, New York, NY 535022</p>
+          <p class="mt-3"><strong>Working Hours:</strong></p>
+          <p data-info="working_hours">Mon - Fri, 9:00 AM - 6:00 PM</p>
+        </div>
+      </div>
+
+      <!-- Copyright & Socials directly below in the same block, no divider line -->
+      <div class="footer-bottom-info text-center mt-4">
+        <div class="copyright">
+          <p>© Copyright <strong class="px-1 sitename" data-info="company_name">Synchrove</strong> <span data-info="copyright_year">2026</span>. All Rights Reserved</p>
+        </div>
+        <div class="social-links d-flex justify-content-center mt-2">
+          <a href="#"><i class="bi bi-twitter-x"></i></a>
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/omarkhayam4917/"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    // Toggle login/signup forms
+    function toggleFormView(target) {
+      var loginView = document.getElementById('login-view');
+      var signupView = document.getElementById('signup-view');
+      var tabLogin = document.getElementById('tab-login');
+      var tabSignup = document.getElementById('tab-signup');
+
+      if (target === 'signup') {
+        loginView.style.display = 'none';
+        signupView.style.display = 'block';
+        tabLogin.style.background = 'var(--surface-color)';
+        tabLogin.style.color = 'var(--default-color)';
+        tabSignup.style.background = 'var(--accent-color)';
+        tabSignup.style.color = 'var(--contrast-color)';
+      } else {
+        signupView.style.display = 'none';
+        loginView.style.display = 'block';
+        tabSignup.style.background = 'var(--surface-color)';
+        tabSignup.style.color = 'var(--default-color)';
+        tabLogin.style.background = 'var(--accent-color)';
+        tabLogin.style.color = 'var(--contrast-color)';
+      }
+    }
+
+    // Autofill demo client credentials
+    function autoFillDemo() {
+      document.getElementById('login-email').value = 'client@example.com';
+      document.getElementById('login-password').value = 'password';
+    }
+
+    function normalizeUserType(userType, fallbackRole) {
+      if (userType === 'Super User' || userType === 'Team Synchrove' || userType === 'Clients') {
+        return userType;
+      }
+
+      if (fallbackRole && fallbackRole.toLowerCase().indexOf('administrator') !== -1) {
+        return 'Super User';
+      }
+
+      return 'Clients';
+    }
+
+    function getDisplayRole(userType) {
+      if (userType === 'Super User') {
+        return 'Super User';
+      }
+
+      if (userType === 'Team Synchrove') {
+        return 'Team Synchrove Creator';
+      }
+
+      return 'Client Partner';
+    }
+
+    // Handle Mock Login logic
+    function handleLogin(e) {
+      e.preventDefault();
+      var email = document.getElementById('login-email').value.trim();
+      var pass = document.getElementById('login-password').value.trim();
+
+      // Check registered users
+      var registeredUser = null;
+      var storedUser = localStorage.getItem('synchrove_registered_user');
+      if (storedUser) {
+        try {
+          var parsed = JSON.parse(storedUser);
+          if (parsed.email === email && parsed.password === pass) {
+            registeredUser = parsed;
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      // Admin Credentials Check
+      if ((email === 'admin@synchrove.com' || email === 'omar@synchrove.com') && (pass === 'admin' || pass === 'password')) {
+        localStorage.removeItem('synchrove_client_authenticated');
+        localStorage.removeItem('synchrove_client_email');
+        localStorage.setItem('synchrove_admin_authenticated', 'true');
+        localStorage.setItem('synchrove_admin_email', email);
+        localStorage.setItem('synchrove_admin_profile', JSON.stringify({
+          name: 'Omar Khayam',
+          userType: 'Super User',
+          role: 'Principal Engineer & Director (Administrator)',
+          email: email,
+          avatar: 'assets/logo-v2.png'
+        }));
+        window.location.href = 'admin.html';
+        return;
+      }
+
+      if (email === 'client@example.com' && pass === 'password') {
+        localStorage.removeItem('synchrove_admin_authenticated');
+        localStorage.removeItem('synchrove_admin_email');
+        localStorage.setItem('synchrove_client_authenticated', 'true');
+        localStorage.setItem('synchrove_client_email', email);
+
+        if (!localStorage.getItem('synchrove_client_profile')) {
+          localStorage.setItem('synchrove_client_profile', JSON.stringify({
+            name: "John Larson",
+            userType: "Clients",
+            role: "CEO, Acme Corp",
+            project: "Acme Web Portal Redesign",
+            avatar: "assets/img/testimonials/testimonials-5.jpg"
+          }));
+        }
+
+        window.location.href = 'dashboard.html';
+      } else if (registeredUser) {
+        var userType = normalizeUserType(registeredUser.userType, registeredUser.role);
+
+        if (userType === 'Super User' || userType === 'Team Synchrove') {
+          localStorage.removeItem('synchrove_client_authenticated');
+          localStorage.removeItem('synchrove_client_email');
+          localStorage.setItem('synchrove_admin_authenticated', 'true');
+          localStorage.setItem('synchrove_admin_email', email);
+          localStorage.setItem('synchrove_admin_profile', JSON.stringify({
+            name: registeredUser.name,
+            userType: userType,
+            role: registeredUser.role || getDisplayRole(userType),
+            email: email,
+            avatar: 'assets/logo-v2.png'
+          }));
+          window.location.href = 'admin.html';
+        } else {
+          localStorage.removeItem('synchrove_admin_authenticated');
+          localStorage.removeItem('synchrove_admin_email');
+          localStorage.setItem('synchrove_client_authenticated', 'true');
+          localStorage.setItem('synchrove_client_email', email);
+          localStorage.setItem('synchrove_client_profile', JSON.stringify({
+            name: registeredUser.name,
+            userType: userType,
+            role: registeredUser.role || getDisplayRole(userType),
+            project: "Interactive Tracking Workspace",
+            avatar: "assets/logo-small.png"
+          }));
+
+          window.location.href = 'dashboard.html';
+        }
+      } else {
+        var errorMsg = document.getElementById('login-error-msg');
+        if (errorMsg) {
+          errorMsg.style.display = 'block';
+          setTimeout(function() {
+            errorMsg.style.display = 'none';
+          }, 5000);
+        } else {
+          alert('Invalid credentials! Use client@example.com / password, or sign up for a new account.');
+        }
+      }
+    }
+
+    // Handle signup
+    function handleSignUp(e) {
+      e.preventDefault();
+      var name = document.getElementById('signup-name').value.trim();
+      var email = document.getElementById('signup-email').value.trim();
+      var password = document.getElementById('signup-password').value.trim();
+      var userType = document.getElementById('signup-user-type').value;
+
+      localStorage.setItem('synchrove_registered_user', JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+        userType: userType,
+        role: getDisplayRole(userType)
+      }));
+
+      alert('Registration successful! You can now log in with your credentials.');
+      toggleFormView('login');
+    }
+  </script>
+
+</body>
+
+</html>

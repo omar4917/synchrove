@@ -1,27 +1,490 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html><head>
-<title>404 Not Found</title>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Project Details - Synchrove</title>
+  <meta name="description" content="Detailed project breakdown and technical specifications.">
+  <link href="assets/favicon.ico" rel="icon">
+  <link href="https://fonts.googleapis.com/" rel="preconnect">
+  <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Poppins:wght@300;400;500;600;700;800&family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/synchrove-core.css" rel="stylesheet">
   <style id="fouc-fix">.fouc-hidden { display: none !important; }</style>
   <script>document.documentElement.classList.add("fouc-hidden");</script>
-</head><body class="theme-peacock">
+  <style>
+    .pd-hero{position:relative;height:340px;overflow:hidden;border-radius:0 0 24px 24px}
+    .pd-hero img{width:100%;height:100%;object-fit:cover;filter:brightness(.55)}
+    .pd-hero-overlay{position:absolute;bottom:0;left:0;right:0;padding:40px;background:linear-gradient(transparent,rgba(0,0,0,.7))}
+    .pd-hero-overlay h1{color:#fff;font-size:32px;font-weight:800;margin-bottom:6px}
+    .pd-hero-overlay .pd-meta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+    .pd-hero-overlay .pd-meta span{color:rgba(255,255,255,.85);font-size:13px;display:flex;align-items:center;gap:5px}
+    .pd-badge{background:var(--accent-color);color:var(--contrast-color);padding:5px 14px;border-radius:8px;font-size:12px;font-weight:700}
+    .pd-body{padding:40px 0}
+    .pd-section{background:var(--surface-color);border:1px solid color-mix(in srgb,var(--default-color) 8%,transparent);border-radius:16px;padding:28px;margin-bottom:24px}
+    .pd-section h3{font-size:17px;font-weight:700;color:var(--heading-color);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+    .pd-section h3 i{color:var(--accent-color);font-size:20px}
+    .pd-desc{font-size:14.5px;line-height:1.85;color:var(--default-color)}
+    .pd-features{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .pd-features li{font-size:13.5px;color:var(--default-color);padding:10px 14px;background:color-mix(in srgb,var(--background-color) 50%,transparent);border-radius:10px;display:flex;align-items:center;gap:8px}
+    .pd-features li i{color:var(--accent-color);font-size:15px}
+    .pd-tech-grid{display:flex;flex-wrap:wrap;gap:8px}
+    .pd-tech-chip{background:color-mix(in srgb,var(--accent-color) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent-color) 25%,transparent);color:var(--heading-color);padding:7px 16px;border-radius:10px;font-size:12.5px;font-weight:600}
+    .pd-info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
+    .pd-info-card{background:color-mix(in srgb,var(--background-color) 50%,transparent);border-radius:12px;padding:18px;text-align:center}
+    .pd-info-card .label{font-size:11px;text-transform:uppercase;letter-spacing:.6px;opacity:.6;font-weight:700;margin-bottom:4px}
+    .pd-info-card .value{font-size:15px;font-weight:700;color:var(--heading-color)}
+    .pd-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+    .pd-actions a{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:10px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s}
+    .pd-actions .btn-live{background:var(--accent-color);color:var(--contrast-color)}
+    .pd-actions .btn-live:hover{opacity:.85;transform:translateY(-2px)}
+    .pd-actions .btn-repo{background:color-mix(in srgb,var(--default-color) 10%,transparent);color:var(--heading-color);border:1px solid color-mix(in srgb,var(--default-color) 15%,transparent)}
+    .pd-actions .btn-repo:hover{border-color:var(--accent-color)}
+    .pd-back{display:inline-flex;align-items:center;gap:6px;color:var(--accent-color);font-weight:600;font-size:14px;text-decoration:none;margin-bottom:20px;transition:all .2s}
+    .pd-back:hover{gap:10px}
+    @media(max-width:768px){.pd-features{grid-template-columns:1fr}.pd-hero{height:240px}}
+  </style>
+</head>
+
+<body class="theme-peacock">
+<header id="header" class="header d-flex align-items-center light-background sticky-top">
+  <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
+    <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+      <img src="assets/logo-v2.png" alt="Synchrove Logo">
+    </a>
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="portfolio.html" class="active">Portfolio</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="portal.html">Portal</a></li>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+    <div class="header-social-links d-flex align-items-center gap-3">
+      <div class="theme-toggle" role="group">
+        <button type="button" class="theme-btn active" data-theme="peacock">Peacock-P</button>
+        <button type="button" class="theme-btn" data-theme="whale">Whale-W</button>
+        <button type="button" class="theme-btn" data-theme="d1">D1</button>
+        <button type="button" class="theme-btn" data-theme="d2">D2</button>
+        <button type="button" class="theme-btn" data-theme="sl1">SL1</button>
+      </div>
+      <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+      <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+      <a href="https://www.linkedin.com/in/omarkhayam4917/" class="linkedin"><i class="bi bi-linkedin"></i></a>
+    </div>
+  </div>
+</header>
   <script>
-    (function () {
-      try {
-        var storedTheme = localStorage.getItem('synch-theme');
-        if (storedTheme && storedTheme !== 'peacock') {
-          var targetClass = 'theme-' + storedTheme;
-          document.body.classList.remove('theme-peacock');
-          document.body.classList.add(targetClass);
-        }
-      } catch (error) {
-        /* Local storage unavailable; default theme remains */
-      }
-    })();
+    (function(){try{var s=localStorage.getItem('synch-theme');if(s&&s!=='peacock'){document.body.classList.remove('theme-peacock');document.body.classList.add('theme-'+s);}}catch(e){}})();
   </script>
 
-<h1>Not Found</h1>
-<p>The requested URL was not found on this server.</p>
-<p>Additionally, a 404 Not Found
-error was encountered while trying to use an ErrorDocument to handle the request.</p>
-</body></html>
+<main class="main">
+  <!-- Hero -->
+  <div class="pd-hero" id="pd-hero">
+    <img id="pd-hero-img" src="assets/img/masonry-portfolio/masonry-portfolio-1.jpg" alt="">
+    <div class="pd-hero-overlay">
+      <h1 id="pd-title">Project Title</h1>
+      <div class="pd-meta">
+        <span class="pd-badge" id="pd-category">Category</span>
+        <span><i class="bi bi-tag"></i> <em id="pd-type">Type</em></span>
+        <span><i class="bi bi-circle-fill" style="font-size:6px;color:#2ec4b6"></i> <em id="pd-status">Status</em></span>
+        <span><i class="bi bi-person"></i> <em id="pd-client">Client</em></span>
+        <span><i class="bi bi-calendar3"></i> <em id="pd-year">Year</em></span>
+      </div>
+    </div>
+  </div>
+
+  <section class="pd-body">
+    <div class="container">
+      <a href="portfolio.html" class="pd-back"><i class="bi bi-arrow-left"></i> Back to Portfolio</a>
+
+      <div class="row g-4">
+        <div class="col-lg-8 col-12">
+          <!-- Description -->
+          <div class="pd-section" data-aos="fade-up">
+            <h3><i class="bi bi-file-text"></i> Project Overview</h3>
+            <p class="pd-desc" id="pd-description">Loading project details...</p>
+          </div>
+
+          <!-- Project Assets Gallery (NEW!) -->
+          <div class="pd-section" data-aos="fade-up" data-aos-delay="50" id="pd-gallery-section" style="display:none;">
+            <h3><i class="bi bi-images"></i> Project Assets & Showcase</h3>
+            <div class="row g-3" id="pd-gallery-grid"></div>
+          </div>
+
+          <!-- Features -->
+          <div class="pd-section" data-aos="fade-up" data-aos-delay="100">
+            <h3><i class="bi bi-check2-square"></i> Key Features & Deliverables</h3>
+            <ul class="pd-features" id="pd-features"></ul>
+          </div>
+
+          <!-- Tech Stack -->
+          <div class="pd-section" data-aos="fade-up" data-aos-delay="200">
+            <h3><i class="bi bi-cpu"></i> Technology Stack</h3>
+            <div class="pd-tech-grid" id="pd-techstack"></div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-12">
+          <!-- Project Info -->
+          <div class="pd-section" data-aos="fade-up" data-aos-delay="100">
+            <h3><i class="bi bi-info-circle"></i> Project Information</h3>
+            <div class="pd-info-grid" id="pd-info-grid"></div>
+            <div class="pd-actions" id="pd-actions"></div>
+          </div>
+
+          <!-- Project Creator Profile Card (NEW!) -->
+          <div class="pd-section" data-aos="fade-up" data-aos-delay="150" id="pd-creator-section">
+            <h3><i class="bi bi-person-badge"></i> Project Creator</h3>
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <img id="pd-creator-avatar" src="assets/logo-v2.png" style="width:55px;height:55px;border-radius:50%;object-fit:cover;border:2px solid var(--accent-color);background:#0f131b;" alt="Creator">
+              <div>
+                <h5 id="pd-creator-name" style="margin:0;font-size:15px;font-weight:700;color:var(--heading-color);">Omar Khayam</h5>
+                <span id="pd-creator-role" style="font-size:12px;opacity:.7;" id="pd-creator-role-span">Principal Engineer & Director</span>
+              </div>
+            </div>
+            <div style="font-size:13px;opacity:.85;margin-bottom:12px;" id="pd-creator-email-box">
+              <i class="bi bi-envelope"></i> <span id="pd-creator-email">omar@synchrove.com</span>
+            </div>
+            <a id="pd-creator-mail-btn" href="mailto:omar@synchrove.com" class="btn btn-sm btn-outline-light w-100" style="border-radius:8px;font-size:12px;font-weight:600;border-color:color-mix(in srgb, var(--default-color) 20%, transparent);color:var(--default-color);">Message Creator</a>
+          </div>
+
+          <!-- Manual / Documentation -->
+          <div class="pd-section" data-aos="fade-up" data-aos-delay="200">
+            <h3><i class="bi bi-book"></i> Documentation & Manuals</h3>
+            <div style="font-size:13.5px;color:var(--default-color);line-height:1.7" id="pd-docs">
+              <p>Comprehensive documentation is provided with every project delivery. This includes:</p>
+              <ul style="padding-left:18px">
+                <li>Setup & Installation Guide</li>
+                <li>API Reference (if applicable)</li>
+                <li>User Manual & Walkthrough</li>
+                <li>Deployment Checklist</li>
+                <li>Maintenance & Update Procedures</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Lightbox Modal -->
+<div class="modal fade" id="imageLightboxModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0 bg-transparent">
+      <div class="modal-body p-0 text-center position-relative">
+        <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3 shadow-lg" data-bs-dismiss="modal" aria-label="Close" style="z-index:9999;"></button>
+        <img id="lightbox-image" src="" class="img-fluid rounded-4 shadow-lg" style="max-height: 85vh; object-fit: contain;">
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer id="footer" class="footer">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-7 col-md-12 footer-about">
+        <a href="index.html" class="logo d-flex align-items-center">
+          <img src="assets/logo-v2.png" alt="Synchrove" style="height:35px;margin-bottom:12px">
+        </a>
+        <p>Innovative software and digital solutions to empower your business</p>
+      </div>
+      <div class="col-lg-5 col-md-12 footer-contact">
+        <h4>Contact Information</h4>
+        <p data-info="address">A108 Awesome Street, New York, NY 535022</p>
+      </div>
+    </div>
+    <div class="footer-bottom-info text-center mt-4">
+      <div class="copyright"><p>&copy; Copyright <strong>Synchrove</strong> 2026. All Rights Reserved</p></div>
+      <div class="social-links d-flex justify-content-center mt-2">
+        <a href="#"><i class="bi bi-twitter-x"></i></a>
+        <a href="#"><i class="bi bi-facebook"></i></a>
+        <a href="#"><i class="bi bi-instagram"></i></a>
+        <a href="https://www.linkedin.com/in/omarkhayam4917/"><i class="bi bi-linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<div id="preloader"></div>
+
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="assets/js/main.js"></script>
+
+<script>
+/* ═══════════════════════════════════════════
+   PROJECT DETAILS RENDERER
+   ═══════════════════════════════════════════ */
+
+const SEED_PROJECTS = [
+  {
+    id:"saas-attendance",title:"SaaS Attendance & Payroll",category:"Website / App",type:"ERP",
+    techs:["Django","PostgreSQL","REST API","Android"],status:"Live",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-1.jpg",
+    summary:"Enterprise-grade attendance tracking with biometric integration, payroll processing, and multi-tenant SaaS architecture.",
+    client:"Globex Corp",year:"2026",
+    creator:"John Larson",creator_role:"CEO, Acme Corp",
+    creator_avatar:"assets/img/testimonials/testimonials-5.jpg",creator_email:"client@example.com",
+    details:{
+      description:"A comprehensive SaaS platform handling employee attendance through Android terminals with biometric verification, real-time dashboard analytics, and automated payroll calculations. Features multi-tenant architecture supporting unlimited organizations.",
+      features:["Biometric fingerprint integration","Real-time attendance dashboard","Automated payroll processing","Multi-tenant SaaS architecture","REST API for third-party integration","Role-based access control"],
+      techStack:["Django 5.0","PostgreSQL 16","Django REST Framework","Android (Kotlin)","Redis","Celery","Docker","Nginx"],
+      liveUrl:"#",repoUrl:"https://github.com/synchrove/attendance",duration:"4 months"
+    }
+  },
+  {
+    id:"lilus-kitchen",title:"Lilus Kitchen",category:"Website / App",type:"E-Commerce",
+    techs:["Laravel","PostgreSQL","Blade","Docker"],status:"Live",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-2.jpg",
+    summary:"Premium restaurant ordering platform with menu management, order tracking, and integrated payment processing.",
+    client:"Lilus Kitchen LLC",year:"2026",
+    creator:"Alice Smith",creator_role:"Client Partner",
+    creator_avatar:"assets/logo-small.png",creator_email:"alice@company.com",
+    details:{
+      description:"A beautifully designed restaurant web application featuring dynamic menu management with categorized dishes, real-time order tracking, customer reviews, and an admin panel for full operational control.",
+      features:["Dynamic menu with categories","Shopping cart & checkout","Order status tracking","Admin dashboard","Customer reviews","Responsive mobile-first design"],
+      techStack:["Laravel 11","PostgreSQL","Blade Templates","Docker","Render Cloud","Cloudflare DNS"],
+      liveUrl:"https://lilus.synchrove.com",repoUrl:"#",duration:"3 weeks"
+    }
+  },
+  {
+    id:"synchrove-hub",title:"Synchrove Agency Hub",category:"Website / App",type:"Portfolio",
+    techs:["HTML/CSS","JavaScript","Cloudflare Workers"],status:"Live",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-3.jpg",
+    summary:"Centralized agency discovery hub with subdomain routing, client portals, and dynamic project showcasing.",
+    client:"Synchrove (Internal)",year:"2026",
+    creator:"Omar Khayam",creator_role:"Principal Engineer & Director",
+    creator_avatar:"assets/logo-v2.png",creator_email:"omar@synchrove.com",
+    details:{
+      description:"The central nervous system of Synchrove's digital presence. Features wildcard subdomain routing via Cloudflare Workers, a unified portfolio discovery interface, client workspace portals, and real-time project status dashboards.",
+      features:["Wildcard subdomain gateway","Client workspace portals","Dynamic project filtering","Real-time status dashboards","Theme customization engine","Testimonial moderation system"],
+      techStack:["HTML5","CSS3","Vanilla JavaScript","Cloudflare Workers","Wrangler CLI","LocalStorage API"],
+      liveUrl:"https://synchrove.com",repoUrl:"#",duration:"Ongoing"
+    }
+  },
+  {
+    id:"hr-api-proxy",title:"HR API Integration Layer",category:"Website / App",type:"ERP",
+    techs:["Python","Django","REST API"],status:"Completed",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-4.jpg",
+    summary:"Middleware proxy server bridging Android terminals, Django backend, and Laravel dashboard for HR ecosystem.",
+    client:"Enterprise Client",year:"2026",
+    creator:"John Larson",creator_role:"CEO, Acme Corp",
+    creator_avatar:"assets/img/testimonials/testimonials-5.jpg",creator_email:"client@example.com",
+    details:{
+      description:"A sophisticated API middleware layer connecting three disparate systems: Android biometric terminals, a Django attendance backend, and a Laravel HR dashboard. Handles CORS, authentication relay, and data transformation.",
+      features:["Cross-origin request handling","Authentication token relay","Data format transformation","Error recovery & logging","Rate limiting","Health monitoring"],
+      techStack:["Python 3.12","Django REST Framework","Socket Programming","CORS Middleware"],
+      liveUrl:"#",repoUrl:"#",duration:"2 weeks"
+    }
+  },
+  {
+    id:"office-network",title:"Enterprise Network Infrastructure",category:"Networking",type:"LAN/WAN Setup",
+    techs:["Cisco","MikroTik","pfSense","VLAN"],status:"Completed",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-5.jpg",
+    summary:"Full-scale office network deployment with VLANs, firewall rules, VPN tunnels, and bandwidth management.",
+    client:"Corporate Office",year:"2025",
+    creator:"Omar Khayam",creator_role:"Principal Engineer & Director",
+    creator_avatar:"assets/logo-v2.png",creator_email:"omar@synchrove.com",
+    details:{
+      description:"Designed and deployed a complete enterprise network infrastructure serving 200+ endpoints across 4 floors. Implemented VLAN segmentation, redundant gateway failover, site-to-site VPN, and granular firewall policies.",
+      features:["VLAN segmentation (8 subnets)","Redundant gateway failover","Site-to-site VPN tunnels","Bandwidth management & QoS","Network monitoring (SNMP)","Centralized authentication (RADIUS)"],
+      techStack:["Cisco Catalyst Switches","MikroTik RouterOS","pfSense Firewall","Ubiquiti UniFi APs","Zabbix Monitoring","FreeRADIUS"],
+      liveUrl:"#",repoUrl:"#",duration:"6 weeks"
+    }
+  },
+  {
+    id:"server-rack",title:"Data Center Rack Build",category:"Networking",type:"Server Administration",
+    techs:["Proxmox","Docker","Ubuntu Server","Cloudflare"],status:"Live",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-6.jpg",
+    summary:"Virtualized server infrastructure on Oracle Cloud ARM with Docker orchestration and Cloudflare tunnels.",
+    client:"Synchrove (Internal)",year:"2026",
+    creator:"Omar Khayam",creator_role:"Principal Engineer & Director",
+    creator_avatar:"assets/logo-v2.png",creator_email:"omar@synchrove.com",
+    details:{
+      description:"Architected a cost-effective cloud infrastructure on Oracle Cloud Always Free ARM instances. Running multiple containerized applications with automated deployments, SSL termination, and monitoring.",
+      features:["Proxmox virtualization","Docker Compose orchestration","Automated SSL via Cloudflare","Resource monitoring dashboards","Automated backup pipelines","Zero-downtime deployments"],
+      techStack:["Oracle Cloud ARM","Proxmox VE","Docker","Coolify","Ubuntu Server 24.04","Cloudflare Tunnels","Nginx Proxy Manager"],
+      liveUrl:"#",repoUrl:"#",duration:"Ongoing"
+    }
+  },
+  {
+    id:"brand-video",title:"Synchrove Brand Showcase",category:"Video Production",type:"Brand Video",
+    techs:["After Effects","Premiere Pro","DaVinci Resolve"],status:"Completed",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-7.jpg",
+    summary:"Cinematic brand introduction video with motion graphics, 3D text reveals, and synchronized audio design.",
+    client:"Synchrove (Internal)",year:"2026",
+    creator:"Omar Khayam",creator_role:"Principal Engineer & Director",
+    creator_avatar:"assets/logo-v2.png",creator_email:"omar@synchrove.com",
+    details:{
+      description:"A high-impact 60-second brand video featuring kinetic typography, particle systems, smooth camera transitions, and a custom soundtrack. Designed to establish Synchrove's premium identity across digital platforms.",
+      features:["Kinetic typography animations","Particle system effects","Custom audio soundtrack","4K resolution output","Social media variants (16:9, 9:16, 1:1)","Color-graded cinematic look"],
+      techStack:["Adobe After Effects","Adobe Premiere Pro","DaVinci Resolve","Adobe Audition","Trapcode Suite"],
+      liveUrl:"#",repoUrl:"#",duration:"1 week"
+    }
+  },
+  {
+    id:"product-shoot",title:"E-Commerce Product Photography",category:"Image / Graphics",type:"Product Photography",
+    techs:["Lightroom","Photoshop","Studio Lighting"],status:"Completed",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-8.jpg",
+    summary:"Professional product photography suite with retouching, background removal, and e-commerce optimization.",
+    client:"Retail Client",year:"2025",
+    creator:"Alice Smith",creator_role:"Client Partner",
+    creator_avatar:"assets/logo-small.png",creator_email:"alice@company.com",
+    details:{
+      description:"End-to-end product photography service including studio setup, shooting, post-processing, and delivery of web-optimized images for an e-commerce catalog of 150+ products.",
+      features:["Studio lighting setup","Color-accurate white balance","Background removal & compositing","Batch processing pipeline","Web-optimized exports","Consistent brand styling"],
+      techStack:["Adobe Lightroom Classic","Adobe Photoshop","Capture One Pro","Studio Strobes","Light Tent Setup"],
+      liveUrl:"#",repoUrl:"#",duration:"2 weeks"
+    }
+  },
+  {
+    id:"seo-campaign",title:"SEO & Growth Campaign",category:"Digital Marketing",type:"SEO",
+    techs:["Google Analytics","SEMrush","Ahrefs","WordPress"],status:"Live",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-9.jpg",
+    summary:"Full-spectrum SEO campaign achieving 340% organic traffic growth through technical audits and content strategy.",
+    client:"SaaS Startup",year:"2026",
+    creator:"Alice Smith",creator_role:"Client Partner",
+    creator_avatar:"assets/logo-small.png",creator_email:"alice@company.com",
+    details:{
+      description:"Comprehensive SEO overhaul including technical site audit, keyword research, content strategy, on-page optimization, and link building. Resulted in 340% organic traffic increase and first-page rankings for 25+ target keywords.",
+      features:["Technical SEO audit & fixes","Keyword research & mapping","Content calendar & production","On-page optimization","Link building outreach","Monthly performance reporting"],
+      techStack:["Google Analytics 4","Google Search Console","SEMrush","Ahrefs","Screaming Frog","WordPress","Yoast SEO"],
+      liveUrl:"#",repoUrl:"#",duration:"6 months (ongoing)"
+    }
+  }
+];
+
+if(!localStorage.getItem("synchrove_portfolio_projects")){
+  localStorage.setItem("synchrove_portfolio_projects", JSON.stringify(SEED_PROJECTS));
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+  let PROJECTS = [];
+  try {
+    PROJECTS = JSON.parse(localStorage.getItem("synchrove_portfolio_projects")) || SEED_PROJECTS;
+  } catch(e) {
+    PROJECTS = SEED_PROJECTS;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const projectId = params.get("id");
+  const project = PROJECTS.find(p => p.id === projectId);
+
+  if(!project){
+    document.querySelector(".pd-body .container").innerHTML = '<div style="text-align:center;padding:80px 20px"><h2>Project Not Found</h2><p>The requested project could not be located.</p><a href="portfolio.html" class="pd-back" style="display:inline-flex"><i class="bi bi-arrow-left"></i> Back to Portfolio</a></div>';
+    return;
+  }
+
+  document.title = project.title + " - Synchrove Portfolio";
+  document.getElementById("pd-hero-img").src = project.image || 'assets/img/masonry-portfolio/masonry-portfolio-1.jpg';
+  document.getElementById("pd-title").textContent = project.title;
+  document.getElementById("pd-category").textContent = project.category;
+  document.getElementById("pd-type").textContent = project.type;
+  document.getElementById("pd-status").textContent = project.status;
+  document.getElementById("pd-client").textContent = project.client || 'N/A';
+  document.getElementById("pd-year").textContent = project.year || '2026';
+  document.getElementById("pd-description").textContent = project.details.description;
+
+  // Render Creator Info
+  document.getElementById("pd-creator-name").textContent = project.creator || 'Omar Khayam';
+  document.getElementById("pd-creator-avatar").src = project.creator_avatar || 'assets/logo-v2.png';
+  document.getElementById("pd-creator-role").textContent = project.creator_role || 'Principal Engineer & Director';
+  document.getElementById("pd-creator-email").textContent = project.creator_email || 'omar@synchrove.com';
+  document.getElementById("pd-creator-mail-btn").href = "mailto:" + (project.creator_email || 'omar@synchrove.com');
+
+  // Render Project Media Assets (Images/Videos)
+  const gallerySection = document.getElementById("pd-gallery-section");
+  const galleryGrid = document.getElementById("pd-gallery-grid");
+  if(project.media && project.media.length > 0){
+    gallerySection.style.display = "block";
+    galleryGrid.innerHTML = project.media.map((item, index) => {
+      if(item.type === "video"){
+        return `
+          <div class="col-md-6 col-12">
+            <div class="card border-0 rounded-4 overflow-hidden shadow-sm" style="background:color-mix(in srgb, var(--default-color) 4%, transparent);">
+              <video src="${item.url}" controls class="w-100" style="max-height:220px;object-fit:cover;"></video>
+              <div class="p-3 text-center small opacity-75">${item.caption || 'Project Showcase Video'}</div>
+            </div>
+          </div>
+        `;
+      } else {
+        return `
+          <div class="col-md-6 col-12">
+            <div class="card border-0 rounded-4 overflow-hidden shadow-sm" style="background:color-mix(in srgb, var(--default-color) 4%, transparent);cursor:pointer;" onclick="viewFullImage('${item.url}')">
+              <img src="${item.url}" class="w-100" style="height:180px;object-fit:cover;transition:all 0.3s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1.00)'">
+              <div class="p-3 text-center small opacity-75">${item.caption || 'Project Showcase Image'}</div>
+            </div>
+          </div>
+        `;
+      }
+    }).join("");
+  } else {
+    // If no custom uploaded media, show main project cover image as default asset
+    gallerySection.style.display = "block";
+    galleryGrid.innerHTML = `
+      <div class="col-md-6 col-12">
+        <div class="card border-0 rounded-4 overflow-hidden shadow-sm" style="background:color-mix(in srgb, var(--default-color) 4%, transparent);cursor:pointer;" onclick="viewFullImage('${project.image || 'assets/img/masonry-portfolio/masonry-portfolio-1.jpg'}')">
+          <img src="${project.image || 'assets/img/masonry-portfolio/masonry-portfolio-1.jpg'}" class="w-100" style="height:180px;object-fit:cover;">
+          <div class="p-3 text-center small opacity-75">Project Cover Image</div>
+        </div>
+      </div>
+    `;
+  }
+
+  const featuresEl = document.getElementById("pd-features");
+  featuresEl.innerHTML = (project.details.features || []).map(f => `<li><i class="bi bi-check-circle-fill"></i> ${f}</li>`).join("");
+
+  const techEl = document.getElementById("pd-techstack");
+  techEl.innerHTML = (project.details.techStack || []).map(t => `<span class="pd-tech-chip">${t}</span>`).join("");
+
+  const infoGrid = document.getElementById("pd-info-grid");
+  infoGrid.innerHTML = `
+    <div class="pd-info-card"><div class="label">Client</div><div class="value">${project.client || 'N/A'}</div></div>
+    <div class="pd-info-card"><div class="label">Category</div><div class="value">${project.category}</div></div>
+    <div class="pd-info-card"><div class="label">Type</div><div class="value">${project.type}</div></div>
+    <div class="pd-info-card"><div class="label">Status</div><div class="value">${project.status}</div></div>
+    <div class="pd-info-card"><div class="label">Duration</div><div class="value">${project.details.duration || 'N/A'}</div></div>
+    <div class="pd-info-card"><div class="label">Year</div><div class="value">${project.year || '2026'}</div></div>
+  `;
+
+  const actionsEl = document.getElementById("pd-actions");
+  let actionsHtml = "";
+  if(project.details.liveUrl && project.details.liveUrl !== "#"){
+    actionsHtml += `<a href="${project.details.liveUrl}" target="_blank" class="btn-live"><i class="bi bi-globe2"></i> View Live</a>`;
+  }
+  if(project.details.repoUrl && project.details.repoUrl !== "#"){
+    actionsHtml += `<a href="${project.details.repoUrl}" target="_blank" class="btn-repo"><i class="bi bi-github"></i> Source Code</a>`;
+  }
+  actionsHtml += `<a href="contact.html" class="btn-repo"><i class="bi bi-chat-dots"></i> Inquire</a>`;
+  actionsEl.innerHTML = actionsHtml;
+});
+
+function viewFullImage(url){
+  document.getElementById("lightbox-image").src = url;
+  const myModal = new bootstrap.Modal(document.getElementById('imageLightboxModal'));
+  myModal.show();
+}
+</script>
+</body>
+</html>
+</script>
+</body>
+</html>

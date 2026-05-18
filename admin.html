@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Admin Console - Synchrove</title>
+  <meta name="description" content="Synchrove Principal Director Console. Manage project progress trackers, milestones routing, discussion rooms, and invoice statements.">
+  <meta name="keywords" content="">
+  <meta property="og:site_name" content="Synchrove">
+
+  <!-- Favicons -->
+  <link href="assets/favicon.ico" rel="icon">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/" rel="preconnect">
+  <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/synchrove-core.css" rel="stylesheet">
+
+  <style>
+    /* Premium Admin Section Styles */
+    .admin-section {
+      padding: 60px 0 80px;
+      background: var(--background-color);
+      color: var(--default-color);
+      min-height: calc(100vh - 250px);
+    }
+
+    /* Client profile welcome bar */
+    .dash-welcome-bar {
+      background: var(--surface-color);
+      border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      border-radius: 20px;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .user-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-color);
+      object-fit: cover;
+    }
+
+    .user-name {
+      font-weight: 700;
+      color: var(--heading-color);
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .user-role {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    .btn-logout {
+      background: color-mix(in srgb, var(--default-color) 8%, transparent);
+      color: var(--default-color) !important;
+      border: 1px solid color-mix(in srgb, var(--default-color) 12%, transparent);
+      border-radius: 10px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-logout:hover {
+      background: color-mix(in srgb, var(--accent-color) 20%, transparent);
+      border-color: var(--accent-color);
+      color: var(--accent-color) !important;
+    }
+
+    /* Sub-navigation Tabs */
+    .dash-sub-nav {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 30px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+    }
+
+    .sub-nav-tab {
+      background: var(--surface-color);
+      color: var(--default-color);
+      border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      border-radius: 14px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .sub-nav-tab:hover {
+      background: color-mix(in srgb, var(--default-color) 4%, transparent);
+      border-color: color-mix(in srgb, var(--default-color) 15%, transparent);
+    }
+
+    .sub-nav-tab.active {
+      background: var(--accent-color);
+      color: var(--contrast-color, #ffffff) !important;
+      border-color: var(--accent-color);
+      box-shadow: 0 8px 20px color-mix(in srgb, var(--accent-color) 30%, transparent);
+    }
+
+    .sub-nav-tab i {
+      font-size: 16px;
+    }
+
+    /* Tab content views */
+    .dash-tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .dash-tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Standardized Card Container Boxes */
+    .section-box {
+      background: var(--surface-color);
+      border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      border-radius: 24px;
+      padding: 35px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    .box-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--heading-color);
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .box-title i {
+      color: var(--accent-color);
+    }
+
+    /* Client Workspace Cards */
+    .workspace-card {
+      background: color-mix(in srgb, var(--background-color) 40%, transparent);
+      border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      border-radius: 16px;
+      padding: 20px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .workspace-card:hover, .workspace-card.active {
+      background: color-mix(in srgb, var(--accent-color) 5%, transparent);
+      border-color: var(--accent-color);
+      transform: translateY(-2px);
+    }
+
+    .workspace-card.active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 20px;
+      bottom: 20px;
+      width: 4px;
+      background: var(--accent-color);
+      border-radius: 0 4px 4px 0;
+    }
+
+    .workspace-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .workspace-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--heading-color);
+    }
+
+    .workspace-desc {
+      font-size: 11px;
+      opacity: 0.7;
+    }
+
+    /* Timeline circle preview */
+    .timeline-circle-box {
+      width: 45px;
+      height: 45px;
+      position: relative;
+    }
+
+    .timeline-circle-pct {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--heading-color);
+    }
+
+    /* PM Chat Box Hub */
+    .chat-box {
+      height: 350px;
+      background: color-mix(in srgb, var(--background-color) 50%, transparent);
+      border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background: color-mix(in srgb, var(--default-color) 5%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chat-status-dot {
+      width: 6px;
+      height: 6px;
+      background: #2ec4b6;
+      border-radius: 50%;
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .chat-msg {
+      max-width: 75%;
+      padding: 10px 15px;
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .chat-msg.pm {
+      align-self: flex-end;
+      background: var(--accent-color);
+      color: var(--contrast-color, #ffffff);
+      border-top-right-radius: 0;
+    }
+
+    .chat-msg.client {
+      align-self: flex-start;
+      background: var(--surface-color);
+      border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      color: var(--heading-color);
+      border-top-left-radius: 0;
+    }
+
+    .chat-footer {
+      padding: 12px 15px;
+      border-top: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      display: flex;
+      gap: 10px;
+      background: var(--surface-color);
+    }
+
+    .chat-input {
+      flex: 1;
+      background: color-mix(in srgb, var(--background-color) 60%, transparent);
+      border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      border-radius: 10px;
+      padding: 10px 15px;
+      color: var(--heading-color);
+      outline: none;
+      font-size: 13px;
+    }
+
+    .chat-input:focus {
+      border-color: var(--accent-color);
+    }
+
+    .btn-chat-send {
+      background: var(--accent-color);
+      border: none;
+      color: var(--contrast-color, #ffffff);
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-chat-send:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: color-mix(in srgb, var(--accent-color) 10%, transparent);
+      color: var(--accent-color);
+      font-weight: 700;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 8px;
+    }
+  </style>
+
+  <style id="fouc-fix">.fouc-hidden { display: none !important; }</style>
+  <script>document.documentElement.classList.add("fouc-hidden");</script>
+</head>
+
+<body class="theme-peacock dashboard-page">
+<header id="header" class="header d-flex align-items-center light-background sticky-top">
+  <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
+
+    <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+      <img src="assets/logo-v2.png" alt="Synchrove Logo">
+    </a>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="index.html" class="">Home</a></li>
+        <li><a href="about.html" class="">About</a></li>
+        <li><a href="resume.html" class="">Resume</a></li>
+        <li><a href="services.html" class="">Services</a></li>
+        <li><a href="portfolio.html" class="">Portfolio</a></li>
+        <li><a href="contact.html" class="">Contact</a></li>
+        <li><a href="admin.html" class="active">Admin Console</a></li>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+
+    <div class="header-social-links d-flex align-items-center gap-3">
+      <div class="theme-toggle" role="group" aria-label="Color theme toggle">
+        <button type="button" class="theme-btn active" data-theme="peacock" aria-pressed="true">Peacock-P</button>
+        <button type="button" class="theme-btn" data-theme="whale" aria-pressed="false">Whale-W</button>
+        <button type="button" class="theme-btn" data-theme="d1" aria-pressed="false">D1</button>
+        <button type="button" class="theme-btn" data-theme="d2" aria-pressed="false">D2</button>
+        <button type="button" class="theme-btn" data-theme="sl1" aria-pressed="false">SL1</button>
+      </div>
+      <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+      <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+      <a href="https://www.linkedin.com/in/omarkhayam4917/" class="linkedin"><i class="bi bi-linkedin"></i></a>
+    </div>
+</div>
+</header>
+  <script>
+    (function () {
+      try {
+        var storedTheme = localStorage.getItem('synch-theme');
+        if (storedTheme && storedTheme !== 'peacock') {
+          var targetClass = 'theme-' + storedTheme;
+          document.body.classList.remove('theme-peacock');
+          document.body.classList.add(targetClass);
+        }
+      } catch (error) {
+        /* Local storage unavailable; default theme remains */
+      }
+    })();
+  </script>
+
+  <main class="main">
+    <section class="admin-section">
+      <div class="container">
+
+        <!-- Welcome Banner Bar -->
+        <div class="dash-welcome-bar">
+          <div class="user-profile">
+            <img src="assets/logo-v2.png" id="admin-header-avatar" class="user-avatar" style="background: #0f131b; object-fit: cover;" alt="Avatar">
+            <div>
+              <div class="user-name" id="admin-header-name">Omar Khayam</div>
+              <div class="user-role" id="admin-header-role">Super User | Principal Engineer &amp; Director (Administrator)</div>
+            </div>
+          </div>
+          <div>
+            <button class="btn-logout" onclick="handleLogout()">Logout</button>
+          </div>
+        </div>
+
+        <!-- Sub-navigation Tabs -->
+        <div class="dash-sub-nav">
+          <button type="button" class="sub-nav-tab active" onclick="switchAdminTab('workspaces')">
+            <i class="bi bi-folder2-open"></i>
+            <span>Client Workspaces</span>
+          </button>
+          <button type="button" class="sub-nav-tab" onclick="switchAdminTab('invoices')">
+            <i class="bi bi-receipt-cutoff"></i>
+            <span>Invoice Statements</span>
+          </button>
+          <button type="button" class="sub-nav-tab" onclick="switchAdminTab('testimonials')">
+            <i class="bi bi-star"></i>
+            <span>Moderate Testimonials</span>
+          </button>
+          <button type="button" class="sub-nav-tab" onclick="switchAdminTab('profile')">
+            <i class="bi bi-person-gear"></i>
+            <span>Admin Profile</span>
+          </button>
+          <button type="button" class="sub-nav-tab" onclick="switchAdminTab('projects')">
+            <i class="bi bi-folder-symlink"></i>
+            <span>Manage Projects</span>
+          </button>
+        </div>
+
+        <!-- TAB VIEW: WORKSPACES MANAGER -->
+        <div id="admin-tab-workspaces" class="dash-tab-content active">
+          <div class="row g-4 mb-4">
+            
+            <!-- Left Side: Workspaces list -->
+            <div class="col-lg-4 col-12">
+              <div class="section-box h-100 mb-0 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="box-title">
+                    <i class="bi bi-people"></i>
+                    <span>Active Workspaces</span>
+                  </div>
+                  
+                  <div id="workspaces-list" class="d-flex flex-column gap-3">
+                    <!-- Loaded dynamically -->
+                  </div>
+                </div>
+
+                <div class="mt-4">
+                  <button type="button" class="btn btn-portal w-100" onclick="showNewWorkspaceCard()">
+                    <span>Create New Workspace</span>
+                    <i class="bi bi-plus-circle"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Side: Workspace Details & Editor -->
+            <div class="col-lg-8 col-12">
+              
+              <!-- Form to Create New Workspace (Initially hidden) -->
+              <div id="new-workspace-card" class="section-box mb-4" style="display: none;">
+                <div class="box-title">
+                  <i class="bi bi-folder-plus"></i>
+                  <span>Launch New Client Workspace</span>
+                </div>
+
+                <form id="new-workspace-form" onsubmit="createNewWorkspace(event)">
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Client Full Name</label>
+                      <input type="text" id="new-client-name" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required placeholder="e.g. John Larson">
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Client Email Address</label>
+                      <input type="email" id="new-client-email" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required placeholder="e.g. client@example.com">
+                    </div>
+                  </div>
+
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-4 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">User Type</label>
+                      <select id="new-client-user-type" class="form-select" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required>
+                        <option value="Clients">Clients</option>
+                        <option value="Team Synchrove">Team Synchrove (Creators)</option>
+                        <option value="Super User">Super User</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Professional Role / Company</label>
+                      <input type="text" id="new-client-role" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required placeholder="e.g. CEO, Acme Corp">
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Project Scope Title</label>
+                      <input type="text" id="new-client-project" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required placeholder="e.g. Digital Platform Redesign">
+                    </div>
+                  </div>
+
+                  <div class="d-flex gap-2 justify-content-end mt-4">
+                    <button type="button" class="btn btn-outline-light" onclick="hideNewWorkspaceCard()" style="border-radius: 8px;">Cancel</button>
+                    <button type="submit" class="btn btn-portal" style="border-radius: 8px;">Create Workspace</button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- Main Workspace Editor Panel -->
+              <div id="workspace-editor-panel" class="section-box h-100 mb-0">
+                <div class="box-title">
+                  <i class="bi bi-pencil-square"></i>
+                  <span>Edit Client Workspace Trackers</span>
+                </div>
+
+                <div id="editor-success-msg" style="display: none; background: rgba(46, 196, 182, 0.08); border: 1px solid rgba(46, 196, 182, 0.25); border-radius: 12px; padding: 14px; margin-bottom: 20px; color: #2ec4b6; font-size: 13px; font-weight: 600;">
+                  ✅ Client progress successfully compiled and updated in real-time!
+                </div>
+
+                <form id="workspace-edit-form" onsubmit="saveActiveWorkspaceUpdates(event)">
+                  
+                  <div class="row g-4 mb-4">
+                    <!-- Progress Slider -->
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-2 d-flex justify-content-between" style="color: var(--heading-color);">
+                        <span>Project Progress Tracker</span>
+                        <strong id="progress-val-label" class="text-info">78%</strong>
+                      </label>
+                      <input type="range" class="form-range" min="0" max="100" id="edit-progress" oninput="document.getElementById('progress-val-label').innerText = this.value + '%'" style="cursor: pointer;">
+                    </div>
+                    
+                    <!-- Active Phase -->
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-2" style="color: var(--heading-color);">Active Staging Phase</label>
+                      <select id="edit-phase" class="form-select" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);">
+                        <option value="Discovery">Discovery &amp; Scope</option>
+                        <option value="UI/UX Design">UI/UX Design</option>
+                        <option value="Development">Core Development</option>
+                        <option value="Review &amp; QA">Review &amp; QA</option>
+                        <option value="Deploy &amp; Launch">Deploy &amp; Launch</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row g-4 mb-4">
+                    <!-- Next Milestone Title -->
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-2" style="color: var(--heading-color);">Next Scheduled Milestone</label>
+                      <input type="text" id="edit-milestone" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required>
+                    </div>
+
+                    <!-- Milestone target date -->
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-2" style="color: var(--heading-color);">Target Target Date</label>
+                      <input type="text" id="edit-target-date" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required>
+                    </div>
+                  </div>
+
+                  <!-- Deliverables Links -->
+                  <div class="mb-4">
+                    <strong class="small d-block mb-3" style="color: var(--heading-color);">Project Deliverables URLs</strong>
+                    <div class="row g-3">
+                      <div class="col-md-6 col-12">
+                        <label class="small mb-1" style="font-size: 12px;">UI/UX Figma Drafts URL</label>
+                        <input type="text" id="edit-figma" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);">
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <label class="small mb-1" style="font-size: 12px;">GitHub Core Repository URL</label>
+                        <input type="text" id="edit-git" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);">
+                      </div>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-portal w-100 mb-4" style="padding: 12px 25px; border-radius: 12px;">
+                    <span>Compile &amp; Save Changes</span>
+                    <i class="bi bi-save-fill"></i>
+                  </button>
+                </form>
+
+                <!-- Discussion Room split inside editor -->
+                <div class="border-top pt-4 mt-2">
+                  <div class="box-title" style="font-size: 16px; margin-bottom: 15px;">
+                    <i class="bi bi-chat-left-dots"></i>
+                    <span>Discussion Room with Client</span>
+                  </div>
+
+                  <div class="chat-box">
+                    <div class="chat-header">
+                      <div class="chat-status-dot"></div>
+                      <div class="small font-weight-bold" id="chat-header-client-name" style="color: var(--heading-color);">Client Chatroom</div>
+                    </div>
+                    <div class="chat-body" id="admin-chat-scroller">
+                      <!-- Chat body filled dynamically -->
+                    </div>
+                    <div class="chat-footer">
+                      <input type="text" id="admin-chat-message-input" class="chat-input" placeholder="Type a response to client..." onkeydown="handleAdminChatSubmit(event)">
+                      <button class="btn-chat-send" onclick="sendAdminChatMessage()">
+                        <i class="bi bi-send-fill"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- TAB VIEW: INVOICES MANAGER -->
+        <div id="admin-tab-invoices" class="dash-tab-content">
+          <div class="row g-4 mb-4">
+            
+            <!-- Left Side: Invoice Form -->
+            <div class="col-lg-5 col-12">
+              <div class="section-box h-100 mb-0">
+                <div class="box-title">
+                  <i class="bi bi-file-earmark-plus"></i>
+                  <span>Generate Project Invoice</span>
+                </div>
+
+                <form onsubmit="generateInvoice(event)">
+                  <div class="mb-3">
+                    <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Select Client Account</label>
+                    <select id="invoice-client-select" class="form-select" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required>
+                      <!-- Loaded dynamically -->
+                    </select>
+                  </div>
+
+                  <div class="row g-3 mb-3">
+                    <div class="col-6">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Invoice ID</label>
+                      <input type="text" id="invoice-id" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required placeholder="INV-2026-000">
+                    </div>
+                    <div class="col-6">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Amount ($)</label>
+                      <input type="text" id="invoice-amount" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required placeholder="1500.00">
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Description</label>
+                    <input type="text" id="invoice-desc" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required placeholder="e.g. 50% Milestone - Core Dev Finished">
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Payment Status</label>
+                    <select id="invoice-status" class="form-select" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required>
+                      <option value="Paid">Paid</option>
+                      <option value="Unpaid">Unpaid</option>
+                    </select>
+                  </div>
+
+                  <button type="submit" class="btn btn-portal w-100" style="border-radius: 12px; padding: 10px; margin-top: 15px;">Generate &amp; Issue Statement</button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Right Side: Invoice Statement list table -->
+            <div class="col-lg-7 col-12">
+              <div class="section-box h-100 mb-0">
+                <div class="box-title">
+                  <i class="bi bi-file-earmark-spreadsheet"></i>
+                  <span>Global Invoice Statements Ledger</span>
+                </div>
+
+                <div class="table-responsive" style="border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent); border-radius: 16px; overflow: hidden;">
+                  <table class="table mb-0" style="color: var(--default-color); background: transparent; vertical-align: middle;">
+                    <thead>
+                      <tr style="background: color-mix(in srgb, var(--default-color) 5%, transparent); border-bottom: 2px solid color-mix(in srgb, var(--default-color) 8%, transparent); font-size: 13px; font-weight: 700; text-transform: uppercase;">
+                        <th scope="col" style="padding: 15px;">Invoice ID</th>
+                        <th scope="col" style="padding: 15px;">Client Account</th>
+                        <th scope="col" style="padding: 15px;">Amount</th>
+                        <th scope="col" style="padding: 15px;">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody style="font-size: 13px;" id="admin-invoices-ledger">
+                      <!-- Loaded dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- TAB VIEW: MODERATE TESTIMONIALS -->
+        <div id="admin-tab-testimonials" class="dash-tab-content">
+          <div class="section-box mb-0">
+            <div class="box-title">
+              <i class="bi bi-stars"></i>
+              <span>Public Client Reviews Testimonials Queue</span>
+            </div>
+            
+            <p class="small opacity-75">When clients submit reviews from their dashboard, they appear in this queue. Approved reviews are dynamically published in real-time onto the agency's primary public About page carousel!</p>
+
+            <div class="table-responsive" style="border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent); border-radius: 16px; overflow: hidden; margin-top: 20px;">
+              <table class="table mb-0" style="color: var(--default-color); background: transparent; vertical-align: middle;">
+                <thead>
+                  <tr style="background: color-mix(in srgb, var(--default-color) 5%, transparent); border-bottom: 2px solid color-mix(in srgb, var(--default-color) 8%, transparent); font-size: 13px; font-weight: 700; text-transform: uppercase;">
+                    <th scope="col" style="padding: 15px;">Client Info</th>
+                    <th scope="col" style="padding: 15px;">Rating</th>
+                    <th scope="col" style="padding: 15px;">Commentary</th>
+                    <th scope="col" style="padding: 15px; text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody style="font-size: 13px;" id="admin-testimonials-queue">
+                  <!-- Loaded dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB VIEW: ADMIN PROFILE -->
+        <div id="admin-tab-profile" class="dash-tab-content">
+          <div class="section-box mb-0">
+            <div class="box-title">
+              <i class="bi bi-person-badge"></i>
+              <span>Administrator Security Profile</span>
+            </div>
+            
+            <p class="small opacity-75">Modify your administrator public details and upload a high-resolution profile photo dynamically using secure offline storage.</p>
+
+            <div id="admin-profile-success-msg" style="display: none; background: rgba(46, 196, 182, 0.08); border: 1px solid rgba(46, 196, 182, 0.25); border-radius: 12px; padding: 14px; margin-bottom: 20px; color: #2ec4b6; font-size: 13px; font-weight: 600;">
+              ✅ Administrator profile successfully saved! All admin headers updated instantly.
+            </div>
+
+            <form id="admin-profile-form" onsubmit="saveAdminProfile(event)">
+              <div class="row g-4 mb-4 align-items-center">
+                <!-- Avatar Preview and Upload -->
+                <div class="col-md-3 col-12 text-center border-end border-opacity-10 py-3">
+                  <div class="position-relative d-inline-block">
+                    <img id="admin-profile-avatar-preview" src="assets/logo-small.png" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent-color); background: #0f131b; box-shadow: 0 8px 25px rgba(0,0,0,0.35);" alt="Preview">
+                    <label for="admin-avatar-file" class="position-absolute bottom-0 end-0 bg-info text-dark rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; cursor: pointer; border: 2px solid var(--background-color);">
+                      <i class="bi bi-camera-fill" style="font-size: 14px;"></i>
+                    </label>
+                    <input type="file" id="admin-avatar-file" accept="image/*" onchange="handleAdminAvatarUpload(event)" style="display: none;">
+                  </div>
+                  <div class="small opacity-50 mt-2">Click camera to upload avatar</div>
+                </div>
+
+                <!-- Input Fields -->
+                <div class="col-md-9 col-12">
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Full Name</label>
+                      <input type="text" id="admin-edit-name" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required>
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">User Type</label>
+                      <select id="admin-edit-user-type" class="form-select" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required>
+                        <option value="Super User">Super User</option>
+                        <option value="Team Synchrove">Team Synchrove (Creators)</option>
+                        <option value="Clients">Clients</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row g-3 mb-3">
+                    <div class="col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Professional Role / Title</label>
+                      <input type="text" id="admin-edit-role" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required>
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Administrator Email Address</label>
+                    <input type="email" id="admin-edit-email" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required readonly style="opacity: 0.85;">
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-portal w-100" style="padding: 12px 25px; border-radius: 12px;">
+                <span>Save Admin Profile Changes</span>
+                <i class="bi bi-check-circle-fill"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- TAB VIEW: PROJECTS MANAGER -->
+        <div id="admin-tab-projects" class="dash-tab-content">
+          <div class="row g-4 mb-4">
+            
+            <!-- Left Side: Portfolio projects list -->
+            <div class="col-lg-4 col-12">
+              <div class="section-box h-100 mb-0 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="box-title">
+                    <i class="bi bi-folder2-open"></i>
+                    <span>Portfolio Projects</span>
+                  </div>
+                  <p class="small opacity-75">Select a project below to edit its specifications or assign its creator.</p>
+                  
+                  <!-- Projects dynamic listing -->
+                  <div id="admin-projects-list-container" class="mt-3" style="max-height: 520px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 5px;">
+                    <!-- Dynamically populated via JS -->
+                  </div>
+                </div>
+                
+                <button onclick="resetProjectForm()" class="btn btn-portal w-100 mt-3" style="padding:10px; border-radius:10px; font-size:13px;">
+                  <i class="bi bi-plus-circle"></i> Create New Project
+                </button>
+              </div>
+            </div>
+
+            <!-- Right Side: Project Creator/Editor Form -->
+            <div class="col-lg-8 col-12">
+              <div class="section-box mb-0">
+                <div class="box-title">
+                  <i class="bi bi-pencil-square"></i>
+                  <span id="admin-project-form-title">Create New Project Blueprint</span>
+                </div>
+                <p class="small opacity-75">Construct a premium project detail card with dynamic gallery assets, outbound links, and assigned developer subdomains.</p>
+
+                <div id="admin-project-success-msg" style="display: none; background: rgba(46, 196, 182, 0.08); border: 1px solid rgba(46, 196, 182, 0.25); border-radius: 12px; padding: 14px; margin-bottom: 20px; color: #2ec4b6; font-size: 13px; font-weight: 600;">
+                  ✅ Project successfully saved & synced to global portfolio index!
+                </div>
+
+                <form id="admin-project-form" onsubmit="saveProjectForm(event)">
+                  <input type="hidden" id="project-edit-id">
+                  
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Project Title</label>
+                      <input type="text" id="project-edit-title" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. SaaS Attendance & Payroll" required>
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Project Creator / Owner</label>
+                      <select id="project-edit-creator" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required>
+                        <!-- Dynamic list of workspaces & admin -->
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-4 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Category</label>
+                      <select id="project-edit-category" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required>
+                        <option value="Website / App">Website / App</option>
+                        <option value="Networking">Networking</option>
+                        <option value="Video Production">Video Production</option>
+                        <option value="Image / Graphics">Image / Graphics</option>
+                        <option value="Digital Marketing">Digital Marketing</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Type</label>
+                      <input type="text" id="project-edit-type" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. ERP, E-Commerce, VPN Solutions" required>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Project Status</label>
+                      <select id="project-edit-status" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required>
+                        <option value="Live">Live</option>
+                        <option value="Completed">Completed</option>
+                        <option value="In Development">In Development</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-4 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Client Name</label>
+                      <input type="text" id="project-edit-client" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. Acme Corp">
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Duration</label>
+                      <input type="text" id="project-edit-duration" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. 4 months">
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Year</label>
+                      <input type="text" id="project-edit-year" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. 2026">
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Teaser Summary (Short Teaser)</label>
+                    <input type="text" id="project-edit-summary" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. Enterprise biometric tracking layer" required>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Detailed Overview & description</label>
+                    <textarea id="project-edit-description" rows="3" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="Write details about the project's background, architectural layout, challenges, and implementation specifications..." required></textarea>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Technologies Used (comma separated)</label>
+                    <input type="text" id="project-edit-techs" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. Django, PostgreSQL, Android, TailwindCSS" required>
+                  </div>
+
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Live URL (optional)</label>
+                      <input type="text" id="project-edit-liveurl" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="https://example.com">
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Repository / Source Code Link (optional)</label>
+                      <input type="text" id="project-edit-repourl" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="https://github.com/...">
+                    </div>
+                  </div>
+
+                  <!-- Cover Image File Upload / Base64 -->
+                  <div class="mb-4">
+                    <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Main Project Showcase Image Cover</label>
+                    <div class="d-flex align-items-center gap-3">
+                      <input type="file" id="project-edit-cover-file" accept="image/*" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" onchange="handleProjectCoverUpload(event)">
+                      <img id="project-edit-cover-preview" src="assets/img/masonry-portfolio/masonry-portfolio-1.jpg" style="width:70px; height:50px; object-fit:cover; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:#0f131b;">
+                    </div>
+                    <input type="hidden" id="project-edit-cover-base64">
+                  </div>
+
+                  <!-- Gallery Assets Uploader Sub-section -->
+                  <div class="mb-4 p-3 rounded-4" style="background: color-mix(in srgb, var(--default-color) 3%, transparent); border:1px dashed color-mix(in srgb, var(--default-color) 10%, transparent);">
+                    <label class="small font-weight-bold mb-2 d-block" style="color: var(--heading-color);"><i class="bi bi-images"></i> Add Showcase Video/Image Assets</label>
+                    <div class="row g-2 mb-2 align-items-center">
+                      <div class="col-md-4">
+                        <select id="gallery-asset-type" class="form-control form-control-sm" style="background:#0f131b;">
+                          <option value="image">Showcase Image</option>
+                          <option value="video">Showcase Video</option>
+                        </select>
+                      </div>
+                      <div class="col-md-5">
+                        <input type="file" id="gallery-asset-file" accept="image/*,video/*" class="form-control form-control-sm" style="background:#05070a;">
+                      </div>
+                      <div class="col-md-3">
+                        <button type="button" class="btn btn-sm btn-info w-100" onclick="uploadGalleryAsset()">Add Asset</button>
+                      </div>
+                    </div>
+                    <input type="text" id="gallery-asset-caption" class="form-control form-control-sm mb-3" style="background:#05070a;" placeholder="Asset caption (e.g. 'Database query analysis')">
+                    
+                    <!-- Dynamic Assets Grid Preview -->
+                    <div id="gallery-assets-preview-grid" class="row g-2 mt-2">
+                      <!-- Rendered live via JS -->
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-portal w-100" style="padding: 12px 25px; border-radius: 12px;">
+                    <span id="admin-project-submit-text">Publish &amp; Sync Project</span>
+                    <i class="bi bi-arrow-right-circle-fill"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Section -->
+  <footer id="footer" class="footer">
+    <div class="container">
+      <div class="row gy-4">
+        <!-- Column 1: About Agency -->
+        <div class="col-lg-7 col-md-12 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <img src="assets/logo-v2.png" alt="Synchrove" style="height: 35px; margin-bottom: 12px;">
+          </a>
+          <p>Innovative software and digital solutions to empower your business</p>
+          <div class="footer-contact pt-2">
+            <p><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+            <p><strong>Email:</strong> <span>contact@synchrove.com</span></p>
+          </div>
+        </div>
+
+        <!-- Column 2: Location / Hours -->
+        <div class="col-lg-5 col-md-12 footer-contact">
+          <h4>Contact Information</h4>
+          <p>A108 Awesome Street, New York, NY 535022</p>
+          <p class="mt-3"><strong>Working Hours:</strong></p>
+          <p>Mon - Fri, 9:00 AM - 6:00 PM</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom-info text-center mt-4">
+        <div class="copyright">
+          <p>© Copyright <strong class="px-1 sitename">Synchrove</strong> 2026. All Rights Reserved</p>
+        </div>
+        <div class="social-links d-flex justify-content-center mt-2">
+          <a href="#"><i class="bi bi-twitter-x"></i></a>
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/omarkhayam4917/"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    // Seeding Client Workspaces & Auth checks
+    let workspaces = [];
+    let activeWorkspaceIndex = 0;
+
+    function normalizeUserType(userType, fallbackRole) {
+      if (userType === 'Super User' || userType === 'Team Synchrove' || userType === 'Clients') {
+        return userType;
+      }
+
+      if (fallbackRole && fallbackRole.toLowerCase().indexOf('administrator') !== -1) {
+        return 'Super User';
+      }
+
+      return 'Clients';
+    }
+
+    function formatUserRole(profile) {
+      const userType = normalizeUserType(profile && profile.userType, profile && profile.role);
+      const role = (profile && profile.role) ? profile.role : '';
+      return role ? `${userType} | ${role}` : userType;
+    }
+
+    (function () {
+      try {
+        if (localStorage.getItem('synchrove_admin_authenticated') !== 'true') {
+          window.location.href = 'portal.html';
+          return;
+        }
+
+        // Load or seed workspaces
+        let stored = localStorage.getItem('synchrove_client_workspaces');
+        if (!stored) {
+          const defaultWorkspaces = [
+            {
+              name: "John Larson",
+              email: "client@example.com",
+              userType: "Clients",
+              role: "CEO, Acme Corp",
+              project: "Digital Platform Redesign",
+              avatar: "assets/img/testimonials/testimonials-5.jpg",
+              progress: 78,
+              phase: "Review & QA",
+              milestone: "Production Launch & Handover",
+              targetDate: "May 24, 2026",
+              deliverables: {
+                figma: "https://figma.com/file/acme-design",
+                git: "https://github.com/synchrove/acme",
+                staging: "index.html",
+                invoice: "INV-2026-089"
+              }
+            },
+            {
+              name: "Alice Smith",
+              email: "alice@company.com",
+              userType: "Clients",
+              role: "Client Partner",
+              project: "Interactive Tracking Workspace",
+              avatar: "assets/logo-small.png",
+              progress: 45,
+              phase: "Development",
+              milestone: "Database Integration",
+              targetDate: "June 12, 2026",
+              deliverables: {
+                figma: "https://figma.com/file/globex-ux",
+                git: "https://github.com/synchrove/globex",
+                staging: "index.html",
+                invoice: "INV-2026-001"
+              }
+            }
+          ];
+          localStorage.setItem('synchrove_client_workspaces', JSON.stringify(defaultWorkspaces));
+          workspaces = defaultWorkspaces;
+        } else {
+          workspaces = JSON.parse(stored);
+        }
+
+        workspaces = workspaces.map((ws) => Object.assign({}, ws, {
+          userType: normalizeUserType(ws.userType, ws.role)
+        }));
+        localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
+
+        renderWorkspacesList();
+        renderInvoiceSelectorOptions();
+        renderGlobalInvoicesLedger();
+        renderTestimonialsQueue();
+        loadActiveWorkspaceIntoEditor();
+
+        // Initializing admin profile
+        let adminProfile = localStorage.getItem('synchrove_admin_profile');
+        if (!adminProfile) {
+          adminProfile = {
+            name: "Omar Khayam",
+            userType: "Super User",
+            role: "Principal Engineer & Director (Administrator)",
+            email: localStorage.getItem('synchrove_admin_email') || "omar@synchrove.com",
+            avatar: "assets/logo-v2.png"
+          };
+          localStorage.setItem('synchrove_admin_profile', JSON.stringify(adminProfile));
+        } else {
+          try {
+            adminProfile = JSON.parse(adminProfile);
+          } catch(e) {
+            adminProfile = {
+              name: "Omar Khayam",
+              userType: "Super User",
+              role: "Principal Engineer & Director (Administrator)",
+              email: localStorage.getItem('synchrove_admin_email') || "omar@synchrove.com",
+              avatar: "assets/logo-v2.png"
+            };
+          }
+        }
+
+        // Apply admin profile widgets
+        adminProfile.userType = normalizeUserType(adminProfile.userType, adminProfile.role);
+
+        document.getElementById('admin-header-name').innerText = adminProfile.name;
+        document.getElementById('admin-header-role').innerText = formatUserRole(adminProfile);
+        document.getElementById('admin-header-avatar').src = adminProfile.avatar;
+
+        loadAdminProfileIntoEditor();
+        renderProjectsManager();
+
+      } catch (err) {
+        console.error(err);
+      }
+    })();
+
+    // Handle logout action
+    function handleLogout() {
+      localStorage.removeItem('synchrove_admin_authenticated');
+      window.location.href = 'portal.html';
+    }
+
+    // Switch between admin tabs
+    function switchAdminTab(tabId) {
+      const tabs = document.querySelectorAll('.sub-nav-tab');
+      tabs.forEach(t => t.classList.remove('active'));
+
+      const contents = document.querySelectorAll('.dash-tab-content');
+      contents.forEach(c => c.classList.remove('active'));
+
+      const activeTab = Array.from(tabs).find(t => t.outerHTML.includes("'" + tabId + "'") || t.getAttribute('onclick').includes(tabId));
+      if (activeTab) activeTab.classList.add('active');
+
+      const activeContent = document.getElementById('admin-tab-' + tabId);
+      if (activeContent) activeContent.classList.add('active');
+    }
+
+    // Admin Profile management controllers
+    function loadAdminProfileIntoEditor() {
+      let adminProfile = {
+        name: "Omar Khayam",
+        userType: "Super User",
+        role: "Principal Engineer & Director (Administrator)",
+        email: "omar@synchrove.com",
+        avatar: "assets/logo-v2.png"
+      };
+      const stored = localStorage.getItem('synchrove_admin_profile');
+      if (stored) {
+        try {
+          adminProfile = JSON.parse(stored);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      const nameEl = document.getElementById('admin-edit-name');
+      const userTypeEl = document.getElementById('admin-edit-user-type');
+      const roleEl = document.getElementById('admin-edit-role');
+      const emailEl = document.getElementById('admin-edit-email');
+      const previewEl = document.getElementById('admin-profile-avatar-preview');
+
+      if (nameEl) nameEl.value = adminProfile.name || 'Omar Khayam';
+      if (userTypeEl) userTypeEl.value = normalizeUserType(adminProfile.userType, adminProfile.role);
+      if (roleEl) roleEl.value = adminProfile.role || 'Principal Engineer & Director (Administrator)';
+      if (emailEl) emailEl.value = adminProfile.email || 'omar@synchrove.com';
+      if (previewEl) previewEl.src = adminProfile.avatar || 'assets/logo-v2.png';
+    }
+
+    function handleAdminAvatarUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64Url = e.target.result;
+        const previewEl = document.getElementById('admin-profile-avatar-preview');
+        if (previewEl) previewEl.src = base64Url;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveAdminProfile(e) {
+      if (e && e.preventDefault) {
+        e.preventDefault();
+      }
+      
+      const name = document.getElementById('admin-edit-name').value.trim();
+      const userType = document.getElementById('admin-edit-user-type').value;
+      const role = document.getElementById('admin-edit-role').value.trim();
+      const email = document.getElementById('admin-edit-email').value.trim();
+      const avatar = document.getElementById('admin-profile-avatar-preview').src;
+
+      const updatedProfile = {
+        name: name,
+        userType: userType,
+        role: role,
+        email: email,
+        avatar: avatar
+      };
+
+      localStorage.setItem('synchrove_admin_profile', JSON.stringify(updatedProfile));
+
+      // Update header widgets
+      const headerName = document.getElementById('admin-header-name');
+      const headerRole = document.getElementById('admin-header-role');
+      const headerAvatar = document.getElementById('admin-header-avatar');
+
+      if (headerName) headerName.innerText = name;
+      if (headerRole) headerRole.innerText = formatUserRole(updatedProfile);
+      if (headerAvatar) headerAvatar.src = avatar;
+
+      // Show success message
+      const successMsg = document.getElementById('admin-profile-success-msg');
+      if (successMsg) {
+        successMsg.style.display = 'block';
+        setTimeout(() => {
+          successMsg.style.display = 'none';
+        }, 4000);
+      }
+    }
+
+    // Render Workspaces List
+    function renderWorkspacesList() {
+      const list = document.getElementById('workspaces-list');
+      list.innerHTML = '';
+
+      workspaces.forEach((ws, idx) => {
+        const div = document.createElement('div');
+        div.className = 'workspace-card d-flex align-items-center justify-content-between ' + (idx === activeWorkspaceIndex ? 'active' : '');
+        div.onclick = () => selectActiveWorkspace(idx);
+
+        div.innerHTML = `
+          <div class="d-flex align-items-center gap-3">
+            <img src="${ws.avatar || 'assets/logo-small.png'}" class="workspace-avatar" alt="Avatar">
+            <div>
+              <div class="workspace-title">${ws.name}</div>
+              <div class="workspace-desc">${normalizeUserType(ws.userType, ws.role)} | ${ws.project}</div>
+            </div>
+          </div>
+          <div class="timeline-circle-box">
+            ${drawCircleMini(ws.progress)}
+            <div class="timeline-circle-pct">${ws.progress}%</div>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    function drawCircleMini(pct) {
+      const radius = 18;
+      const circ = 2 * Math.PI * radius;
+      const strokeVal = circ - ((pct / 100) * circ);
+      return `<svg width="45" height="45" style="transform: rotate(-90deg)">
+        <circle cx="22.5" cy="22.5" r="${radius}" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3"/>
+        <circle cx="22.5" cy="22.5" r="${radius}" fill="none" stroke="var(--accent-color)" stroke-width="3" 
+          stroke-dasharray="${circ}" stroke-dashoffset="${strokeVal}" stroke-linecap="round"/>
+      </svg>`;
+    }
+
+    // Select Workspace
+    function selectActiveWorkspace(idx) {
+      activeWorkspaceIndex = idx;
+      hideNewWorkspaceCard();
+      renderWorkspacesList();
+      loadActiveWorkspaceIntoEditor();
+    }
+
+    // Load active workspace details into fields
+    function loadActiveWorkspaceIntoEditor() {
+      const ws = workspaces[activeWorkspaceIndex];
+      if (!ws) return;
+
+      document.getElementById('edit-progress').value = ws.progress;
+      document.getElementById('progress-val-label').innerText = ws.progress + '%';
+      document.getElementById('edit-phase').value = ws.phase;
+      document.getElementById('edit-milestone').value = ws.milestone;
+      document.getElementById('edit-target-date').value = ws.targetDate;
+      document.getElementById('edit-figma').value = ws.deliverables.figma || '';
+      document.getElementById('edit-git').value = ws.deliverables.git || '';
+
+      document.getElementById('chat-header-client-name').innerText = `Discussion Room with ${ws.name}`;
+      loadActiveClientChatHistory();
+    }
+
+    // Save Updates
+    function saveActiveWorkspaceUpdates(e) {
+      e.preventDefault();
+      const ws = workspaces[activeWorkspaceIndex];
+      if (!ws) return;
+
+      ws.progress = parseInt(document.getElementById('edit-progress').value);
+      ws.phase = document.getElementById('edit-phase').value;
+      ws.milestone = document.getElementById('edit-milestone').value;
+      ws.targetDate = document.getElementById('edit-target-date').value;
+      ws.deliverables.figma = document.getElementById('edit-figma').value.trim();
+      ws.deliverables.git = document.getElementById('edit-git').value.trim();
+
+      // Save to localStorage
+      localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
+      
+      // If updating the active logged-in client profile, mirror immediately
+      const loggedClientEmail = localStorage.getItem('synchrove_client_email');
+      if (ws.email === loggedClientEmail) {
+        localStorage.setItem('synchrove_client_profile', JSON.stringify({
+          name: ws.name,
+          userType: normalizeUserType(ws.userType, ws.role),
+          role: ws.role,
+          project: ws.project,
+          avatar: ws.avatar
+        }));
+      }
+
+      // Show success
+      const msg = document.getElementById('editor-success-msg');
+      msg.style.display = 'block';
+      setTimeout(() => {
+        msg.style.display = 'none';
+      }, 4000);
+
+      renderWorkspacesList();
+    }
+
+    // New Workspace Form actions
+    function showNewWorkspaceCard() {
+      document.getElementById('new-workspace-card').style.display = 'block';
+      document.getElementById('workspace-editor-panel').style.display = 'none';
+    }
+
+    function hideNewWorkspaceCard() {
+      document.getElementById('new-workspace-card').style.display = 'none';
+      document.getElementById('workspace-editor-panel').style.display = 'block';
+    }
+
+    function createNewWorkspace(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('new-client-name').value.trim();
+      const email = document.getElementById('new-client-email').value.trim();
+      const userType = document.getElementById('new-client-user-type').value;
+      const role = document.getElementById('new-client-role').value.trim();
+      const project = document.getElementById('new-client-project').value.trim();
+
+      const newWS = {
+        name: name,
+        email: email,
+        userType: userType,
+        role: role,
+        project: project,
+        avatar: "assets/logo-small.png",
+        progress: 10,
+        phase: "Discovery",
+        milestone: "Detailed Scope Gathering",
+        targetDate: "TBD",
+        deliverables: {
+          figma: "",
+          git: "",
+          staging: "index.html",
+          invoice: ""
+        }
+      };
+
+      workspaces.push(newWS);
+      localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
+
+      // Reset form
+      document.getElementById('new-client-name').value = '';
+      document.getElementById('new-client-email').value = '';
+      document.getElementById('new-client-user-type').value = 'Clients';
+      document.getElementById('new-client-role').value = '';
+      document.getElementById('new-client-project').value = '';
+
+      activeWorkspaceIndex = workspaces.length - 1;
+      hideNewWorkspaceCard();
+      renderWorkspacesList();
+      renderInvoiceSelectorOptions();
+      loadActiveWorkspaceIntoEditor();
+      
+      alert(`Client workspace successfully launched for ${name}!`);
+    }
+
+    // CHATROOM SEGMENT
+    function loadActiveClientChatHistory() {
+      const ws = workspaces[activeWorkspaceIndex];
+      const scroller = document.getElementById('admin-chat-scroller');
+      scroller.innerHTML = '';
+
+      if (!ws) return;
+
+      const chatKey = `synchrove_chats_${ws.email}`;
+      let history = [];
+      const stored = localStorage.getItem(chatKey);
+
+      if (stored) {
+        history = JSON.parse(stored);
+      } else {
+        // Seed default chat history
+        history = [
+          { sender: "pm", text: `Hi ${ws.name.split(' ')[0]}! Hope your week is starting well. The core UI/UX updates and full responsive styles have been merged into the staging branch. Take a look at the Figma link below or the live demo!` },
+          { sender: "client", text: "Thanks Omar! I checked the dashboard color themes and swatches, they look incredibly smooth. When do you think we can finalize the review?" },
+          { sender: "pm", text: "We are wrapping up defensive code testing and cross-browser responsiveness checks today. If everything matches your approval, we will be ready to schedule deployment for next week!" }
+        ];
+        localStorage.setItem(chatKey, JSON.stringify(history));
+      }
+
+      history.forEach(msg => {
+        const bubble = document.createElement('div');
+        bubble.className = 'chat-msg ' + msg.sender;
+        bubble.innerText = msg.text;
+        scroller.appendChild(bubble);
+      });
+
+      scroller.scrollTop = scroller.scrollHeight;
+    }
+
+    function handleAdminChatSubmit(e) {
+      if (e.key === 'Enter') {
+        sendAdminChatMessage();
+      }
+    }
+
+    function sendAdminChatMessage() {
+      const ws = workspaces[activeWorkspaceIndex];
+      if (!ws) return;
+
+      const input = document.getElementById('admin-chat-message-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const chatKey = `synchrove_chats_${ws.email}`;
+      let history = JSON.parse(localStorage.getItem(chatKey)) || [];
+
+      history.push({ sender: "pm", text: text });
+      localStorage.setItem(chatKey, JSON.stringify(history));
+
+      const scroller = document.getElementById('admin-chat-scroller');
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-msg pm';
+      bubble.innerText = text;
+      scroller.appendChild(bubble);
+
+      input.value = '';
+      scroller.scrollTop = scroller.scrollHeight;
+    }
+
+
+    // INVOICES MANAGER SEGMENT
+    function renderInvoiceSelectorOptions() {
+      const select = document.getElementById('invoice-client-select');
+      select.innerHTML = '';
+      workspaces.forEach((ws, idx) => {
+        const opt = document.createElement('option');
+        opt.value = idx;
+        opt.innerText = `${ws.name} - ${ws.project}`;
+        select.appendChild(opt);
+      });
+    }
+
+    function renderGlobalInvoicesLedger() {
+      const tbody = document.getElementById('admin-invoices-ledger');
+      tbody.innerHTML = '';
+
+      workspaces.forEach(ws => {
+        const invoicesKey = `synchrove_invoices_${ws.email}`;
+        let clientInvoices = [];
+        const stored = localStorage.getItem(invoicesKey);
+        if (stored) {
+          clientInvoices = JSON.parse(stored);
+        } else {
+          // Default seed invoices
+          if (ws.email === 'client@example.com') {
+            clientInvoices = [
+              { id: "INV-2026-089", desc: "75% Milestone Completion - Integration & Beta QA", amount: "14500.00", status: "Paid", date: "May 15, 2026" },
+              { id: "INV-2026-045", desc: "50% Milestone Completion - Core Dev & Styling", amount: "5000.00", status: "Paid", date: "May 08, 2026" },
+              { id: "INV-2026-001", desc: "25% Initial Retainer - Discovery Scope Finalization", amount: "5000.00", status: "Paid", date: "May 02, 2026" }
+            ];
+          } else {
+            clientInvoices = [
+              { id: "INV-2026-001", desc: "25% Retainer Fee - Scope Finalized", amount: "5000.00", status: "Paid", date: "May 02, 2026" }
+            ];
+          }
+          localStorage.setItem(invoicesKey, JSON.stringify(clientInvoices));
+        }
+
+        clientInvoices.forEach(inv => {
+          const tr = document.createElement('tr');
+          tr.style.borderBottom = '1px solid color-mix(in srgb, var(--default-color) 8%, transparent)';
+          tr.innerHTML = `
+            <td style="padding: 15px; font-weight: 700; color: var(--heading-color);">${inv.id}</td>
+            <td style="padding: 15px;">${ws.name}</td>
+            <td style="padding: 15px; font-weight: 700;">$${parseFloat(inv.amount).toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
+            <td style="padding: 15px;"><span class="badge" style="background: ${inv.status === 'Paid' ? 'rgba(46, 196, 182, 0.15)' : 'rgba(230, 57, 70, 0.15)'}; color: ${inv.status === 'Paid' ? '#2ec4b6' : '#e63946'}; font-size: 11px; padding: 5px 10px; border-radius: 6px;">${inv.status}</span></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      });
+    }
+
+    function generateInvoice(e) {
+      e.preventDefault();
+      
+      const wsIdx = parseInt(document.getElementById('invoice-client-select').value);
+      const ws = workspaces[wsIdx];
+      if (!ws) return;
+
+      const id = document.getElementById('invoice-id').value.trim();
+      const amount = document.getElementById('invoice-amount').value.trim();
+      const desc = document.getElementById('invoice-desc').value.trim();
+      const status = document.getElementById('invoice-status').value;
+
+      const newInv = {
+        id: id,
+        desc: desc,
+        amount: amount,
+        status: status,
+        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' })
+      };
+
+      const invoicesKey = `synchrove_invoices_${ws.email}`;
+      let clientInvoices = JSON.parse(localStorage.getItem(invoicesKey)) || [];
+      clientInvoices.unshift(newInv);
+      localStorage.setItem(invoicesKey, JSON.stringify(clientInvoices));
+
+      // Reset form fields
+      document.getElementById('invoice-id').value = '';
+      document.getElementById('invoice-amount').value = '';
+      document.getElementById('invoice-desc').value = '';
+
+      renderGlobalInvoicesLedger();
+      alert(`Invoice ${id} successfully generated and posted to ${ws.name}'s billing statement ledger!`);
+    }
+
+
+    // TESTIMONIALS QUEUE SEGMENT
+    function renderTestimonialsQueue() {
+      const tbody = document.getElementById('admin-testimonials-queue');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      let testimonials = [];
+      const stored = localStorage.getItem('synchrove_testimonials');
+      if (stored) {
+        try {
+          testimonials = JSON.parse(stored);
+          if (!Array.isArray(testimonials)) {
+            testimonials = [];
+          }
+        } catch (e) {
+          console.error("Error parsing testimonials in admin queue:", e);
+          testimonials = [];
+        }
+      }
+
+      if (testimonials.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="text-center opacity-75 py-4">No pending testimonials in queue.</td></tr>`;
+        return;
+      }
+
+      testimonials.forEach((t, idx) => {
+        if (!t) return;
+        const isApproved = t.approved === true;
+        const starsCount = parseInt(t.stars) || 5;
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid color-mix(in srgb, var(--default-color) 8%, transparent)';
+        tr.innerHTML = `
+          <td style="padding: 15px; font-weight: 700; color: var(--heading-color);">${t.name || 'Anonymous'} <span class="d-block small opacity-75 font-weight-normal">${t.role || 'Client Partner'}</span></td>
+          <td style="padding: 15px; color: #ffd166;">${'★'.repeat(starsCount)}</td>
+          <td style="padding: 15px; max-width: 300px; white-space: normal; line-height: 1.4;">${t.text || ''}</td>
+          <td style="padding: 15px; text-align: right;">
+            ${isApproved 
+              ? `<span class="badge bg-success-subtle text-success me-2" style="font-size: 11px; padding: 6px 12px; border-radius: 6px;">Published Live</span>` 
+              : `<button onclick="approveTestimonial(${idx})" class="btn btn-sm btn-outline-success" style="font-size: 11.5px; border-radius: 6px;">Approve &amp; Publish</button>`
+            }
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function approveTestimonial(idx) {
+      let testimonials = [];
+      try {
+        testimonials = JSON.parse(localStorage.getItem('synchrove_testimonials')) || [];
+        if (!Array.isArray(testimonials)) {
+          testimonials = [];
+        }
+      } catch (e) {
+        console.error("Error reading testimonials for approval:", e);
+        testimonials = [];
+      }
+
+      if (testimonials[idx]) {
+        testimonials[idx].approved = true;
+        localStorage.setItem('synchrove_testimonials', JSON.stringify(testimonials));
+        renderTestimonialsQueue();
+        alert("Review successfully moderated and published to the public Swiper slide carousel!");
+      }
+    }
+
+    /* ═══════════════════════════════════════════
+       PORTFOLIO PROJECTS MANAGER (ADMIN PANEL)
+       ═══════════════════════════════════════════ */
+
+    let activeProjectGalleryAssets = []; // Temporary holding state for current project gallery
+
+    function renderProjectsManager() {
+      // 1. Populate Creator Dropdown
+      const creatorDropdown = document.getElementById("project-edit-creator");
+      if (creatorDropdown) {
+        let clientsList = [];
+        try {
+          clientsList = JSON.parse(localStorage.getItem("synchrove_client_workspaces")) || [];
+        } catch(e) {
+          clientsList = [];
+        }
+        
+        let html = `<option value="omar@synchrove.com" data-name="Omar Khayam" data-role="Principal Engineer & Director" data-avatar="assets/logo-v2.png">Omar Khayam (Admin)</option>`;
+        clientsList.forEach(ws => {
+          html += `<option value="${ws.email}" data-name="${ws.name}" data-role="${ws.role}" data-avatar="${ws.avatar}">${ws.name} (${ws.role})</option>`;
+        });
+        creatorDropdown.innerHTML = html;
+      }
+
+      // 2. Load and Draw Sidebar Projects List
+      let projectsList = [];
+      try {
+        projectsList = JSON.parse(localStorage.getItem("synchrove_portfolio_projects")) || [];
+      } catch(e) {
+        projectsList = [];
+      }
+
+      const container = document.getElementById("admin-projects-list-container");
+      if (container) {
+        if (projectsList.length === 0) {
+          container.innerHTML = `<div class="text-center py-4 small opacity-50">No projects registered yet.</div>`;
+          return;
+        }
+
+        container.innerHTML = projectsList.map(p => `
+          <div class="p-3 rounded-4 border d-flex justify-content-between align-items-center" style="background: color-mix(in srgb, var(--default-color) 2%, transparent); border-color: color-mix(in srgb, var(--default-color) 8%, transparent) !important;">
+            <div class="d-flex align-items-center gap-3">
+              <img src="${p.image || 'assets/img/masonry-portfolio/masonry-portfolio-1.jpg'}" style="width: 50px; height: 38px; object-fit: cover; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
+              <div>
+                <h6 style="margin: 0; font-size: 13.5px; font-weight: 700; color: var(--heading-color);">${p.title}</h6>
+                <span class="small opacity-50 d-block" style="font-size: 11px;">${p.category} · ${p.creator || 'Omar Khayam'}</span>
+              </div>
+            </div>
+            <div class="d-flex gap-2">
+              <button onclick="editProject('${p.id}')" class="btn btn-sm btn-outline-info" style="padding: 3px 8px; font-size: 11px; border-radius: 6px;"><i class="bi bi-pencil"></i></button>
+              <button onclick="deleteProject('${p.id}')" class="btn btn-sm btn-outline-danger" style="padding: 3px 8px; font-size: 11px; border-radius: 6px;"><i class="bi bi-trash"></i></button>
+            </div>
+          </div>
+        `).join("");
+      }
+    }
+
+    function handleProjectCoverUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById("project-edit-cover-base64").value = e.target.result;
+        document.getElementById("project-edit-cover-preview").src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function uploadGalleryAsset() {
+      const fileInput = document.getElementById("gallery-asset-file");
+      const typeSelect = document.getElementById("gallery-asset-type");
+      const captionInput = document.getElementById("gallery-asset-caption");
+      
+      const file = fileInput.files[0];
+      if (!file) {
+        alert("Please select a file to upload as gallery asset!");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        activeProjectGalleryAssets.push({
+          type: typeSelect.value,
+          url: e.target.result,
+          caption: captionInput.value || (typeSelect.value === 'video' ? 'Project Showcase Video' : 'Project Showcase Image')
+        });
+
+        // Reset fields
+        fileInput.value = "";
+        captionInput.value = "";
+        
+        renderGalleryAssetsGrid();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeGalleryAsset(index) {
+      activeProjectGalleryAssets.splice(index, 1);
+      renderGalleryAssetsGrid();
+    }
+
+    function renderGalleryAssetsGrid() {
+      const grid = document.getElementById("gallery-assets-preview-grid");
+      if (!grid) return;
+
+      if (activeProjectGalleryAssets.length === 0) {
+        grid.innerHTML = `<div class="col-12 text-center py-2 small opacity-50">No additional assets uploaded.</div>`;
+        return;
+      }
+
+      grid.innerHTML = activeProjectGalleryAssets.map((item, idx) => `
+        <div class="col-6 position-relative">
+          <div class="card bg-dark border-0 rounded-3 overflow-hidden p-0 position-relative" style="background:#05070a !important;">
+            ${item.type === 'video' 
+              ? `<video src="${item.url}" class="w-100" style="height:70px; object-fit:cover;"></video>` 
+              : `<img src="${item.url}" class="w-100" style="height:70px; object-fit:cover;">`
+            }
+            <div class="p-1 text-center small text-white-50" style="font-size: 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.caption}</div>
+            <button type="button" onclick="removeGalleryAsset(${idx})" class="btn btn-sm btn-danger position-absolute top-0 end-0 m-1" style="padding: 1px 5px; font-size: 9px; border-radius: 4px;"><i class="bi bi-x"></i></button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function editProject(projectId) {
+      let projectsList = [];
+      try {
+        projectsList = JSON.parse(localStorage.getItem("synchrove_portfolio_projects")) || [];
+      } catch(e) {
+        projectsList = [];
+      }
+
+      const p = projectsList.find(x => x.id === projectId);
+      if (!p) return;
+
+      document.getElementById("project-edit-id").value = p.id;
+      document.getElementById("project-edit-title").value = p.title;
+      document.getElementById("project-edit-category").value = p.category;
+      document.getElementById("project-edit-type").value = p.type;
+      document.getElementById("project-edit-status").value = p.status;
+      document.getElementById("project-edit-client").value = p.client || "";
+      document.getElementById("project-edit-duration").value = p.details.duration || "";
+      document.getElementById("project-edit-year").value = p.year || "";
+      document.getElementById("project-edit-summary").value = p.summary;
+      document.getElementById("project-edit-description").value = p.details.description;
+      document.getElementById("project-edit-techs").value = (p.techs || []).join(", ");
+      
+      document.getElementById("project-edit-cover-base64").value = p.image || "";
+      document.getElementById("project-edit-cover-preview").src = p.image || "assets/img/masonry-portfolio/masonry-portfolio-1.jpg";
+
+      activeProjectGalleryAssets = p.media || [];
+      renderGalleryAssetsGrid();
+
+      // Set creator select dropdown value based on email
+      const creatorSelect = document.getElementById("project-edit-creator");
+      if (creatorSelect) {
+        creatorSelect.value = p.creator_email || "omar@synchrove.com";
+      }
+
+      document.getElementById("admin-project-form-title").textContent = "Edit Portfolio Showcase: " + p.title;
+      document.getElementById("admin-project-submit-text").textContent = "Update & Sync Changes";
+      
+      // Auto scroll to form
+      document.getElementById("admin-project-form").scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function deleteProject(projectId) {
+      if(!confirm("Are you sure you want to delete this project from the Synchrove Portfolio system?")) return;
+
+      let projectsList = [];
+      try {
+        projectsList = JSON.parse(localStorage.getItem("synchrove_portfolio_projects")) || [];
+      } catch(e) {
+        projectsList = [];
+      }
+
+      projectsList = projectsList.filter(p => p.id !== projectId);
+      localStorage.setItem("synchrove_portfolio_projects", JSON.stringify(projectsList));
+
+      renderProjectsManager();
+      resetProjectForm();
+      alert("Project deleted successfully!");
+    }
+
+    function resetProjectForm() {
+      document.getElementById("admin-project-form").reset();
+      document.getElementById("project-edit-id").value = "";
+      document.getElementById("project-edit-cover-base64").value = "";
+      document.getElementById("project-edit-cover-preview").src = "assets/img/masonry-portfolio/masonry-portfolio-1.jpg";
+      activeProjectGalleryAssets = [];
+      renderGalleryAssetsGrid();
+
+      document.getElementById("admin-project-form-title").textContent = "Create New Project Blueprint";
+      document.getElementById("admin-project-submit-text").textContent = "Publish & Sync Project";
+    }
+
+    function saveProjectForm(event) {
+      event.preventDefault();
+
+      let projectsList = [];
+      try {
+        projectsList = JSON.parse(localStorage.getItem("synchrove_portfolio_projects")) || [];
+      } catch(e) {
+        projectsList = [];
+      }
+
+      const id = document.getElementById("project-edit-id").value;
+      const title = document.getElementById("project-edit-title").value;
+      const category = document.getElementById("project-edit-category").value;
+      const type = document.getElementById("project-edit-type").value;
+      const status = document.getElementById("project-edit-status").value;
+      const client = document.getElementById("project-edit-client").value;
+      const duration = document.getElementById("project-edit-duration").value;
+      const year = document.getElementById("project-edit-year").value;
+      const summary = document.getElementById("project-edit-summary").value;
+      const description = document.getElementById("project-edit-description").value;
+      const techsStr = document.getElementById("project-edit-techs").value;
+      const liveUrl = document.getElementById("project-edit-liveurl") ? document.getElementById("project-edit-liveurl").value : "#";
+      const repoUrl = document.getElementById("project-edit-repourl") ? document.getElementById("project-edit-repourl").value : "#";
+      const coverBase64 = document.getElementById("project-edit-cover-base64").value;
+
+      // Extract Creator Details from selection attributes
+      const creatorSelect = document.getElementById("project-edit-creator");
+      const selectedOption = creatorSelect.options[creatorSelect.selectedIndex];
+      
+      const creatorName = selectedOption.getAttribute("data-name") || "Omar Khayam";
+      const creatorRole = selectedOption.getAttribute("data-role") || "Principal Engineer & Director";
+      const creatorAvatar = selectedOption.getAttribute("data-avatar") || "assets/logo-v2.png";
+      const creatorEmail = creatorSelect.value || "omar@synchrove.com";
+
+      const parsedTechs = techsStr.split(",").map(t => t.trim()).filter(t => t.length > 0);
+
+      // Generate features array dynamically from description sentences as a clean mock fallback
+      const features = description.split(".").map(s => s.trim()).filter(s => s.length > 10).slice(0, 6);
+
+      const projectData = {
+        id: id || ("project-" + Date.now()),
+        title: title,
+        category: category,
+        type: type,
+        techs: parsedTechs,
+        status: status,
+        image: coverBase64 || "assets/img/masonry-portfolio/masonry-portfolio-1.jpg",
+        summary: summary,
+        client: client || "N/A",
+        year: year || "2026",
+        creator: creatorName,
+        creator_role: creatorRole,
+        creator_avatar: creatorAvatar,
+        creator_email: creatorEmail,
+        media: activeProjectGalleryAssets,
+        details: {
+          description: description,
+          features: features.length > 0 ? features : ["Dynamic design and architecture", "Comprehensive specifications compliance", "Interactive layout integration"],
+          techStack: parsedTechs,
+          liveUrl: liveUrl || "#",
+          repoUrl: repoUrl || "#",
+          duration: duration || "Ongoing"
+        }
+      };
+
+      if (id) {
+        // Edit mode
+        const idx = projectsList.findIndex(x => x.id === id);
+        if (idx !== -1) {
+          projectsList[idx] = projectData;
+        }
+      } else {
+        // Create mode
+        projectsList.push(projectData);
+      }
+
+      localStorage.setItem("synchrove_portfolio_projects", JSON.stringify(projectsList));
+      
+      renderProjectsManager();
+      resetProjectForm();
+
+      const successMsg = document.getElementById("admin-project-success-msg");
+      if (successMsg) {
+        successMsg.style.display = "block";
+        setTimeout(() => successMsg.style.display = "none", 4000);
+      }
+    }
+  </script>
+</body>
+</html>

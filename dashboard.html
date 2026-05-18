@@ -1,0 +1,2274 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Dashboard - Synchrove</title>
+  <meta name="description" content="Track your active project roadmap, access deliverables, and review live milestones.">
+  <meta name="keywords" content="">
+  <meta property="og:site_name" content="Synchrove">
+
+  <!-- Favicons -->
+  <link href="assets/favicon.ico" rel="icon">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/" rel="preconnect">
+  <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/synchrove-core.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Kelly
+  * Template URL: https://bootstrapmade.com/kelly-free-bootstrap-cv-resume-html-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+  <style>
+    /* Premium Dashboard Section Styles */
+    .dashboard-section {
+      padding: 60px 0 80px;
+      background: var(--background-color);
+      color: var(--default-color);
+      min-height: calc(100vh - 250px);
+    }
+
+    /* Client profile welcome bar */
+    .dash-welcome-bar {
+      background: var(--surface-color);
+      border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      border-radius: 20px;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .user-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-color);
+      object-fit: cover;
+    }
+
+    .user-name {
+      font-weight: 700;
+      color: var(--heading-color);
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .user-role {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    .btn-logout {
+      background: color-mix(in srgb, var(--default-color) 8%, transparent);
+      color: var(--default-color) !important;
+      border: 1px solid color-mix(in srgb, var(--default-color) 12%, transparent);
+      border-radius: 10px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-logout:hover {
+      background: color-mix(in srgb, var(--accent-color) 20%, transparent);
+      border-color: var(--accent-color);
+      color: var(--accent-color) !important;
+    }
+
+    /* Widgets Grid */
+    .widget-card {
+      background: var(--surface-color);
+      border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      border-radius: 20px;
+      padding: 25px;
+      height: 100%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .widget-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .widget-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-color);
+      margin-bottom: 15px;
+    }
+
+    .progress-circle-box {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      margin: 0 auto;
+    }
+
+    .progress-number {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--heading-color);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: color-mix(in srgb, var(--accent-color) 10%, transparent);
+      color: var(--accent-color);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 8px 16px;
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+
+    .status-pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent-color);
+      animation: pulse 1.5s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.8); opacity: 0.5; }
+      100% { transform: scale(1.3); opacity: 1; }
+    }
+
+    /* Standardized Card Container Boxes */
+    .section-box {
+      background: var(--surface-color);
+      border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      border-radius: 24px;
+      padding: 35px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    .box-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--heading-color);
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .box-title i {
+      color: var(--accent-color);
+    }
+
+    /* Roadmap Timeline */
+    .timeline-steps {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin: 40px 0 20px;
+      flex-wrap: nowrap;
+    }
+
+    .timeline-steps::before {
+      content: "";
+      position: absolute;
+      top: 25px;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: color-mix(in srgb, var(--default-color) 12%, transparent);
+      z-index: 1;
+    }
+
+    .timeline-progress-line {
+      position: absolute;
+      top: 25px;
+      left: 0;
+      width: 78%;
+      height: 4px;
+      background: var(--accent-color);
+      z-index: 2;
+      box-shadow: 0 0 10px var(--accent-color);
+    }
+
+    .step-node {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 18%;
+      z-index: 10;
+    }
+
+    .step-circle {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--surface-color);
+      border: 3px solid color-mix(in srgb, var(--default-color) 15%, transparent);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      color: var(--default-color);
+      margin-bottom: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .step-node.completed .step-circle {
+      background: var(--accent-color);
+      border-color: var(--accent-color);
+      color: var(--contrast-color, #ffffff);
+      box-shadow: 0 0 15px color-mix(in srgb, var(--accent-color) 40%, transparent);
+    }
+
+    .step-node.active .step-circle {
+      background: var(--surface-color);
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+      box-shadow: 0 0 20px color-mix(in srgb, var(--accent-color) 50%, transparent);
+      animation: ringGlow 2s infinite alternate;
+    }
+
+    @keyframes ringGlow {
+      0% { box-shadow: 0 0 5px color-mix(in srgb, var(--accent-color) 30%, transparent); }
+      100% { box-shadow: 0 0 20px color-mix(in srgb, var(--accent-color) 70%, transparent); }
+    }
+
+    .step-label {
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--heading-color);
+      margin-bottom: 4px;
+    }
+
+    .step-desc {
+      font-size: 11px;
+      color: var(--default-color);
+      opacity: 0.7;
+    }
+
+    /* Deliverables cards */
+    .deliverable-card {
+      background: color-mix(in srgb, var(--background-color) 50%, transparent);
+      border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .deliverable-card:hover {
+      background: color-mix(in srgb, var(--accent-color) 6%, transparent);
+      border-color: var(--accent-color);
+      transform: translateY(-2px);
+    }
+
+    .deliverable-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: color-mix(in srgb, var(--accent-color) 12%, transparent);
+      color: var(--accent-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+    }
+
+    .deliverable-info h5 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--heading-color);
+      margin-bottom: 2px;
+    }
+
+    .deliverable-info span {
+      font-size: 11px;
+      color: var(--default-color);
+      opacity: 0.7;
+    }
+
+    /* PM Chat Box Hub */
+    .chat-box {
+      height: 380px;
+      background: color-mix(in srgb, var(--background-color) 50%, transparent);
+      border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background: color-mix(in srgb, var(--default-color) 5%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chat-status-dot {
+      width: 6px;
+      height: 6px;
+      background: #2ec4b6;
+      border-radius: 50%;
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .chat-msg {
+      max-width: 75%;
+      padding: 10px 15px;
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .chat-msg.pm {
+      align-self: flex-start;
+      background: var(--surface-color);
+      border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      color: var(--heading-color);
+      border-top-left-radius: 0;
+    }
+
+    .chat-msg.client {
+      align-self: flex-end;
+      background: var(--accent-color);
+      color: var(--contrast-color, #ffffff);
+      border-top-right-radius: 0;
+    }
+
+    .chat-footer {
+      padding: 12px 15px;
+      border-top: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      display: flex;
+      gap: 10px;
+      background: var(--surface-color);
+    }
+
+    .chat-input {
+      flex: 1;
+      background: color-mix(in srgb, var(--background-color) 60%, transparent);
+      border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      border-radius: 10px;
+      padding: 10px 15px;
+      color: var(--heading-color);
+      outline: none;
+      font-size: 13px;
+    }
+
+    .chat-input:focus {
+      border-color: var(--accent-color);
+    }
+
+    .btn-chat-send {
+      background: var(--accent-color);
+      border: none;
+      color: var(--contrast-color, #ffffff);
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-chat-send:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    /* Review Stars selector */
+    .star-rating-wrapper {
+      display: flex;
+      gap: 6px;
+      margin: 10px 0 20px;
+    }
+
+    .star-select {
+      font-size: 22px;
+      color: color-mix(in srgb, var(--default-color) 20%, transparent);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .star-select:hover,
+    .star-select.selected {
+      color: #ffd166;
+    }
+
+    /* Success checkmark animation */
+    .success-checkmark {
+      display: none;
+      text-align: center;
+      padding: 30px 10px;
+    }
+
+    .success-checkmark i {
+      font-size: 50px;
+      color: var(--accent-color);
+      animation: checkFade 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes checkFade {
+      0% { transform: scale(0.3); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Sub-navigation Tabs */
+    .dash-sub-nav {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 30px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+    }
+
+    .sub-nav-tab {
+      background: var(--surface-color);
+      color: var(--default-color);
+      border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);
+      border-radius: 14px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .sub-nav-tab:hover {
+      background: color-mix(in srgb, var(--default-color) 4%, transparent);
+      border-color: color-mix(in srgb, var(--default-color) 15%, transparent);
+    }
+
+    .sub-nav-tab.active {
+      background: var(--accent-color);
+      color: var(--contrast-color, #ffffff) !important;
+      border-color: var(--accent-color);
+      box-shadow: 0 8px 20px color-mix(in srgb, var(--accent-color) 30%, transparent);
+    }
+
+    .sub-nav-tab i {
+      font-size: 16px;
+    }
+
+    /* Tab content views */
+    .dash-tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .dash-tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .preset-avatar-img {
+      transition: all 0.3s ease;
+    }
+    .preset-avatar-img:hover {
+      transform: scale(1.1);
+      border-color: var(--accent-color) !important;
+    }
+  </style>
+
+  <!-- SVG Circle Helper -->
+  <script>
+    function drawCircle(pct) {
+      const radius = 45;
+      const circ = 2 * Math.PI * radius;
+      const strokeVal = circ - ((pct / 100) * circ);
+      return `<svg width="110" height="110" style="transform: rotate(-90deg)">
+        <circle cx="55" cy="55" r="${radius}" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
+        <circle cx="55" cy="55" r="${radius}" fill="none" stroke="var(--accent-color)" stroke-width="6" 
+          stroke-dasharray="${circ}" stroke-dashoffset="${strokeVal}" stroke-linecap="round" 
+          style="transition: stroke-dashoffset 0.8s ease-in-out;"/>
+      </svg>`;
+    }
+  </script>
+
+  <style id="fouc-fix">.fouc-hidden { display: none !important; }</style>
+  <script>document.documentElement.classList.add("fouc-hidden");</script>
+</head>
+
+
+<body class="theme-peacock dashboard-page">
+<header id="header" class="header d-flex align-items-center light-background sticky-top">
+  <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
+
+    <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+      <img src="assets/logo-v2.png" alt="Synchrove Logo">
+    </a>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="index.html" class="">Home</a></li>
+        <li><a href="about.html" class="">About</a></li>
+        <li><a href="resume.html" class="">Resume</a></li>
+        <li><a href="services.html" class="">Services</a></li>
+        <li><a href="portfolio.html" class="">Portfolio</a></li>
+        
+        <li><a href="contact.html" class="">Contact</a></li>
+        <li><a href="portal.html" class="active">Portal</a></li>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+
+    <div class="header-social-links d-flex align-items-center gap-3">
+      <div class="theme-toggle" role="group" aria-label="Color theme toggle">
+        <button type="button" class="theme-btn active" data-theme="peacock" aria-pressed="true">Peacock-P</button>
+        <button type="button" class="theme-btn" data-theme="whale" aria-pressed="false">Whale-W</button>
+        <button type="button" class="theme-btn" data-theme="d1" aria-pressed="false">D1</button>
+        <button type="button" class="theme-btn" data-theme="d2" aria-pressed="false">D2</button>
+        <button type="button" class="theme-btn" data-theme="sl1" aria-pressed="false">SL1</button>
+      </div>
+      <a href="#" class="twitter" data-info="social_twitter"><i class="bi bi-twitter-x"></i></a>
+      <a href="#" class="facebook" data-info="social_facebook"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="instagram" data-info="social_instagram"><i class="bi bi-instagram"></i></a>
+      <a href="https://www.linkedin.com/in/omarkhayam4917/" class="linkedin" data-info="social_linkedin"><i class="bi bi-linkedin"></i></a>
+    </div>
+</div>
+</header>
+  <script>
+    (function () {
+      try {
+        var storedTheme = localStorage.getItem('synch-theme');
+        if (storedTheme && storedTheme !== 'peacock') {
+          var targetClass = 'theme-' + storedTheme;
+          document.body.classList.remove('theme-peacock');
+          document.body.classList.add(targetClass);
+        }
+      } catch (error) {
+        /* Local storage unavailable; default theme remains */
+      }
+    })();
+  </script>
+
+
+  <main class="main">
+    <section class="dashboard-section">
+      <div class="container">
+
+        <!-- Welcome Banner Bar -->
+        <div class="dash-welcome-bar">
+          <div class="user-profile">
+            <img src="assets/img/testimonials/testimonials-5.jpg" id="profile-avatar" class="user-avatar" alt="Avatar">
+            <div>
+              <div class="user-name" id="profile-name">Client User</div>
+              <div class="user-role" id="profile-role">Clients | CEO, Acme Corp</div>
+            </div>
+          </div>
+          <div>
+            <button class="btn-logout" onclick="handleLogout()">Logout</button>
+          </div>
+        </div>
+
+        <!-- Sub-navigation Tabs -->
+        <div class="dash-sub-nav">
+          <button type="button" class="sub-nav-tab active" onclick="switchDashTab('overview')">
+            <i class="bi bi-speedometer2"></i>
+            <span>Project Overview</span>
+          </button>
+          <button type="button" class="sub-nav-tab" onclick="switchDashTab('orders')">
+            <i class="bi bi-receipt"></i>
+            <span>Orders &amp; Invoices</span>
+          </button>
+          <button type="button" class="sub-nav-tab" onclick="switchDashTab('profile')">
+            <i class="bi bi-person-circle"></i>
+            <span>Client Profile</span>
+          </button>
+          <button type="button" class="sub-nav-tab" onclick="switchDashTab('settings')">
+            <i class="bi bi-gear"></i>
+            <span>System Settings</span>
+          </button>
+          <button type="button" class="sub-nav-tab" onclick="switchDashTab('showcases')">
+            <i class="bi bi-journal-code"></i>
+            <span>My Showcases</span>
+          </button>
+        </div>
+
+        <!-- TAB VIEW: OVERVIEW -->
+        <div id="dash-tab-overview" class="dash-tab-content active">
+
+        <!-- Widgets Grid -->
+        <div class="row g-4 mb-4">
+          <!-- Progress SVG Circle -->
+          <div class="col-lg-3 col-md-6 col-12">
+            <div class="widget-card text-center d-flex flex-column justify-content-between">
+              <div>
+                <div class="widget-title">Project Progress</div>
+                <div class="progress-circle-box my-3" id="circle-container">
+                  <script>document.getElementById('circle-container').innerHTML = drawCircle(78);</script>
+                  <div class="progress-number" id="progress-pct-number">78%</div>
+                </div>
+              </div>
+              <div class="small opacity-75">Milestone progress looks on-track</div>
+            </div>
+          </div>
+
+          <!-- Active Phase -->
+          <div class="col-lg-3 col-md-6 col-12">
+            <div class="widget-card d-flex flex-column justify-content-between">
+              <div>
+                <div class="widget-title">Active Phase</div>
+                <div class="h4 font-weight-bold text-white mb-2" id="project-name" style="color: var(--heading-color) !important;">Digital Platform Redesign</div>
+                <div>
+                  <span class="status-badge">
+                    <span class="status-pulse"></span>
+                    <span id="active-phase-badge-text">Review &amp; QA</span>
+                  </span>
+                </div>
+              </div>
+              <div class="small opacity-75 mt-3"><i class="bi bi-clock-history"></i> Current Staging Phase</div>
+            </div>
+          </div>
+
+          <!-- Next Milestone -->
+          <div class="col-lg-3 col-md-6 col-12">
+            <div class="widget-card d-flex flex-column justify-content-between">
+              <div>
+                <div class="widget-title">Next Milestone</div>
+                <div class="h5 font-weight-bold text-white mb-2" id="next-milestone-title" style="color: var(--heading-color) !important;">Production Launch &amp; Handover</div>
+                <div class="small opacity-75">Target Date:</div>
+                <div class="h6 font-weight-bold text-white mt-1" id="next-milestone-date" style="color: var(--heading-color) !important;">May 24, 2026</div>
+              </div>
+              <div class="small text-warning" id="milestone-days-remaining-label"><i class="bi bi-exclamation-triangle"></i> 7 Days Remaining</div>
+            </div>
+          </div>
+
+          <!-- Project Director -->
+          <div class="col-lg-3 col-md-6 col-12">
+            <div class="widget-card d-flex flex-column justify-content-between">
+              <div>
+                <div class="widget-title">Project Director</div>
+                <div class="d-flex align-items-center gap-3 mt-1">
+                  <img src="assets/logo-v2.png" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover; background: #0f131b; border: 1px solid rgba(255,255,255,0.1);" alt="PM Avatar">
+                  <div>
+                    <div class="font-weight-bold text-white" style="font-size: 14px; color: var(--heading-color) !important;">Omar Khayam</div>
+                    <div class="small opacity-75" style="font-size: 11px;">Principal Engineer &amp; Director</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-3">
+                <a href="mailto:contact@synchrove.com" class="btn btn-sm w-100 btn-outline-light" style="font-size: 12px; font-weight: 600; border-radius: 8px; border-color: color-mix(in srgb, var(--default-color) 25%, transparent); color: var(--default-color);">Contact PM</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Roadmap Timeline -->
+        <div class="section-box">
+          <div class="box-title">
+            <i class="bi bi-flag"></i>
+            <span>Milestone Roadmap Tracker</span>
+          </div>
+
+          <div class="timeline-steps" id="roadmap-timeline-steps">
+            <div class="timeline-progress-line"></div>
+            
+            <div class="step-node completed">
+              <div class="step-circle"><i class="bi bi-check2"></i></div>
+              <div class="step-label">Discovery</div>
+              <div class="step-desc">Scope finalized</div>
+            </div>
+
+            <div class="step-node completed">
+              <div class="step-circle"><i class="bi bi-check2"></i></div>
+              <div class="step-label">UI/UX Design</div>
+              <div class="step-desc">Figma screens signed</div>
+            </div>
+
+            <div class="step-node completed">
+              <div class="step-circle"><i class="bi bi-check2"></i></div>
+              <div class="step-label">Development</div>
+              <div class="step-desc">Frontend &amp; DB core</div>
+            </div>
+
+            <div class="step-node active">
+              <div class="step-circle">4</div>
+              <div class="step-label">Review &amp; QA</div>
+              <div class="step-desc">Testing &amp; Review</div>
+            </div>
+
+            <div class="step-node">
+              <div class="step-circle">5</div>
+              <div class="step-label">Deploy &amp; Launch</div>
+              <div class="step-desc">Handover &amp; DNS</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PM Chat and Feedback Form Split -->
+        <div class="row g-4 mb-4">
+          <!-- Chatroom -->
+          <div class="col-lg-6 col-12">
+            <div class="section-box h-100 mb-0 d-flex flex-column justify-content-between">
+              <div>
+                <div class="box-title">
+                  <i class="bi bi-chat-left-dots"></i>
+                  <span>Project Discussion Room</span>
+                </div>
+                
+                <div class="chat-box">
+                  <div class="chat-header">
+                    <div class="chat-status-dot"></div>
+                    <div class="small font-weight-bold" style="color: var(--heading-color);">Omar Khayam (Project Manager)</div>
+                  </div>
+
+                  <div class="chat-body" id="chat-scroller">
+                    <div class="chat-msg pm">
+                      Hi John! Hope your week is starting well. The core UI/UX updates and full responsive styles have been merged into the staging branch. Take a look at the Figma link below or the live demo!
+                    </div>
+                    <div class="chat-msg client">
+                      Thanks Omar! I checked the dashboard color themes and swatches, they look incredibly smooth. When do you think we can finalize the review?
+                    </div>
+                    <div class="chat-msg pm">
+                      We are wrapping up defensive code testing and cross-browser responsiveness checks today. If everything matches your approval, we will be ready to schedule deployment for next week!
+                    </div>
+                  </div>
+
+                  <div class="chat-footer">
+                    <input type="text" id="chat-message-input" class="chat-input" placeholder="Ask a question or provide design feedback..." onkeydown="handleChatSubmit(event)">
+                    <button class="btn-chat-send" onclick="sendChatMessage()">
+                      <i class="bi bi-send-fill"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feedback Form -->
+          <div class="col-lg-6 col-12">
+            <div class="section-box h-100 mb-0">
+              <div class="box-title">
+                <i class="bi bi-star"></i>
+                <span>Submit Project Feedback</span>
+              </div>
+
+              <div id="review-form-container">
+                <p class="small opacity-75">Your thoughts help us empower other businesses. Any submitted feedback will instantly appear on our global testimonials section!</p>
+                
+                <div class="star-rating-wrapper">
+                  <i class="bi bi-star-fill star-select selected" data-value="1" onclick="rateStars(1)"></i>
+                  <i class="bi bi-star-fill star-select selected" data-value="2" onclick="rateStars(2)"></i>
+                  <i class="bi bi-star-fill star-select selected" data-value="3" onclick="rateStars(3)"></i>
+                  <i class="bi bi-star-fill star-select selected" data-value="4" onclick="rateStars(4)"></i>
+                  <i class="bi bi-star-fill star-select selected" data-value="5" onclick="rateStars(5)"></i>
+                </div>
+
+                <form id="feedback-form" onsubmit="submitReview(event)">
+                  <div class="mb-3">
+                    <label for="review-role" class="small font-weight-bold mb-1" style="color: var(--heading-color);">Your Professional Role / Company</label>
+                    <input type="text" id="review-role" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. CEO &amp; Founder, Acme Corp" required>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="review-comment" class="small font-weight-bold mb-1" style="color: var(--heading-color);">Your Review / Project Experience</label>
+                    <textarea id="review-comment" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" rows="4" placeholder="Describe your experience collaborating with Synchrove team..." required></textarea>
+                  </div>
+
+                  <button type="submit" class="btn btn-portal w-100">
+                    <span>Publish Live Review</span>
+                    <i class="bi bi-globe"></i>
+                  </button>
+                </form>
+              </div>
+
+              <!-- Success Checkmark state -->
+              <div class="success-checkmark" id="success-view">
+                <i class="bi bi-check-circle-fill"></i>
+                <h4 class="font-weight-bold mt-3" style="color: var(--heading-color);">Review Published Successfully!</h4>
+                <p class="small opacity-75 mt-2">Your review has been dynamically added to Synchrove's public testimonials. You can now visit the <a href="about.html" class="text-info font-weight-bold">About Page</a> to see it live in the carousel slider!</p>
+                <button class="btn btn-sm btn-outline-light mt-3" onclick="resetReviewForm()" style="border-radius: 8px; border-color: color-mix(in srgb, var(--default-color) 25%, transparent); color: var(--default-color);">Submit Another Review</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Deliverables and Downloads Grid -->
+        <div class="section-box mb-0">
+          <div class="box-title">
+            <i class="bi bi-cloud-arrow-down"></i>
+            <span>Project Deliverables &amp; Downloads</span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-lg-3 col-md-6 col-12">
+              <a href="#" onclick="alert('Demo feature: Wireframe Prototype link clicked!')" class="deliverable-card">
+                <div class="deliverable-icon"><i class="bi bi-palette"></i></div>
+                <div class="deliverable-info">
+                  <h5>UI/UX Prototypes</h5>
+                  <span>Sign-off Design Drafts</span>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-12">
+              <a href="#" onclick="alert('Demo feature: Source Code access link clicked!')" class="deliverable-card">
+                <div class="deliverable-icon"><i class="bi bi-git"></i></div>
+                <div class="deliverable-info">
+                  <h5>Source Repository</h5>
+                  <span>GitHub Core Branch</span>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-12">
+              <a href="index.html" class="deliverable-card">
+                <div class="deliverable-icon"><i class="bi bi-laptop"></i></div>
+                <div class="deliverable-info">
+                  <h5>Live Staging Server</h5>
+                  <span>Active Testing Demo</span>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-12">
+              <a href="#" onclick="alert('Demo feature: Invoice INV-2026-089 (Paid) downloaded!')" class="deliverable-card">
+                <div class="deliverable-icon"><i class="bi bi-receipt-cutoff"></i></div>
+                <div class="deliverable-info">
+                  <h5>Invoice &amp; Billing</h5>
+                  <span>Latest Statement (Paid)</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        </div> <!-- END OF TAB VIEW: OVERVIEW -->
+
+        <!-- TAB VIEW: ORDERS & INVOICES -->
+        <div id="dash-tab-orders" class="dash-tab-content">
+          <!-- Active Orders Package -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-8 col-12">
+              <div class="section-box h-100 mb-0">
+                <div class="box-title">
+                  <i class="bi bi-box-seam"></i>
+                  <span>Active Project Packages</span>
+                </div>
+                
+                <div class="d-flex align-items-start gap-3 p-3 mb-3" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent); border-radius: 16px;">
+                  <div class="deliverable-icon" style="font-size: 24px; padding: 25px;"><i class="bi bi-code-slash"></i></div>
+                  <div class="flex-grow-1">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                      <h5 style="font-weight: 700; color: var(--heading-color); margin-bottom: 4px;">Enterprise Web Application &amp; Integration</h5>
+                      <span class="status-badge" style="margin-top: 0; background: rgba(46, 196, 182, 0.1); color: #2ec4b6;">Active Contract</span>
+                    </div>
+                    <p class="small opacity-75" style="margin-bottom: 12px;">Full-stack development of secure dashboard portal, live metrics synchronizer, responsive theme customization, and automated local data adapters.</p>
+                    <div style="display: flex; gap: 20px; font-size: 12px; font-weight: 600;">
+                      <span>📅 Start Date: May 02, 2026</span>
+                      <span>🚀 Launch Target: May 24, 2026</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex align-items-start gap-3 p-3" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent); border-radius: 16px;">
+                  <div class="deliverable-icon" style="font-size: 24px; padding: 25px;"><i class="bi bi-shield-check"></i></div>
+                  <div class="flex-grow-1">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                      <h5 style="font-weight: 700; color: var(--heading-color); margin-bottom: 4px;">Premium Post-Launch SLA Support</h5>
+                      <span class="status-badge" style="margin-top: 0; background: color-mix(in srgb, var(--default-color) 10%, transparent); color: var(--default-color);">Pending Start</span>
+                    </div>
+                    <p class="small opacity-75" style="margin-bottom: 12px;">24/7 priority developer availability, monthly performance optimization audits, and wild-card DNS/subdomain scaling security monitoring.</p>
+                    <div style="display: flex; gap: 20px; font-size: 12px; font-weight: 600;">
+                      <span>📅 Start Date: May 25, 2026</span>
+                      <span>🚀 Period: 12 Months Contract</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Summary Widget -->
+            <div class="col-lg-4 col-12">
+              <div class="section-box h-100 mb-0 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="box-title">
+                    <i class="bi bi-currency-dollar"></i>
+                    <span>Financial Summary</span>
+                  </div>
+                  
+                  <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed color-mix(in srgb, var(--default-color) 8%, transparent); padding-bottom: 10px;">
+                      <span class="small opacity-75">Contract Budget</span>
+                      <strong class="text-white" id="fin-contract-budget" style="color: var(--heading-color) !important;">$24,500.00</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed color-mix(in srgb, var(--default-color) 8%, transparent); padding-bottom: 10px;">
+                      <span class="small opacity-75">Milestones Paid</span>
+                      <strong id="fin-milestones-paid" style="color: #2ec4b6;">$24,500.00</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px;">
+                      <span class="small opacity-75">Outstanding Balance</span>
+                      <strong id="fin-outstanding-balance" style="color: var(--accent-color); font-size: 18px;">$0.00</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-3 text-center" id="fin-success-callout" style="background: rgba(46, 196, 182, 0.06); border: 1px dashed rgba(46, 196, 182, 0.25); border-radius: 12px; font-size: 12px; color: #2ec4b6; font-weight: 600;">
+                  🎉 Your account is fully paid and up-to-date! Thank you for partnering with Synchrove.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Invoice Statement History Table -->
+          <div class="section-box mb-0">
+            <div class="box-title">
+              <i class="bi bi-receipt-cutoff"></i>
+              <span>Invoice &amp; Payment Statements</span>
+            </div>
+
+            <div class="table-responsive" style="border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent); border-radius: 16px; overflow: hidden;">
+              <table class="table mb-0" style="color: var(--default-color); background: transparent; vertical-align: middle;">
+                <thead>
+                  <tr style="background: color-mix(in srgb, var(--default-color) 5%, transparent); border-bottom: 2px solid color-mix(in srgb, var(--default-color) 8%, transparent); font-size: 13px; font-weight: 700; text-transform: uppercase;">
+                    <th scope="col" style="padding: 15px 20px;">Invoice ID</th>
+                    <th scope="col" style="padding: 15px 20px;">Issued Date</th>
+                    <th scope="col" style="padding: 15px 20px;">Description</th>
+                    <th scope="col" style="padding: 15px 20px;">Amount</th>
+                    <th scope="col" style="padding: 15px 20px;">Status</th>
+                    <th scope="col" style="padding: 15px 20px; text-align: right;">Receipt</th>
+                  </tr>
+                </thead>
+                <tbody style="font-size: 13px;" id="client-invoices-list-tbody">
+                  <!-- Loaded dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB VIEW: CLIENT PROFILE -->
+        <div id="dash-tab-profile" class="dash-tab-content">
+          <div class="row g-4 mb-4">
+            <!-- Edit Form -->
+            <div class="col-lg-8 col-12">
+              <div class="section-box h-100 mb-0">
+                <div class="box-title">
+                  <i class="bi bi-pencil-square"></i>
+                  <span>Edit Profile Details</span>
+                </div>
+
+                <div id="profile-success-msg" style="display: none; background: rgba(46, 196, 182, 0.08); border: 1px solid rgba(46, 196, 182, 0.25); border-radius: 12px; padding: 14px; margin-bottom: 20px; color: #2ec4b6; font-size: 13px; font-weight: 600;">
+                  ✅ Client profile successfully updated! Changes are reflected immediately.
+                </div>
+
+                <form id="edit-profile-form" onsubmit="saveClientProfile(event)">
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Your Full Name</label>
+                      <input type="text" id="edit-name" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required>
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Contact Email</label>
+                      <input type="email" id="edit-email" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required readonly>
+                    </div>
+                  </div>
+
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Professional Role / Title</label>
+                      <input type="text" id="edit-role" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. Director of Operations" required>
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Active Workspace / Project</label>
+                      <input type="text" id="edit-project" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. Acme Web Portal Redesign" required>
+                    </div>
+                  </div>
+
+                  <div class="row g-3 mb-4">
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Custom Profile Avatar URL</label>
+                      <input type="text" id="edit-avatar-url" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="URL to profile image (optional)">
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Or Upload Custom Photo</label>
+                      <input type="file" id="client-avatar-file" accept="image/*" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color); font-size: 13px;" onchange="handleClientAvatarUpload(event)">
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-portal w-100" style="padding: 12px 25px; border-radius: 12px;">
+                    <span>Save &amp; Update Profile</span>
+                    <i class="bi bi-save-fill"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Avatar Preset Grid & Bio -->
+            <div class="col-lg-4 col-12">
+              <div class="section-box h-100 mb-0 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="box-title">
+                    <i class="bi bi-camera"></i>
+                    <span>Profile Avatar Presets</span>
+                  </div>
+                  
+                  <div class="row g-2 text-center" style="margin-top: 15px;">
+                    <div class="col-3">
+                      <img src="assets/img/testimonials/testimonials-5.jpg" onclick="selectAvatarPreset('assets/img/testimonials/testimonials-5.jpg')" class="img-thumbnail rounded-circle preset-avatar-img selected" style="width: 55px; height: 55px; cursor: pointer; border: 2px solid var(--accent-color); object-fit: cover;" alt="P1">
+                    </div>
+                    <div class="col-3">
+                      <img src="assets/img/testimonials/testimonials-4.jpg" onclick="selectAvatarPreset('assets/img/testimonials/testimonials-4.jpg')" class="img-thumbnail rounded-circle preset-avatar-img" style="width: 55px; height: 55px; cursor: pointer; border: 2px solid transparent; object-fit: cover;" alt="P2">
+                    </div>
+                    <div class="col-3">
+                      <img src="assets/img/testimonials/testimonials-3.jpg" onclick="selectAvatarPreset('assets/img/testimonials/testimonials-3.jpg')" class="img-thumbnail rounded-circle preset-avatar-img" style="width: 55px; height: 55px; cursor: pointer; border: 2px solid transparent; object-fit: cover;" alt="P3">
+                    </div>
+                    <div class="col-3">
+                      <img src="assets/logo-small.png" onclick="selectAvatarPreset('assets/logo-small.png')" class="img-thumbnail rounded-circle preset-avatar-img" style="width: 55px; height: 55px; cursor: pointer; border: 2px solid transparent; object-fit: cover;" alt="P4">
+                    </div>
+                  </div>
+                  <span class="small opacity-75 d-block text-center mt-2">Click any preset image to select it instantly</span>
+                </div>
+
+                <div class="mt-4 p-3" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent); border-radius: 14px;">
+                  <strong class="small d-block mb-1" style="color: var(--heading-color);">Synchrove Client Signature:</strong>
+                  <p class="small opacity-75 mb-0" style="font-size: 11px;">Your workspace profile remains private and encrypted. It is only shared within this staging session to guarantee a customized, high-touch portal experience.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB VIEW: SYSTEM SETTINGS -->
+        <div id="dash-tab-settings" class="dash-tab-content">
+          <div class="row g-4 mb-4">
+            <!-- Alert Notifications Toggle -->
+            <div class="col-lg-6 col-12">
+              <div class="section-box h-100 mb-0">
+                <div class="box-title">
+                  <i class="bi bi-bell"></i>
+                  <span>Notification Preferences</span>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 15px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                      <h6 class="mb-0" style="font-weight: 700; color: var(--heading-color);">Daily Progress Reports</h6>
+                      <span class="small opacity-75" style="font-size: 11px;">Receive daily developer commit summaries</span>
+                    </div>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="notify-daily" checked style="cursor: pointer; width: 45px; height: 22px;">
+                    </div>
+                  </div>
+
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed color-mix(in srgb, var(--default-color) 8%, transparent); padding-top: 15px;">
+                    <div>
+                      <h6 class="mb-0" style="font-weight: 700; color: var(--heading-color);">Milestone SMS Alerts</h6>
+                      <span class="small opacity-75" style="font-size: 11px;">Get direct text messages when a stage reaches 100%</span>
+                    </div>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="notify-sms" style="cursor: pointer; width: 45px; height: 22px;">
+                    </div>
+                  </div>
+
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed color-mix(in srgb, var(--default-color) 8%, transparent); padding-top: 15px;">
+                    <div>
+                      <h6 class="mb-0" style="font-weight: 700; color: var(--heading-color);">Weekly Staging Backups</h6>
+                      <span class="small opacity-75" style="font-size: 11px;">Receive automated notification of code builds</span>
+                    </div>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="notify-backups" checked style="cursor: pointer; width: 45px; height: 22px;">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-4">
+                  <button onclick="alert('Notification preferences successfully saved!')" class="btn btn-portal w-100" style="border-radius: 12px; padding: 10px;">Save Preferences</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Password Reset panel -->
+            <div class="col-lg-6 col-12">
+              <div class="section-box h-100 mb-0">
+                <div class="box-title">
+                  <i class="bi bi-shield-lock"></i>
+                  <span>Security &amp; Password</span>
+                </div>
+
+                <form onsubmit="event.preventDefault(); alert('Security credentials updated! Your new password has been applied.');">
+                  <div class="mb-3">
+                    <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Current Account Password</label>
+                    <input type="password" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required placeholder="••••••••">
+                  </div>
+                  <div class="mb-3">
+                    <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">New Secure Password</label>
+                    <input type="password" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required placeholder="••••••••">
+                  </div>
+                  <div class="mb-3">
+                    <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Confirm New Password</label>
+                    <input type="password" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required placeholder="••••••••">
+                  </div>
+
+                  <button type="submit" class="btn btn-portal w-100" style="border-radius: 12px; padding: 10px;">Update Secure Password</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB VIEW: MY SHOWCASES -->
+        <div id="dash-tab-showcases" class="dash-tab-content">
+          <div class="row g-4 mb-4">
+            
+            <!-- Left Side: My dynamic showcases list -->
+            <div class="col-lg-4 col-12">
+              <div class="section-box h-100 mb-0 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="box-title">
+                    <i class="bi bi-folder-check"></i>
+                    <span>My Showcase Projects</span>
+                  </div>
+                  <p class="small opacity-75">Modify or add new project showcases connected directly to your developer account.</p>
+                  
+                  <div id="client-projects-list-container" class="mt-3" style="max-height: 520px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 5px;">
+                    <!-- Dynamically populated via JS -->
+                  </div>
+                </div>
+                
+                <button onclick="resetClientProjectForm()" class="btn btn-portal w-100 mt-3" style="padding:10px; border-radius:10px; font-size:13px;">
+                  <i class="bi bi-plus-circle"></i> Create New Showcase
+                </button>
+              </div>
+            </div>
+
+            <!-- Right Side: Creation / Edit form -->
+            <div class="col-lg-8 col-12">
+              <div class="section-box mb-0">
+                <div class="box-title">
+                  <i class="bi bi-journal-plus"></i>
+                  <span id="client-project-form-title">Submit Project Showcase</span>
+                </div>
+                <p class="small opacity-75">Publish high-resolution screenshots, technology manuals, and live staging URLs directly to the agency portfolio index.</p>
+
+                <div id="client-project-success-msg" style="display: none; background: rgba(46, 196, 182, 0.08); border: 1px solid rgba(46, 196, 182, 0.25); border-radius: 12px; padding: 14px; margin-bottom: 20px; color: #2ec4b6; font-size: 13px; font-weight: 600;">
+                  ✅ Showcase successfully published to the central agency hub!
+                </div>
+
+                <form id="client-project-form" onsubmit="saveClientProjectForm(event)">
+                  <input type="hidden" id="client-project-edit-id">
+                  
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Project Title</label>
+                      <input type="text" id="client-project-edit-title" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. Acme Web Platform" required>
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Creator / Owner (Locked)</label>
+                      <input type="text" id="client-project-edit-creator-display" class="form-control" style="background: color-mix(in srgb, var(--background-color) 20%, transparent); border-color: color-mix(in srgb, var(--default-color) 10%, transparent); color: var(--heading-color); opacity:0.8;" readonly>
+                    </div>
+                  </div>
+
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-4 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Category</label>
+                      <select id="client-project-edit-category" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required>
+                        <option value="Website / App">Website / App</option>
+                        <option value="Networking">Networking</option>
+                        <option value="Video Production">Video Production</option>
+                        <option value="Image / Graphics">Image / Graphics</option>
+                        <option value="Digital Marketing">Digital Marketing</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Type</label>
+                      <input type="text" id="client-project-edit-type" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. SaaS, E-Commerce" required>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Project Status</label>
+                      <select id="client-project-edit-status" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" required>
+                        <option value="Live">Live</option>
+                        <option value="Completed">Completed</option>
+                        <option value="In Development">In Development</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-4 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Client Name</label>
+                      <input type="text" id="client-project-edit-client" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. Globex Corp">
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Duration</label>
+                      <input type="text" id="client-project-edit-duration" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. 2 months">
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Year</label>
+                      <input type="text" id="client-project-edit-year" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. 2026">
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Teaser Summary (Short Teaser)</label>
+                    <input type="text" id="client-project-edit-summary" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. Premium tracking dashboard" required>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Detailed Overview & Description</label>
+                    <textarea id="client-project-edit-description" rows="3" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="Describe setup details, database schema, operational manual, and tech stack configurations..." required></textarea>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Technologies Used (comma separated)</label>
+                    <input type="text" id="client-project-edit-techs" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. Laravel, React, TailwindCSS" required>
+                  </div>
+
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Live URL (optional)</label>
+                      <input type="text" id="client-project-edit-liveurl" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="https://staging.synchrove.com">
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Repository / Source Code (optional)</label>
+                      <input type="text" id="client-project-edit-repourl" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="https://github.com/...">
+                    </div>
+                  </div>
+
+                  <!-- Cover Image File Upload -->
+                  <div class="mb-4">
+                    <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Main Project Cover Image</label>
+                    <div class="d-flex align-items-center gap-3">
+                      <input type="file" id="client-project-edit-cover-file" accept="image/*" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" onchange="handleClientProjectCoverUpload(event)">
+                      <img id="client-project-edit-cover-preview" src="assets/img/masonry-portfolio/masonry-portfolio-1.jpg" style="width:70px; height:50px; object-fit:cover; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:#0f131b;">
+                    </div>
+                    <input type="hidden" id="client-project-edit-cover-base64">
+                  </div>
+
+                  <!-- Gallery Assets Sub-section -->
+                  <div class="mb-4 p-3 rounded-4" style="background: color-mix(in srgb, var(--default-color) 3%, transparent); border:1px dashed color-mix(in srgb, var(--default-color) 10%, transparent);">
+                    <label class="small font-weight-bold mb-2 d-block" style="color: var(--heading-color);"><i class="bi bi-images"></i> Add Showcase Video/Image Assets</label>
+                    <div class="row g-2 mb-2 align-items-center">
+                      <div class="col-md-4">
+                        <select id="client-gallery-asset-type" class="form-control form-control-sm" style="background:#0f131b;">
+                          <option value="image">Showcase Image</option>
+                          <option value="video">Showcase Video</option>
+                        </select>
+                      </div>
+                      <div class="col-md-5">
+                        <input type="file" id="client-gallery-asset-file" accept="image/*,video/*" class="form-control form-control-sm" style="background:#05070a;">
+                      </div>
+                      <div class="col-md-3">
+                        <button type="button" class="btn btn-sm btn-info w-100" onclick="uploadClientGalleryAsset()">Add Asset</button>
+                      </div>
+                    </div>
+                    <input type="text" id="client-gallery-asset-caption" class="form-control form-control-sm mb-3" style="background:#05070a;" placeholder="Asset caption (e.g. 'Staging dashboard layout')">
+                    
+                    <!-- Dynamic Assets Grid Preview -->
+                    <div id="client-gallery-assets-preview-grid" class="row g-2 mt-2">
+                      <!-- Rendered live via JS -->
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-portal w-100" style="padding: 12px 25px; border-radius: 12px;">
+                    <span id="client-project-submit-text">Publish Showcase to Central Index</span>
+                    <i class="bi bi-arrow-right-circle-fill"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Section -->
+  <footer id="footer" class="footer">
+    <div class="container">
+      <div class="row gy-4">
+        <!-- Column 1: About Agency -->
+        <div class="col-lg-7 col-md-12 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <img src="assets/logo-v2.png" alt="Synchrove" style="height: 35px; margin-bottom: 12px;">
+          </a>
+          <p data-info="company_tagline">Innovative software and digital solutions to empower your business</p>
+          <div class="footer-contact pt-2">
+            <p><strong>Phone:</strong> <span data-info="phone">+1 5589 55488 55</span></p>
+            <p><strong>Email:</strong> <span data-info="email">contact@synchrove.com</span></p>
+          </div>
+        </div>
+
+        <!-- Column 2: Location / Hours -->
+        <div class="col-lg-5 col-md-12 footer-contact">
+          <h4>Contact Information</h4>
+          <p data-info="address">A108 Awesome Street, New York, NY 535022</p>
+          <p class="mt-3"><strong>Working Hours:</strong></p>
+          <p data-info="working_hours">Mon - Fri, 9:00 AM - 6:00 PM</p>
+        </div>
+      </div>
+
+      <!-- Copyright & Socials directly below in the same block, no divider line -->
+      <div class="footer-bottom-info text-center mt-4">
+        <div class="copyright">
+          <p>© Copyright <strong class="px-1 sitename" data-info="company_name">Synchrove</strong> <span data-info="copyright_year">2026</span>. All Rights Reserved</p>
+        </div>
+        <div class="social-links d-flex justify-content-center mt-2">
+          <a href="#"><i class="bi bi-twitter-x"></i></a>
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/omarkhayam4917/"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    // Client profile and validation checks
+    let clientWorkspace = null;
+    let clientEmail = 'client@example.com';
+
+    function normalizeUserType(userType, fallbackRole) {
+      if (userType === 'Super User' || userType === 'Team Synchrove' || userType === 'Clients') {
+        return userType;
+      }
+
+      if (fallbackRole && fallbackRole.toLowerCase().indexOf('administrator') !== -1) {
+        return 'Super User';
+      }
+
+      return 'Clients';
+    }
+
+    function formatUserRole(profile) {
+      const userType = normalizeUserType(profile && profile.userType, profile && profile.role);
+      const role = (profile && profile.role) ? profile.role : '';
+      return role ? `${userType} | ${role}` : userType;
+    }
+
+    (function () {
+      try {
+        if (localStorage.getItem('synchrove_client_authenticated') !== 'true') {
+          window.location.href = 'portal.html';
+          return;
+        }
+
+        clientEmail = localStorage.getItem('synchrove_client_email') || 'client@example.com';
+
+        // Load client workspaces from localStorage
+        let workspaces = [];
+        const storedWS = localStorage.getItem('synchrove_client_workspaces');
+        if (storedWS) {
+          workspaces = JSON.parse(storedWS);
+        } else {
+          // Default fallback mock workspaces
+          workspaces = [
+            {
+              name: "John Larson",
+              email: "client@example.com",
+              userType: "Clients",
+              role: "CEO, Acme Corp",
+              project: "Digital Platform Redesign",
+              avatar: "assets/img/testimonials/testimonials-5.jpg",
+              progress: 78,
+              phase: "Review & QA",
+              milestone: "Production Launch & Handover",
+              targetDate: "May 24, 2026",
+              deliverables: {
+                figma: "https://figma.com/file/acme-design",
+                git: "https://github.com/synchrove/acme",
+                staging: "index.html",
+                invoice: "INV-2026-089"
+              }
+            }
+          ];
+          localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
+        }
+
+        workspaces = workspaces.map((ws) => Object.assign({}, ws, {
+          userType: normalizeUserType(ws.userType, ws.role)
+        }));
+        localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
+
+        clientWorkspace = workspaces.find(w => w.email === clientEmail);
+        if (!clientWorkspace) {
+          // If not found in workspaces (e.g. newly signed up client), seed a dynamic one
+          clientWorkspace = {
+            name: "Client Partner",
+            email: clientEmail,
+            userType: "Clients",
+            role: "Client Partner",
+            project: "Interactive Tracking Workspace",
+            avatar: "assets/logo-small.png",
+            progress: 10,
+            phase: "Discovery",
+            milestone: "Detailed Scope Gathering",
+            targetDate: "TBD",
+            deliverables: {
+              figma: "",
+              git: "",
+              staging: "index.html",
+              invoice: ""
+            }
+          };
+          workspaces.push(clientWorkspace);
+          localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
+        }
+
+        // Apply profile widgets
+        document.getElementById('profile-name').innerText = clientWorkspace.name;
+        document.getElementById('profile-role').innerText = formatUserRole(clientWorkspace);
+        document.getElementById('project-name').innerText = clientWorkspace.project;
+        if (clientWorkspace.avatar) {
+          document.getElementById('profile-avatar').src = clientWorkspace.avatar;
+        }
+
+        // Apply Project progress circle
+        document.getElementById('progress-pct-number').innerText = clientWorkspace.progress + '%';
+        document.getElementById('circle-container').innerHTML = drawCircle(clientWorkspace.progress);
+
+        // Apply Phase & Milestones
+        document.getElementById('active-phase-badge-text').innerText = clientWorkspace.phase;
+        document.getElementById('next-milestone-title').innerText = clientWorkspace.milestone;
+        document.getElementById('next-milestone-date').innerText = clientWorkspace.targetDate;
+
+        // Calculate countdown days remaining
+        try {
+          const target = new Date(clientWorkspace.targetDate);
+          if (!isNaN(target.getTime())) {
+            const diffTime = target - new Date();
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            if (diffDays > 0) {
+              document.getElementById('milestone-days-remaining-label').innerHTML = `<i class="bi bi-exclamation-triangle"></i> ${diffDays} Days Remaining`;
+            } else if (diffDays === 0) {
+              document.getElementById('milestone-days-remaining-label').innerHTML = `<i class="bi bi-exclamation-triangle"></i> Target is Today!`;
+            } else {
+              document.getElementById('milestone-days-remaining-label').innerHTML = `<i class="bi bi-check-circle"></i> Launch Target Reached`;
+              document.getElementById('milestone-days-remaining-label').className = "small text-success";
+            }
+          } else {
+            document.getElementById('milestone-days-remaining-label').innerHTML = `<i class="bi bi-clock"></i> Project Initialized`;
+          }
+        } catch (e) {
+          console.error(e);
+        }
+
+        // Render dynamic Milestone Roadmap
+        renderMilestoneRoadmapNodes(clientWorkspace.phase);
+
+        // Render deliverable href URLs
+        if (clientWorkspace.deliverables) {
+          if (clientWorkspace.deliverables.figma) {
+            document.getElementById('link-figma-deliverable').href = clientWorkspace.deliverables.figma;
+          }
+          if (clientWorkspace.deliverables.git) {
+            document.getElementById('link-git-deliverable').href = clientWorkspace.deliverables.git;
+          }
+        }
+
+        // Load invoices list and calculate financial summary
+        loadClientInvoicesAndFinancials();
+
+        // Render chat history
+        loadClientChatHistory();
+
+        loadProfileIntoEditForm();
+        renderClientProjectsManager();
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+
+    // Draw roadmap nodes dynamically
+    function renderMilestoneRoadmapNodes(activePhase) {
+      const phases = ["Discovery", "UI/UX Design", "Development", "Review & QA", "Deploy & Launch"];
+      const phaseLabels = ["Discovery", "UI/UX Design", "Development", "Review & QA", "Deploy & Launch"];
+      const phaseDescs = ["Scope finalized", "Figma screens signed", "Frontend & DB core", "Testing & Review", "Handover & DNS"];
+      
+      let activeIdx = phases.indexOf(activePhase);
+      if (activeIdx === -1) activeIdx = 3; 
+      
+      const container = document.getElementById('roadmap-timeline-steps');
+      if (!container) return;
+      
+      container.innerHTML = `<div class="timeline-progress-line"></div>`;
+      
+      phases.forEach((p, idx) => {
+        const node = document.createElement('div');
+        if (idx < activeIdx) {
+          node.className = "step-node completed";
+          node.innerHTML = `
+            <div class="step-circle"><i class="bi bi-check2"></i></div>
+            <div class="step-label">${phaseLabels[idx]}</div>
+            <div class="step-desc">${phaseDescs[idx]}</div>
+          `;
+        } else if (idx === activeIdx) {
+          node.className = "step-node active";
+          node.innerHTML = `
+            <div class="step-circle">${idx + 1}</div>
+            <div class="step-label">${phaseLabels[idx]}</div>
+            <div class="step-desc">${phaseDescs[idx]}</div>
+          `;
+        } else {
+          node.className = "step-node";
+          node.innerHTML = `
+            <div class="step-circle">${idx + 1}</div>
+            <div class="step-label">${phaseLabels[idx]}</div>
+            <div class="step-desc">${phaseDescs[idx]}</div>
+          `;
+        }
+        container.appendChild(node);
+      });
+    }
+
+    // Load Invoices and financials from localStorage
+    function loadClientInvoicesAndFinancials() {
+      const tbody = document.getElementById('client-invoices-list-tbody');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+      const invoicesKey = `synchrove_invoices_${clientEmail}`;
+      let clientInvoices = [];
+      const stored = localStorage.getItem(invoicesKey);
+
+      if (stored) {
+        clientInvoices = JSON.parse(stored);
+      } else {
+        // Seed default invoices for Acme John Larson
+        if (clientEmail === 'client@example.com') {
+          clientInvoices = [
+            { id: "INV-2026-089", desc: "75% Milestone Completion - Integration & Beta QA", amount: "14500.00", status: "Paid", date: "May 15, 2026" },
+            { id: "INV-2026-045", desc: "50% Milestone Completion - Core Dev & Styling", amount: "5000.00", status: "Paid", date: "May 08, 2026" },
+            { id: "INV-2026-001", desc: "25% Initial Retainer - Discovery Scope Finalization", amount: "5000.00", status: "Paid", date: "May 02, 2026" }
+          ];
+        } else {
+          clientInvoices = [
+            { id: "INV-2026-001", desc: "25% Retainer Fee - Scope Finalized", amount: "5000.00", status: "Paid", date: "May 02, 2026" }
+          ];
+        }
+        localStorage.setItem(invoicesKey, JSON.stringify(clientInvoices));
+      }
+
+      // Calculate totals
+      let totalBudget = 0;
+      let totalPaid = 0;
+      
+      clientInvoices.forEach(inv => {
+        const amt = parseFloat(inv.amount);
+        totalBudget += amt;
+        if (inv.status === 'Paid') {
+          totalPaid += amt;
+        }
+
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid color-mix(in srgb, var(--default-color) 8%, transparent)';
+        tr.innerHTML = `
+          <td style="padding: 15px 20px; font-weight: 700; color: var(--heading-color);">${inv.id}</td>
+          <td style="padding: 15px 20px;">${inv.date}</td>
+          <td style="padding: 15px 20px;">${inv.desc}</td>
+          <td style="padding: 15px 20px; font-weight: 700;">$${amt.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
+          <td style="padding: 15px 20px;"><span class="badge" style="background: ${inv.status === 'Paid' ? 'rgba(46, 196, 182, 0.15)' : 'rgba(230, 57, 70, 0.15)'}; color: ${inv.status === 'Paid' ? '#2ec4b6' : '#e63946'}; font-size: 11px; padding: 5px 10px; border-radius: 6px;">${inv.status}</span></td>
+          <td style="padding: 15px 20px; text-align: right;"><button onclick="alert('Demo feature: Invoice ${inv.id} statement downloaded!')" class="btn btn-sm btn-outline-light" style="font-size: 11px; border-radius: 6px; border-color: rgba(255,255,255,0.15);"><i class="bi bi-cloud-arrow-down-fill"></i> PDF</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      const outstanding = totalBudget - totalPaid;
+      
+      document.getElementById('fin-contract-budget').innerText = `$${totalBudget.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+      document.getElementById('fin-milestones-paid').innerText = `$${totalPaid.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+      document.getElementById('fin-outstanding-balance').innerText = `$${outstanding.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+
+      const callout = document.getElementById('fin-success-callout');
+      if (outstanding === 0) {
+        callout.className = "p-3 text-center";
+        callout.style.background = "rgba(46, 196, 182, 0.06)";
+        document.getElementById('fin-outstanding-balance').style.color = '#2ec4b6';
+        callout.innerHTML = `🎉 Your account is fully paid and up-to-date! Thank you for partnering with Synchrove.`;
+      } else {
+        callout.className = "p-3 text-center text-warning";
+        callout.style.background = "rgba(255, 193, 7, 0.06)";
+        document.getElementById('fin-outstanding-balance').style.color = 'var(--accent-color)';
+        callout.innerHTML = `⚠️ You have an outstanding balance of $${outstanding.toLocaleString('en-US', {minimumFractionDigits: 2})} remaining on milestone billing.`;
+      }
+    }
+
+    // Load Chat history dynamically
+    const scroller = document.getElementById('chat-scroller');
+    
+    function loadClientChatHistory() {
+      scroller.innerHTML = '';
+      const chatKey = `synchrove_chats_${clientEmail}`;
+      let history = [];
+      const stored = localStorage.getItem(chatKey);
+
+      if (stored) {
+        history = JSON.parse(stored);
+      } else {
+        history = [
+          { sender: "pm", text: `Hi ${clientWorkspace.name.split(' ')[0]}! Hope your week is starting well. The core UI/UX updates and full responsive styles have been merged into the staging branch. Take a look at the Figma link below or the live demo!` },
+          { sender: "client", text: "Thanks Omar! I checked the dashboard color themes and swatches, they look incredibly smooth. When do you think we can finalize the review?" },
+          { sender: "pm", text: "We are wrapping up defensive code testing and cross-browser responsiveness checks today. If everything matches your approval, we will be ready to schedule deployment for next week!" }
+        ];
+        localStorage.setItem(chatKey, JSON.stringify(history));
+      }
+
+      history.forEach(msg => {
+        const bubble = document.createElement('div');
+        bubble.className = 'chat-msg ' + msg.sender;
+        bubble.innerText = msg.text;
+        scroller.appendChild(bubble);
+      });
+
+      scroller.scrollTop = scroller.scrollHeight;
+    }
+
+    // Handle logout action
+    function handleLogout() {
+      localStorage.removeItem('synchrove_client_authenticated');
+      window.location.href = 'portal.html';
+    }
+
+    // Chat submit actions
+    function handleChatSubmit(e) {
+      if (e.key === 'Enter') {
+        sendChatMessage();
+      }
+    }
+
+    function sendChatMessage() {
+      const input = document.getElementById('chat-message-input');
+      const val = input.value.trim();
+      if (!val) return;
+
+      const chatKey = `synchrove_chats_${clientEmail}`;
+      let history = JSON.parse(localStorage.getItem(chatKey)) || [];
+
+      // Append Client Msg
+      history.push({ sender: "client", text: val });
+      localStorage.setItem(chatKey, JSON.stringify(history));
+
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-msg client';
+      bubble.innerText = val;
+      scroller.appendChild(bubble);
+      
+      input.value = '';
+      scroller.scrollTop = scroller.scrollHeight;
+
+      // Trigger automatic simulated response if not reply immediately from admin
+      setTimeout(() => {
+        let replies = JSON.parse(localStorage.getItem(chatKey)) || [];
+        const replyText = getDynamicPMResponse(val);
+        
+        replies.push({ sender: "pm", text: replyText });
+        localStorage.setItem(chatKey, JSON.stringify(replies));
+
+        const replyBubble = document.createElement('div');
+        replyBubble.className = 'chat-msg pm';
+        replyBubble.innerText = replyText;
+        scroller.appendChild(replyBubble);
+        scroller.scrollTop = scroller.scrollHeight;
+      }, 1500);
+    }
+
+    function getDynamicPMResponse(query) {
+      query = query.toLowerCase();
+      if (query.includes('deploy') || query.includes('launch') || query.includes('live')) {
+        return "That's correct! Once you sign off on the QA review in this feedback panel, we'll coordinate the staging-to-production DNS routing. I expect deployment to be fully complete in about 2-3 hours.";
+      }
+      if (query.includes('color') || query.includes('theme') || query.includes('visual') || query.includes('logo')) {
+        return "Ah, yes! The dynamic color swatches in the top bar permit you to switch the dashboard theme (Peacock, Whale, Slate, Warm Amber, Soft Light) in real time. We want to ensure all core branding fits your corporate styling guidelines.";
+      }
+      if (query.includes('cost') || query.includes('invoice') || query.includes('billing') || query.includes('paid')) {
+        return "All billing milestones are current. You can download the latest receipt statement directly from the 'Project Deliverables' card grid at the bottom of the dashboard.";
+      }
+      return "Got it! Thanks for the note. I will sync immediately with Omar and the development team to make sure this is incorporated before our evening staging compile.";
+    }
+
+    // Stars rating interaction
+    let selectedRating = 5;
+    function rateStars(val) {
+      selectedRating = val;
+      const stars = document.querySelectorAll('.star-select');
+      stars.forEach(star => {
+        const starVal = parseInt(star.getAttribute('data-value'));
+        if (starVal <= val) {
+          star.classList.add('selected');
+        } else {
+          star.classList.remove('selected');
+        }
+      });
+    }
+
+    // Submit review
+    function submitReview(e) {
+      if (e && e.preventDefault) {
+        e.preventDefault();
+      }
+      
+      try {
+        const roleEl = document.getElementById('review-role');
+        const commentEl = document.getElementById('review-comment');
+        
+        const role = roleEl ? roleEl.value.trim() : "Client Partner";
+        const text = commentEl ? commentEl.value.trim() : "";
+        
+        let profile = null;
+        const storedProfile = localStorage.getItem('synchrove_client_profile');
+        if (storedProfile) {
+          try {
+            profile = JSON.parse(storedProfile);
+          } catch (pe) {
+            console.error("Profile parsing error:", pe);
+          }
+        }
+        
+        const name = (profile && profile.name) ? profile.name : "John Larson";
+        const avatar = (profile && profile.avatar) ? profile.avatar : "assets/img/testimonials/testimonials-5.jpg";
+
+        const reviewObj = {
+          name: name,
+          role: role,
+          stars: typeof selectedRating !== 'undefined' ? selectedRating : 5,
+          text: text,
+          avatar: avatar,
+          timestamp: Date.now(),
+          approved: false // Explicitly set to false initially
+        };
+
+        let existing = [];
+        const stored = localStorage.getItem('synchrove_testimonials');
+        if (stored) {
+          try {
+            existing = JSON.parse(stored);
+            if (!Array.isArray(existing)) {
+              existing = [];
+            }
+          } catch (err) {
+            console.error("Testimonial JSON parsing error:", err);
+            existing = [];
+          }
+        }
+        
+        existing.push(reviewObj);
+        localStorage.setItem('synchrove_testimonials', JSON.stringify(existing));
+
+        // Update UI
+        const formContainer = document.getElementById('review-form-container');
+        const successView = document.getElementById('success-view');
+        if (formContainer) formContainer.style.display = 'none';
+        if (successView) successView.style.display = 'block';
+      } catch (err) {
+        console.error("Error submitting review:", err);
+        alert("An unexpected error occurred while saving your review. Please try again!");
+      }
+    }
+
+    function resetReviewForm() {
+      document.getElementById('review-role').value = '';
+      document.getElementById('review-comment').value = '';
+      rateStars(5);
+      document.getElementById('success-view').style.display = 'none';
+      document.getElementById('review-form-container').style.display = 'block';
+    }
+
+    // Switch between dashboard tabs
+    function switchDashTab(tabId) {
+      // Deactivate all tabs & content
+      const tabs = document.querySelectorAll('.sub-nav-tab');
+      tabs.forEach(t => t.classList.remove('active'));
+
+      const contents = document.querySelectorAll('.dash-tab-content');
+      contents.forEach(c => c.classList.remove('active'));
+
+      // Find selected elements
+      const activeTab = Array.from(tabs).find(t => t.outerHTML.includes("'" + tabId + "'") || t.getAttribute('onclick').includes(tabId));
+      if (activeTab) activeTab.classList.add('active');
+
+      const activeContent = document.getElementById('dash-tab-' + tabId);
+      if (activeContent) activeContent.classList.add('active');
+    }
+
+    // Load Client Profile into inputs
+    function loadProfileIntoEditForm() {
+      try {
+        const email = localStorage.getItem('synchrove_client_email') || 'client@example.com';
+        document.getElementById('edit-email').value = email;
+
+        const profile = JSON.parse(localStorage.getItem('synchrove_client_profile'));
+        if (profile) {
+          document.getElementById('edit-name').value = profile.name;
+          document.getElementById('edit-role').value = profile.role;
+          document.getElementById('edit-project').value = profile.project;
+          document.getElementById('edit-avatar-url').value = profile.avatar || '';
+          
+          // Select corresponding avatar in presets if matching
+          const presets = document.querySelectorAll('.preset-avatar-img');
+          presets.forEach(p => {
+            if (p.getAttribute('src') === profile.avatar) {
+              p.style.borderColor = 'var(--accent-color)';
+            } else {
+              p.style.borderColor = 'transparent';
+            }
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Select avatar from preset list
+    function selectAvatarPreset(avatarPath) {
+      document.getElementById('edit-avatar-url').value = avatarPath;
+      
+      const presets = document.querySelectorAll('.preset-avatar-img');
+      presets.forEach(p => {
+        if (p.getAttribute('src') === avatarPath) {
+          p.style.borderColor = 'var(--accent-color)';
+        } else {
+          p.style.borderColor = 'transparent';
+        }
+      });
+    }
+
+    // Handle offline image upload via FileReader
+    function handleClientAvatarUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64Url = e.target.result;
+        document.getElementById('edit-avatar-url').value = base64Url;
+        
+        // Clear border selection from presets
+        const presets = document.querySelectorAll('.preset-avatar-img');
+        presets.forEach(img => img.style.borderColor = 'transparent');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Save updated profile
+    function saveClientProfile(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('edit-name').value.trim();
+      const role = document.getElementById('edit-role').value.trim();
+      const project = document.getElementById('edit-project').value.trim();
+      const avatar = document.getElementById('edit-avatar-url').value.trim() || 'assets/img/testimonials/testimonials-5.jpg';
+      const userType = normalizeUserType(
+        clientWorkspace && clientWorkspace.userType,
+        (clientWorkspace && clientWorkspace.role) || ''
+      );
+
+      const updatedProfile = {
+        name: name,
+        userType: userType,
+        role: role,
+        project: project,
+        avatar: avatar
+      };
+
+      localStorage.setItem('synchrove_client_profile', JSON.stringify(updatedProfile));
+
+      if (clientWorkspace) {
+        clientWorkspace.name = name;
+        clientWorkspace.userType = userType;
+        clientWorkspace.role = role;
+        clientWorkspace.project = project;
+        clientWorkspace.avatar = avatar;
+
+        let workspaces = [];
+        try {
+          workspaces = JSON.parse(localStorage.getItem('synchrove_client_workspaces')) || [];
+        } catch (err) {
+          workspaces = [];
+        }
+
+        const idx = workspaces.findIndex(item => item.email === clientEmail);
+        if (idx !== -1) {
+          workspaces[idx] = Object.assign({}, workspaces[idx], clientWorkspace);
+          localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
+        }
+      }
+
+      // Instantly update header widgets
+      document.getElementById('profile-name').innerText = name;
+      document.getElementById('profile-role').innerText = formatUserRole(updatedProfile);
+      document.getElementById('project-name').innerText = project;
+      document.getElementById('profile-avatar').src = avatar;
+
+      // Show success message
+      const success = document.getElementById('profile-success-msg');
+      success.style.display = 'block';
+      setTimeout(() => {
+        success.style.display = 'none';
+      }, 4000);
+    }
+
+    /* ═══════════════════════════════════════════
+       CLIENT-SIDE SHOWCASE PROJECT CONTROLLERS
+       ═══════════════════════════════════════════ */
+
+    let activeClientGalleryAssets = [];
+
+    function renderClientProjectsManager() {
+      const email = localStorage.getItem('synchrove_client_email') || 'client@example.com';
+      
+      let profile = {};
+      try {
+        profile = JSON.parse(localStorage.getItem('synchrove_client_profile') || '{}');
+      } catch(e) {
+        profile = {};
+      }
+
+      const clientName = profile.name || 'John Larson';
+      const clientRole = profile.role || 'CEO, Acme Corp';
+      const clientAvatar = profile.avatar || 'assets/img/testimonials/testimonials-5.jpg';
+
+      const displayField = document.getElementById("client-project-edit-creator-display");
+      if (displayField) {
+        displayField.value = `${clientName} (${clientRole})`;
+      }
+
+      // Fetch projects matching creator email
+      let list = [];
+      try {
+        list = JSON.parse(localStorage.getItem("synchrove_portfolio_projects")) || [];
+      } catch(e) {
+        list = [];
+      }
+
+      const myProjects = list.filter(p => p.creator_email === email);
+      const container = document.getElementById("client-projects-list-container");
+      
+      if (container) {
+        if (myProjects.length === 0) {
+          container.innerHTML = `<div class="text-center py-4 small opacity-50">You have no project showcases published.</div>`;
+          return;
+        }
+
+        container.innerHTML = myProjects.map(p => `
+          <div class="p-3 rounded-4 border d-flex justify-content-between align-items-center" style="background: color-mix(in srgb, var(--default-color) 2%, transparent); border-color: color-mix(in srgb, var(--default-color) 8%, transparent) !important;">
+            <div class="d-flex align-items-center gap-3">
+              <img src="${p.image || 'assets/img/masonry-portfolio/masonry-portfolio-1.jpg'}" style="width: 50px; height: 38px; object-fit: cover; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
+              <div>
+                <h6 style="margin: 0; font-size: 13px; font-weight: 700; color: var(--heading-color);">${p.title}</h6>
+                <span class="small opacity-50 d-block" style="font-size: 11px;">${p.category} · ${p.status}</span>
+              </div>
+            </div>
+            <div class="d-flex gap-2">
+              <button onclick="editClientProject('${p.id}')" class="btn btn-sm btn-outline-info" style="padding: 3px 8px; font-size: 11px; border-radius: 6px;"><i class="bi bi-pencil"></i></button>
+              <button onclick="deleteClientProject('${p.id}')" class="btn btn-sm btn-outline-danger" style="padding: 3px 8px; font-size: 11px; border-radius: 6px;"><i class="bi bi-trash"></i></button>
+            </div>
+          </div>
+        `).join("");
+      }
+    }
+
+    function handleClientProjectCoverUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById("client-project-edit-cover-base64").value = e.target.result;
+        document.getElementById("client-project-edit-cover-preview").src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function uploadClientGalleryAsset() {
+      const fileInput = document.getElementById("client-gallery-asset-file");
+      const typeSelect = document.getElementById("client-gallery-asset-type");
+      const captionInput = document.getElementById("client-gallery-asset-caption");
+      
+      const file = fileInput.files[0];
+      if (!file) {
+        alert("Please select a file to upload as showcase gallery asset!");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        activeClientGalleryAssets.push({
+          type: typeSelect.value,
+          url: e.target.result,
+          caption: captionInput.value || (typeSelect.value === 'video' ? 'Project Showcase Video' : 'Project Showcase Image')
+        });
+
+        fileInput.value = "";
+        captionInput.value = "";
+        
+        renderClientGalleryAssetsGrid();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeClientGalleryAsset(index) {
+      activeClientGalleryAssets.splice(index, 1);
+      renderClientGalleryAssetsGrid();
+    }
+
+    function renderClientGalleryAssetsGrid() {
+      const grid = document.getElementById("client-gallery-assets-preview-grid");
+      if (!grid) return;
+
+      if (activeClientGalleryAssets.length === 0) {
+        grid.innerHTML = `<div class="col-12 text-center py-2 small opacity-50">No additional assets uploaded.</div>`;
+        return;
+      }
+
+      grid.innerHTML = activeClientGalleryAssets.map((item, idx) => `
+        <div class="col-6 position-relative">
+          <div class="card bg-dark border-0 rounded-3 overflow-hidden p-0 position-relative" style="background:#05070a !important;">
+            ${item.type === 'video' 
+              ? `<video src="${item.url}" class="w-100" style="height:70px; object-fit:cover;"></video>` 
+              : `<img src="${item.url}" class="w-100" style="height:70px; object-fit:cover;">`
+            }
+            <div class="p-1 text-center small text-white-50" style="font-size: 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.caption}</div>
+            <button type="button" onclick="removeClientGalleryAsset(${idx})" class="btn btn-sm btn-danger position-absolute top-0 end-0 m-1" style="padding: 1px 5px; font-size: 9px; border-radius: 4px;"><i class="bi bi-x"></i></button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function editClientProject(projectId) {
+      let list = [];
+      try {
+        list = JSON.parse(localStorage.getItem("synchrove_portfolio_projects")) || [];
+      } catch(e) {
+        list = [];
+      }
+
+      const p = list.find(x => x.id === projectId);
+      if (!p) return;
+
+      document.getElementById("client-project-edit-id").value = p.id;
+      document.getElementById("client-project-edit-title").value = p.title;
+      document.getElementById("client-project-edit-category").value = p.category;
+      document.getElementById("client-project-edit-type").value = p.type;
+      document.getElementById("client-project-edit-status").value = p.status;
+      document.getElementById("client-project-edit-client").value = p.client || "";
+      document.getElementById("client-project-edit-duration").value = p.details.duration || "";
+      document.getElementById("client-project-edit-year").value = p.year || "";
+      document.getElementById("client-project-edit-summary").value = p.summary;
+      document.getElementById("client-project-edit-description").value = p.details.description;
+      document.getElementById("client-project-edit-techs").value = (p.techs || []).join(", ");
+      
+      document.getElementById("client-project-edit-cover-base64").value = p.image || "";
+      document.getElementById("client-project-edit-cover-preview").src = p.image || "assets/img/masonry-portfolio/masonry-portfolio-1.jpg";
+
+      activeClientGalleryAssets = p.media || [];
+      renderClientGalleryAssetsGrid();
+
+      document.getElementById("client-project-form-title").textContent = "Edit Project Showcase: " + p.title;
+      document.getElementById("client-project-submit-text").textContent = "Save Changes & Sync Hub";
+      
+      document.getElementById("client-project-form").scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function deleteClientProject(projectId) {
+      if(!confirm("Are you sure you want to delete this showcase?")) return;
+
+      let list = [];
+      try {
+        list = JSON.parse(localStorage.getItem("synchrove_portfolio_projects")) || [];
+      } catch(e) {
+        list = [];
+      }
+
+      list = list.filter(p => p.id !== projectId);
+      localStorage.setItem("synchrove_portfolio_projects", JSON.stringify(list));
+
+      renderClientProjectsManager();
+      resetClientProjectForm();
+      alert("Showcase deleted successfully.");
+    }
+
+    function resetClientProjectForm() {
+      document.getElementById("client-project-form").reset();
+      document.getElementById("client-project-edit-id").value = "";
+      document.getElementById("client-project-edit-cover-base64").value = "";
+      document.getElementById("client-project-edit-cover-preview").src = "assets/img/masonry-portfolio/masonry-portfolio-1.jpg";
+      activeClientGalleryAssets = [];
+      renderClientGalleryAssetsGrid();
+
+      document.getElementById("client-project-form-title").textContent = "Submit Project Showcase";
+      document.getElementById("client-project-submit-text").textContent = "Publish Showcase to Central Index";
+    }
+
+    function saveClientProjectForm(event) {
+      event.preventDefault();
+
+      let list = [];
+      try {
+        list = JSON.parse(localStorage.getItem("synchrove_portfolio_projects")) || [];
+      } catch(e) {
+        list = [];
+      }
+
+      const email = localStorage.getItem('synchrove_client_email') || 'client@example.com';
+      
+      let profile = {};
+      try {
+        profile = JSON.parse(localStorage.getItem('synchrove_client_profile') || '{}');
+      } catch(e) {
+        profile = {};
+      }
+
+      const clientName = profile.name || 'John Larson';
+      const clientRole = profile.role || 'CEO, Acme Corp';
+      const clientAvatar = profile.avatar || 'assets/img/testimonials/testimonials-5.jpg';
+
+      const id = document.getElementById("client-project-edit-id").value;
+      const title = document.getElementById("client-project-edit-title").value;
+      const category = document.getElementById("client-project-edit-category").value;
+      const type = document.getElementById("client-project-edit-type").value;
+      const status = document.getElementById("client-project-edit-status").value;
+      const client = document.getElementById("client-project-edit-client").value;
+      const duration = document.getElementById("client-project-edit-duration").value;
+      const year = document.getElementById("client-project-edit-year").value;
+      const summary = document.getElementById("client-project-edit-summary").value;
+      const description = document.getElementById("client-project-edit-description").value;
+      const techsStr = document.getElementById("client-project-edit-techs").value;
+      const liveUrl = document.getElementById("client-project-edit-liveurl") ? document.getElementById("client-project-edit-liveurl").value : "#";
+      const repoUrl = document.getElementById("client-project-edit-repourl") ? document.getElementById("client-project-edit-repourl").value : "#";
+      const coverBase64 = document.getElementById("client-project-edit-cover-base64").value;
+
+      const parsedTechs = techsStr.split(",").map(t => t.trim()).filter(t => t.length > 0);
+      const features = description.split(".").map(s => s.trim()).filter(s => s.length > 10).slice(0, 6);
+
+      const projectData = {
+        id: id || ("project-" + Date.now()),
+        title: title,
+        category: category,
+        type: type,
+        techs: parsedTechs,
+        status: status,
+        image: coverBase64 || "assets/img/masonry-portfolio/masonry-portfolio-1.jpg",
+        summary: summary,
+        client: client || "N/A",
+        year: year || "2026",
+        creator: clientName,
+        creator_role: clientRole,
+        creator_avatar: clientAvatar,
+        creator_email: email,
+        media: activeClientGalleryAssets,
+        details: {
+          description: description,
+          features: features.length > 0 ? features : ["Dynamic design and architecture", "Comprehensive specifications compliance", "Interactive layout integration"],
+          techStack: parsedTechs,
+          liveUrl: liveUrl || "#",
+          repoUrl: repoUrl || "#",
+          duration: duration || "Ongoing"
+        }
+      };
+
+      if (id) {
+        // Edit mode
+        const idx = list.findIndex(x => x.id === id);
+        if (idx !== -1) {
+          list[idx] = projectData;
+        }
+      } else {
+        // Create mode
+        list.push(projectData);
+      }
+
+      localStorage.setItem("synchrove_portfolio_projects", JSON.stringify(list));
+      
+      renderClientProjectsManager();
+      resetClientProjectForm();
+
+      const successMsg = document.getElementById("client-project-success-msg");
+      if (successMsg) {
+        successMsg.style.display = "block";
+        setTimeout(() => successMsg.style.display = "none", 4000);
+      }
+    }
+  </script>
+</body>
+</html>

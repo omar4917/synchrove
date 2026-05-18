@@ -1,68 +1,75 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
-
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Portfolio - Synchrove</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+  <meta name="description" content="Explore Synchrove's portfolio of web apps, networking, video, and digital marketing projects.">
   <meta property="og:site_name" content="Synchrove">
-
-  <!-- Favicons -->
-  <link href="https://synchrove.com/assets/favicon.ico" rel="icon">
-  
-  <!-- Fonts -->
+  <link href="assets/favicon.ico" rel="icon">
   <link href="https://fonts.googleapis.com/" rel="preconnect">
   <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Poppins:wght@300;400;500;600;700;800&family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-
-  <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-  <link href="https://synchrove.com/assets/synchrove-core.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: Kelly
-  * Template URL: https://bootstrapmade.com/kelly-free-bootstrap-cv-resume-html-template/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-
+  <link href="assets/synchrove-core.css" rel="stylesheet">
   <style id="fouc-fix">.fouc-hidden { display: none !important; }</style>
   <script>document.documentElement.classList.add("fouc-hidden");</script>
+  <style>
+    /* ── Portfolio Filter Bar ── */
+    .pf-filter-bar{background:color-mix(in srgb,var(--surface-color) 85%,transparent);backdrop-filter:blur(18px);border:1px solid color-mix(in srgb,var(--default-color) 8%,transparent);border-radius:16px;padding:20px 24px;margin-bottom:30px}
+    .pf-filter-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+    .pf-filter-row label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--heading-color);opacity:.7;margin-bottom:4px;display:block}
+    .pf-filter-row select{background:color-mix(in srgb,var(--background-color) 60%,transparent);border:1px solid color-mix(in srgb,var(--default-color) 15%,transparent);color:var(--heading-color);border-radius:10px;padding:8px 14px;font-size:13px;font-family:var(--default-font);min-width:170px;cursor:pointer;transition:all .2s}
+    .pf-filter-row select:focus{outline:none;border-color:var(--accent-color);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent-color) 15%,transparent)}
+    .pf-cat-pills{display:flex;flex-wrap:wrap;gap:8px}
+    .pf-cat-pill{padding:7px 18px;border-radius:20px;font-size:12.5px;font-weight:600;cursor:pointer;border:1.5px solid color-mix(in srgb,var(--default-color) 15%,transparent);background:transparent;color:var(--heading-color);transition:all .25s}
+    .pf-cat-pill:hover,.pf-cat-pill.active{background:var(--accent-color);color:var(--contrast-color);border-color:var(--accent-color);transform:translateY(-1px);box-shadow:0 4px 14px color-mix(in srgb,var(--accent-color) 30%,transparent)}
+    /* ── Project Cards ── */
+    .pf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px}
+    .pf-card{position:relative;border-radius:16px;overflow:hidden;background:var(--surface-color);border:1px solid color-mix(in srgb,var(--default-color) 8%,transparent);transition:all .35s cubic-bezier(.4,0,.2,1);cursor:pointer}
+    .pf-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px color-mix(in srgb,var(--default-color) 15%,transparent)}
+    .pf-card-img{width:100%;height:220px;object-fit:cover;transition:transform .5s}
+    .pf-card:hover .pf-card-img{transform:scale(1.05)}
+    .pf-card-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.85) 100%);opacity:0;transition:opacity .35s;display:flex;flex-direction:column;justify-content:flex-end;padding:24px}
+    .pf-card:hover .pf-card-overlay{opacity:1}
+    .pf-card-overlay h3{color:#fff;font-size:18px;font-weight:700;margin-bottom:4px}
+    .pf-card-overlay p{color:rgba(255,255,255,.8);font-size:12.5px;margin-bottom:10px}
+    .pf-card-tags{display:flex;flex-wrap:wrap;gap:5px}
+    .pf-card-tag{background:rgba(255,255,255,.15);backdrop-filter:blur(4px);color:#fff;padding:3px 10px;border-radius:6px;font-size:10.5px;font-weight:600}
+    .pf-card-badge{position:absolute;top:14px;right:14px;background:var(--accent-color);color:var(--contrast-color);padding:4px 12px;border-radius:8px;font-size:11px;font-weight:700;z-index:2}
+    .pf-card-creator-badge{position:absolute;top:14px;left:14px;background:rgba(15,19,27,0.85);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:4px 12px;border-radius:8px;font-size:11px;font-weight:600;z-index:2;display:flex;align-items:center;gap:5px}
+    .pf-card-bottom{padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+    .pf-card-bottom h4{font-size:14.5px;font-weight:700;color:var(--heading-color);margin:0}
+    .pf-card-bottom span{font-size:12px;color:var(--accent-color);font-weight:600}
+    .pf-empty{text-align:center;padding:60px 20px;opacity:.6;font-size:15px}
+    @media(max-width:768px){.pf-grid{grid-template-columns:1fr}.pf-filter-row{flex-direction:column;align-items:stretch}.pf-filter-row select{min-width:100%}}
+  </style>
 </head>
 
 <body class="theme-peacock portfolio-page">
 <header id="header" class="header d-flex align-items-center light-background sticky-top">
   <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
-
     <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
-      <img src="https://synchrove.com/assets/logo-v2.png" alt="Synchrove Logo">
+      <img src="assets/logo-v2.png" alt="Synchrove Logo">
     </a>
-
     <nav id="navmenu" class="navmenu">
       <ul>
-        <li><a href="index.html" class="">Home</a></li>
-        <li><a href="about.html" class="">About</a></li>
-        <li><a href="resume.html" class="">Resume</a></li>
-        <li><a href="services.html" class="">Services</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="services.html">Services</a></li>
         <li><a href="portfolio.html" class="active">Portfolio</a></li>
-        
-        <li><a href="contact.html" class="">Contact</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="portal.html">Portal</a></li>
       </ul>
       <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
     </nav>
-
     <div class="header-social-links d-flex align-items-center gap-3">
       <div class="theme-toggle" role="group" aria-label="Color theme toggle">
         <button type="button" class="theme-btn active" data-theme="peacock" aria-pressed="true">Peacock-P</button>
@@ -76,201 +83,371 @@
       <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
       <a href="https://www.linkedin.com/in/omarkhayam4917/" class="linkedin"><i class="bi bi-linkedin"></i></a>
     </div>
-</div>
+  </div>
 </header>
   <script>
-    (function () {
-      try {
-        var storedTheme = localStorage.getItem('synch-theme');
-        if (storedTheme && storedTheme !== 'peacock') {
-          var targetClass = 'theme-' + storedTheme;
-          document.body.classList.remove('theme-peacock');
-          document.body.classList.add(targetClass);
-        }
-      } catch (error) {
-        /* Local storage unavailable; default theme remains */
-      }
-    })();
+    (function(){try{var s=localStorage.getItem('synch-theme');if(s&&s!=='peacock'){document.body.classList.remove('theme-peacock');document.body.classList.add('theme-'+s);}}catch(e){}})();
   </script>
 
-
 <main class="main">
+  <section id="portfolio" class="portfolio section">
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Portfolio</h2>
+      <p>Explore our diverse collection of projects spanning web development, networking infrastructure, video production, and digital marketing solutions.</p>
+    </div>
 
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Portfolio</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-
-          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
-            <li data-filter="*" class="filter-active">All</li>
-            <li data-filter=".filter-app">App</li>
-            <li data-filter=".filter-product">Card</li>
-            <li data-filter=".filter-branding">Web</li>
-          </ul><!-- End Portfolio Filters -->
-
-          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-1.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>App 1</h4>
-                <p>Lorem ipsum, dolor sit</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-1.jpg" title="App 1" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-2.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Product 1</h4>
-                <p>Lorem ipsum, dolor sit</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-2.jpg" title="Product 1" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-3.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Branding 1</h4>
-                <p>Lorem ipsum, dolor sit</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-3.jpg" title="Branding 1" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-4.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>App 2</h4>
-                <p>Lorem ipsum, dolor sit</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-4.jpg" title="App 2" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-5.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Product 2</h4>
-                <p>Lorem ipsum, dolor sit</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-5.jpg" title="Product 2" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-6.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Branding 2</h4>
-                <p>Lorem ipsum, dolor sit</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-6.jpg" title="Branding 2" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-7.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>App 3</h4>
-                <p>Lorem ipsum, dolor sit</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-7.jpg" title="App 3" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-8.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Product 3</h4>
-                <p>Lorem ipsum, dolor sit</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-8.jpg" title="Product 3" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
-              <img src="assets/img/masonry-portfolio/masonry-portfolio-9.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Branding 3</h4>
-                <p>Lorem ipsum, dolor sit</p>
-                <a href="assets/img/masonry-portfolio/masonry-portfolio-9.jpg" title="Branding 2" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-          </div><!-- End Portfolio Container -->
-
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <!-- Filter Bar -->
+      <div class="pf-filter-bar" id="pf-filter-bar">
+        <div class="pf-cat-pills mb-3" id="pf-category-pills"></div>
+        <div class="pf-filter-row">
+          <div style="flex:1;min-width:160px">
+            <label>Type / Subcategory</label>
+            <select id="pf-type-filter" onchange="applyFilters()"><option value="">All Types</option></select>
+          </div>
+          <div style="flex:1;min-width:160px">
+            <label>Technology</label>
+            <select id="pf-tech-filter" onchange="applyFilters()"><option value="">All Technologies</option></select>
+          </div>
+          <div style="flex:1;min-width:160px">
+            <label>Status</label>
+            <select id="pf-status-filter" onchange="applyFilters()">
+              <option value="">All</option>
+              <option value="Live">Live</option>
+              <option value="In Development">In Development</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
         </div>
-
       </div>
 
-    </section><!-- /Portfolio Section -->
-
-  </main>
-
-
-  <footer id="footer" class="footer light-background">
-
-    <div class="container">
-      <div class="copyright text-center">
-        <p>© <span>Copyright</span> 
-          <strong class="px-1 sitename">Synchrove</strong> 
-          <span>All Rights Reserved<br></span>
-        </p>
+      <!-- Project Grid -->
+      <div class="pf-grid" id="pf-grid"></div>
+      <div class="pf-empty" id="pf-empty" style="display:none">
+        <i class="bi bi-inbox" style="font-size:48px;display:block;margin-bottom:12px"></i>
+        No projects match your current filters. Try broadening your search.
       </div>
-      <div class="social-links d-flex justify-content-center">
+    </div>
+  </section>
+</main>
+
+<footer id="footer" class="footer">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-7 col-md-12 footer-about">
+        <a href="index.html" class="logo d-flex align-items-center">
+          <img src="assets/logo-v2.png" alt="Synchrove" style="height:35px;margin-bottom:12px">
+        </a>
+        <p data-info="company_tagline">Innovative software and digital solutions to empower your business</p>
+        <div class="footer-contact pt-2">
+          <p><strong>Phone:</strong> <span data-info="phone">+1 5589 55488 55</span></p>
+          <p><strong>Email:</strong> <span data-info="email">contact@synchrove.com</span></p>
+        </div>
+      </div>
+      <div class="col-lg-5 col-md-12 footer-contact">
+        <h4>Contact Information</h4>
+        <p data-info="address">A108 Awesome Street, New York, NY 535022</p>
+        <p class="mt-3"><strong>Working Hours:</strong></p>
+        <p data-info="working_hours">Mon - Fri, 9:00 AM - 6:00 PM</p>
+      </div>
+    </div>
+    <div class="footer-bottom-info text-center mt-4">
+      <div class="copyright">
+        <p>&copy; Copyright <strong class="px-1 sitename" data-info="company_name">Synchrove</strong> <span data-info="copyright_year">2026</span>. All Rights Reserved</p>
+      </div>
+      <div class="social-links d-flex justify-content-center mt-2">
         <a href="#"><i class="bi bi-twitter-x"></i></a>
         <a href="#"><i class="bi bi-facebook"></i></a>
         <a href="#"><i class="bi bi-instagram"></i></a>
         <a href="https://www.linkedin.com/in/omarkhayam4917/"><i class="bi bi-linkedin"></i></a>
       </div>
-      <div class="credits">
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-        Distributed by <a href="https://themewagon.com/">ThemeWagon</a>
-      </div>
     </div>
-
-  </footer>
-
-<footer class="synchrove-footer">
-    <p>Powered by <a href="https://synchrove.com" target="_blank">
-        <img src="https://synchrove.com/assets/logo-small.png" alt="Synchrove" style="height:20px;">
-    </a></p>
-    <p>Developed by <a href="https://omar.synchrove.com" target="_blank">Omar Khayam</a></p>
+  </div>
 </footer>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
-    <i class="bi bi-arrow-up-short"></i>
-  </a>
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<div id="preloader"></div>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="assets/js/main.js"></script>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script>
+/* ═══════════════════════════════════════════
+   SYNCHROVE PORTFOLIO ENGINE (LOCALSTORAGE MIGRATED)
+   ═══════════════════════════════════════════ */
 
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
+const SEED_PROJECTS = [
+  {
+    id:"saas-attendance",title:"SaaS Attendance & Payroll",category:"Website / App",type:"ERP",
+    techs:["Django","PostgreSQL","REST API","Android"],status:"Live",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-1.jpg",
+    summary:"Enterprise-grade attendance tracking with biometric integration, payroll processing, and multi-tenant SaaS architecture.",
+    client:"Globex Corp",year:"2026",
+    creator:"John Larson",creator_role:"CEO, Acme Corp",
+    creator_avatar:"assets/img/testimonials/testimonials-5.jpg",creator_email:"client@example.com",
+    details:{
+      description:"A comprehensive SaaS platform handling employee attendance through Android terminals with biometric verification, real-time dashboard analytics, and automated payroll calculations. Features multi-tenant architecture supporting unlimited organizations.",
+      features:["Biometric fingerprint integration","Real-time attendance dashboard","Automated payroll processing","Multi-tenant SaaS architecture","REST API for third-party integration","Role-based access control"],
+      techStack:["Django 5.0","PostgreSQL 16","Django REST Framework","Android (Kotlin)","Redis","Celery","Docker","Nginx"],
+      liveUrl:"#",repoUrl:"https://github.com/synchrove/attendance",duration:"4 months"
+    }
+  },
+  {
+    id:"lilus-kitchen",title:"Lilus Kitchen",category:"Website / App",type:"E-Commerce",
+    techs:["Laravel","PostgreSQL","Blade","Docker"],status:"Live",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-2.jpg",
+    summary:"Premium restaurant ordering platform with menu management, order tracking, and integrated payment processing.",
+    client:"Lilus Kitchen LLC",year:"2026",
+    creator:"Alice Smith",creator_role:"Client Partner",
+    creator_avatar:"assets/logo-small.png",creator_email:"alice@company.com",
+    details:{
+      description:"A beautifully designed restaurant web application featuring dynamic menu management with categorized dishes, real-time order tracking, customer reviews, and an admin panel for full operational control.",
+      features:["Dynamic menu with categories","Shopping cart & checkout","Order status tracking","Admin dashboard","Customer reviews","Responsive mobile-first design"],
+      techStack:["Laravel 11","PostgreSQL","Blade Templates","Docker","Render Cloud","Cloudflare DNS"],
+      liveUrl:"https://lilus.synchrove.com",repoUrl:"#",duration:"3 weeks"
+    }
+  },
+  {
+    id:"synchrove-hub",title:"Synchrove Agency Hub",category:"Website / App",type:"Portfolio",
+    techs:["HTML/CSS","JavaScript","Cloudflare Workers"],status:"Live",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-3.jpg",
+    summary:"Centralized agency discovery hub with subdomain routing, client portals, and dynamic project showcasing.",
+    client:"Synchrove (Internal)",year:"2026",
+    creator:"Omar Khayam",creator_role:"Principal Engineer & Director",
+    creator_avatar:"assets/logo-v2.png",creator_email:"omar@synchrove.com",
+    details:{
+      description:"The central nervous system of Synchrove's digital presence. Features wildcard subdomain routing via Cloudflare Workers, a unified portfolio discovery interface, client workspace portals, and real-time project status dashboards.",
+      features:["Wildcard subdomain gateway","Client workspace portals","Dynamic project filtering","Real-time status dashboards","Theme customization engine","Testimonial moderation system"],
+      techStack:["HTML5","CSS3","Vanilla JavaScript","Cloudflare Workers","Wrangler CLI","LocalStorage API"],
+      liveUrl:"https://synchrove.com",repoUrl:"#",duration:"Ongoing"
+    }
+  },
+  {
+    id:"hr-api-proxy",title:"HR API Integration Layer",category:"Website / App",type:"ERP",
+    techs:["Python","Django","REST API"],status:"Completed",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-4.jpg",
+    summary:"Middleware proxy server bridging Android terminals, Django backend, and Laravel dashboard for HR ecosystem.",
+    client:"Enterprise Client",year:"2026",
+    creator:"John Larson",creator_role:"CEO, Acme Corp",
+    creator_avatar:"assets/img/testimonials/testimonials-5.jpg",creator_email:"client@example.com",
+    details:{
+      description:"A sophisticated API middleware layer connecting three disparate systems: Android biometric terminals, a Django attendance backend, and a Laravel HR dashboard. Handles CORS, authentication relay, and data transformation.",
+      features:["Cross-origin request handling","Authentication token relay","Data format transformation","Error recovery & logging","Rate limiting","Health monitoring"],
+      techStack:["Python 3.12","Django REST Framework","Socket Programming","CORS Middleware"],
+      liveUrl:"#",repoUrl:"#",duration:"2 weeks"
+    }
+  },
+  {
+    id:"office-network",title:"Enterprise Network Infrastructure",category:"Networking",type:"LAN/WAN Setup",
+    techs:["Cisco","MikroTik","pfSense","VLAN"],status:"Completed",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-5.jpg",
+    summary:"Full-scale office network deployment with VLANs, firewall rules, VPN tunnels, and bandwidth management.",
+    client:"Corporate Office",year:"2025",
+    creator:"Omar Khayam",creator_role:"Principal Engineer & Director",
+    creator_avatar:"assets/logo-v2.png",creator_email:"omar@synchrove.com",
+    details:{
+      description:"Designed and deployed a complete enterprise network infrastructure serving 200+ endpoints across 4 floors. Implemented VLAN segmentation, redundant gateway failover, site-to-site VPN, and granular firewall policies.",
+      features:["VLAN segmentation (8 subnets)","Redundant gateway failover","Site-to-site VPN tunnels","Bandwidth management & QoS","Network monitoring (SNMP)","Centralized authentication (RADIUS)"],
+      techStack:["Cisco Catalyst Switches","MikroTik RouterOS","pfSense Firewall","Ubiquiti UniFi APs","Zabbix Monitoring","FreeRADIUS"],
+      liveUrl:"#",repoUrl:"#",duration:"6 weeks"
+    }
+  },
+  {
+    id:"server-rack",title:"Data Center Rack Build",category:"Networking",type:"Server Administration",
+    techs:["Proxmox","Docker","Ubuntu Server","Cloudflare"],status:"Live",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-6.jpg",
+    summary:"Virtualized server infrastructure on Oracle Cloud ARM with Docker orchestration and Cloudflare tunnels.",
+    client:"Synchrove (Internal)",year:"2026",
+    creator:"Omar Khayam",creator_role:"Principal Engineer & Director",
+    creator_avatar:"assets/logo-v2.png",creator_email:"omar@synchrove.com",
+    details:{
+      description:"Architected a cost-effective cloud infrastructure on Oracle Cloud Always Free ARM instances. Running multiple containerized applications with automated deployments, SSL termination, and monitoring.",
+      features:["Proxmox virtualization","Docker Compose orchestration","Automated SSL via Cloudflare","Resource monitoring dashboards","Automated backup pipelines","Zero-downtime deployments"],
+      techStack:["Oracle Cloud ARM","Proxmox VE","Docker","Coolify","Ubuntu Server 24.04","Cloudflare Tunnels","Nginx Proxy Manager"],
+      liveUrl:"#",repoUrl:"#",duration:"Ongoing"
+    }
+  },
+  {
+    id:"brand-video",title:"Synchrove Brand Showcase",category:"Video Production",type:"Brand Video",
+    techs:["After Effects","Premiere Pro","DaVinci Resolve"],status:"Completed",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-7.jpg",
+    summary:"Cinematic brand introduction video with motion graphics, 3D text reveals, and synchronized audio design.",
+    client:"Synchrove (Internal)",year:"2026",
+    creator:"Omar Khayam",creator_role:"Principal Engineer & Director",
+    creator_avatar:"assets/logo-v2.png",creator_email:"omar@synchrove.com",
+    details:{
+      description:"A high-impact 60-second brand video featuring kinetic typography, particle systems, smooth camera transitions, and a custom soundtrack. Designed to establish Synchrove's premium identity across digital platforms.",
+      features:["Kinetic typography animations","Particle system effects","Custom audio soundtrack","4K resolution output","Social media variants (16:9, 9:16, 1:1)","Color-graded cinematic look"],
+      techStack:["Adobe After Effects","Adobe Premiere Pro","DaVinci Resolve","Adobe Audition","Trapcode Suite"],
+      liveUrl:"#",repoUrl:"#",duration:"1 week"
+    }
+  },
+  {
+    id:"product-shoot",title:"E-Commerce Product Photography",category:"Image / Graphics",type:"Product Photography",
+    techs:["Lightroom","Photoshop","Studio Lighting"],status:"Completed",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-8.jpg",
+    summary:"Professional product photography suite with retouching, background removal, and e-commerce optimization.",
+    client:"Retail Client",year:"2025",
+    creator:"Alice Smith",creator_role:"Client Partner",
+    creator_avatar:"assets/logo-small.png",creator_email:"alice@company.com",
+    details:{
+      description:"End-to-end product photography service including studio setup, shooting, post-processing, and delivery of web-optimized images for an e-commerce catalog of 150+ products.",
+      features:["Studio lighting setup","Color-accurate white balance","Background removal & compositing","Batch processing pipeline","Web-optimized exports","Consistent brand styling"],
+      techStack:["Adobe Lightroom Classic","Adobe Photoshop","Capture One Pro","Studio Strobes","Light Tent Setup"],
+      liveUrl:"#",repoUrl:"#",duration:"2 weeks"
+    }
+  },
+  {
+    id:"seo-campaign",title:"SEO & Growth Campaign",category:"Digital Marketing",type:"SEO",
+    techs:["Google Analytics","SEMrush","Ahrefs","WordPress"],status:"Live",
+    image:"assets/img/masonry-portfolio/masonry-portfolio-9.jpg",
+    summary:"Full-spectrum SEO campaign achieving 340% organic traffic growth through technical audits and content strategy.",
+    client:"SaaS Startup",year:"2026",
+    creator:"Alice Smith",creator_role:"Client Partner",
+    creator_avatar:"assets/logo-small.png",creator_email:"alice@company.com",
+    details:{
+      description:"Comprehensive SEO overhaul including technical site audit, keyword research, content strategy, on-page optimization, and link building. Resulted in 340% organic traffic increase and first-page rankings for 25+ target keywords.",
+      features:["Technical SEO audit & fixes","Keyword research & mapping","Content calendar & production","On-page optimization","Link building outreach","Monthly performance reporting"],
+      techStack:["Google Analytics 4","Google Search Console","SEMrush","Ahrefs","Screaming Frog","WordPress","Yoast SEO"],
+      liveUrl:"#",repoUrl:"#",duration:"6 months (ongoing)"
+    }
+  }
+];
 
+// Initialize localStorage projects database if empty
+if(!localStorage.getItem("synchrove_portfolio_projects")){
+  localStorage.setItem("synchrove_portfolio_projects", JSON.stringify(SEED_PROJECTS));
+}
+
+let PROJECTS = JSON.parse(localStorage.getItem("synchrove_portfolio_projects"));
+
+/* Category → Type mappings */
+const CAT_TYPES = {
+  "Website / App":["E-Commerce","ERP","Portfolio","SaaS","Landing Page","CMS"],
+  "Networking":["LAN/WAN Setup","Server Administration","Firewall & Security","VPN Solutions"],
+  "Video Production":["Brand Video","Product Demo","Social Media Content","Motion Graphics"],
+  "Image / Graphics":["Product Photography","UI/UX Design","Brand Identity","Photo Retouching"],
+  "Digital Marketing":["SEO","PPC / Ads","Social Media","Email Marketing","Content Strategy"]
+};
+
+/* Category → Tech mappings */
+const CAT_TECHS = {
+  "Website / App":["Django","Laravel","React","Next.js","Vue.js",".NET","Node.js","HTML/CSS","JavaScript","Python","PHP","PostgreSQL","MySQL","MongoDB","REST API","Docker","Android","Flutter","Cloudflare Workers"],
+  "Networking":["Cisco","MikroTik","pfSense","Ubiquiti","Proxmox","Docker","Ubuntu Server","Windows Server","VLAN","VPN","Cloudflare","Zabbix"],
+  "Video Production":["After Effects","Premiere Pro","DaVinci Resolve","Final Cut Pro","Blender","Cinema 4D"],
+  "Image / Graphics":["Photoshop","Lightroom","Illustrator","Figma","Canva","Studio Lighting","Capture One"],
+  "Digital Marketing":["Google Analytics","SEMrush","Ahrefs","Google Ads","Meta Ads","Mailchimp","HubSpot","WordPress"]
+};
+
+const ALL_CATS = Object.keys(CAT_TYPES);
+let activeCategory = "";
+let grid, pills, typeSelect, techSelect, statusSelect, emptyMsg;
+
+document.addEventListener("DOMContentLoaded", function(){
+  grid = document.getElementById("pf-grid");
+  pills = document.getElementById("pf-category-pills");
+  typeSelect = document.getElementById("pf-type-filter");
+  techSelect = document.getElementById("pf-tech-filter");
+  statusSelect = document.getElementById("pf-status-filter");
+  emptyMsg = document.getElementById("pf-empty");
+  buildCategoryPills();
+  applyFilters();
+});
+
+function buildCategoryPills(){
+  let html = '<button class="pf-cat-pill active" onclick="setCategory(\'\')">All Projects</button>';
+  ALL_CATS.forEach(c => {
+    html += `<button class="pf-cat-pill" onclick="setCategory('${c}')">${c}</button>`;
+  });
+  pills.innerHTML = html;
+}
+
+function setCategory(cat){
+  activeCategory = cat;
+  document.querySelectorAll(".pf-cat-pill").forEach(p => p.classList.remove("active"));
+  const idx = cat === "" ? 0 : ALL_CATS.indexOf(cat) + 1;
+  document.querySelectorAll(".pf-cat-pill")[idx].classList.add("active");
+  rebuildDropdowns();
+  applyFilters();
+}
+
+function rebuildDropdowns(){
+  const types = activeCategory ? CAT_TYPES[activeCategory] || [] : [].concat(...Object.values(CAT_TYPES));
+  const techs = activeCategory ? CAT_TECHS[activeCategory] || [] : [].concat(...Object.values(CAT_TECHS));
+  const uniqueTypes = [...new Set(types)].sort();
+  const uniqueTechs = [...new Set(techs)].sort();
+
+  typeSelect.innerHTML = '<option value="">All Types</option>';
+  uniqueTypes.forEach(t => typeSelect.innerHTML += `<option value="${t}">${t}</option>`);
+
+  techSelect.innerHTML = '<option value="">All Technologies</option>';
+  uniqueTechs.forEach(t => techSelect.innerHTML += `<option value="${t}">${t}</option>`);
+}
+
+function applyFilters(){
+  PROJECTS = JSON.parse(localStorage.getItem("synchrove_portfolio_projects")) || SEED_PROJECTS;
+  const typeVal = typeSelect.value;
+  const techVal = techSelect.value;
+  const statusVal = statusSelect.value;
+
+  let filtered = PROJECTS;
+  if(activeCategory) filtered = filtered.filter(p => p.category === activeCategory);
+  if(typeVal) filtered = filtered.filter(p => p.type === typeVal);
+  if(techVal) filtered = filtered.filter(p => p.techs && p.techs.includes(techVal));
+  if(statusVal) filtered = filtered.filter(p => p.status === statusVal);
+
+  renderGrid(filtered);
+}
+
+function renderGrid(projects){
+  if(projects.length === 0){
+    grid.innerHTML = "";
+    emptyMsg.style.display = "block";
+    return;
+  }
+  emptyMsg.style.display = "none";
+
+  grid.innerHTML = projects.map(p => `
+    <div class="pf-card" onclick="openProjectDetails('${p.id}')" data-aos="fade-up">
+      <img src="${p.image || 'assets/img/masonry-portfolio/masonry-portfolio-1.jpg'}" class="pf-card-img" alt="${p.title}" loading="lazy">
+      <span class="pf-card-creator-badge"><i class="bi bi-person-fill"></i> ${p.creator || 'Omar Khayam'}</span>
+      <span class="pf-card-badge">${p.category}</span>
+      <div class="pf-card-overlay">
+        <div style="font-size: 10px; color: var(--accent-color); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; display: flex; align-items: center; gap: 4px; letter-spacing: 0.5px;">
+          <i class="bi bi-person-circle" style="font-size: 11px;"></i> Creator: ${p.creator || 'Omar Khayam'}
+        </div>
+        <h3>${p.title}</h3>
+        <p>${p.summary}</p>
+        <div class="pf-card-tags">
+          ${(p.techs || []).slice(0,4).map(t => `<span class="pf-card-tag">${t}</span>`).join("")}
+        </div>
+      </div>
+      <div class="pf-card-bottom" style="display: flex; flex-direction: column; gap: 4px; padding: 16px 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+          <h4 style="margin: 0; font-size: 14.5px; font-weight: 700; color: var(--heading-color);">${p.title}</h4>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; font-size: 12px; margin-top: 2px;">
+          <span style="color: var(--accent-color); font-weight: 600;">${p.status} · ${p.type}</span>
+          <span style="color: rgba(255,255,255,0.4); font-weight: 600; font-size: 11px;"><i class="bi bi-person"></i> ${p.creator || 'Omar Khayam'}</span>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function openProjectDetails(id){
+  window.location.href = "portfolio-details.html?id=" + id;
+}
+
+// Initialize dropdowns
+rebuildDropdowns();
+</script>
 </body>
-
 </html>

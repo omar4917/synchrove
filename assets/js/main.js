@@ -133,6 +133,72 @@
    * Init swiper sliders
    */
   function initSwiper() {
+    // Dynamic testimonial injection
+    const wrapper = document.querySelector("#testimonials .swiper-wrapper") || document.querySelector(".testimonials .swiper-wrapper");
+    if (wrapper) {
+      let stored = localStorage.getItem("synchrove_testimonials");
+      if (!stored) {
+        // Seed default high-quality realistic approved reviews so the carousel looks stunning on first visit!
+        const defaultTestimonials = [
+          {
+            name: "John Larson",
+            role: "CEO, Acme Corp",
+            stars: 5,
+            text: "Synchrove delivered our custom enterprise dashboard ahead of schedule! The progress milestone tracker and direct client-to-developer workspace made collaboration incredibly seamless and transparent.",
+            avatar: "assets/img/testimonials/testimonials-5.jpg",
+            timestamp: Date.now() - 86400000 * 3,
+            approved: true
+          },
+          {
+            name: "Alice Smith",
+            role: "Marketing Director, Globex Corp",
+            stars: 5,
+            text: "Having a centralized billing ledger, milestones checklist, and instant chat updates made this the smoothest software delivery experience we have ever had. Outstanding craftsmanship!",
+            avatar: "assets/logo-small.png",
+            timestamp: Date.now() - 86400000 * 2,
+            approved: true
+          }
+        ];
+        localStorage.setItem("synchrove_testimonials", JSON.stringify(defaultTestimonials));
+        stored = JSON.stringify(defaultTestimonials);
+      }
+
+      try {
+        const list = JSON.parse(stored);
+        if (Array.isArray(list)) {
+          const approved = list.filter(item => item && item.approved === true);
+          approved.forEach(item => {
+            const slide = document.createElement("div");
+            slide.className = "swiper-slide";
+            
+            // Stars HTML
+            let starsHtml = "";
+            const starsCount = parseInt(item.stars || 5);
+            for (let i = 0; i < starsCount; i++) {
+              starsHtml += '<i class="bi bi-star-fill"></i>';
+            }
+            
+            slide.innerHTML = `
+              <div class="testimonial-item">
+                <img src="${item.avatar || 'assets/img/testimonials/testimonials-1.jpg'}" class="testimonial-img" alt="${item.name}">
+                <h3>${item.name || 'Anonymous'}</h3>
+                <h4>${item.role || 'Client Partner'}</h4>
+                <div class="stars">${starsHtml}</div>
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  <span>${item.text || ''}</span>
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
+              </div>
+            `;
+            wrapper.prepend(slide);
+          });
+        }
+      } catch (e) {
+        console.error("Error loading custom testimonials:", e);
+      }
+    }
+
     document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
       let config = JSON.parse(
         swiperElement.querySelector(".swiper-config").innerHTML.trim()
@@ -340,5 +406,101 @@
     initServicesAnimation();
     initMainServicesAnimation();
   });
+
+  /**
+   * Load Centralized Data from JSON
+   */
+  async function loadData() {
+    try {
+      const response = await fetch('assets/data.json');
+      const data = await response.json();
+      
+      // Update text and hrefs for standard info
+      document.querySelectorAll('[data-info]').forEach(el => {
+        const key = el.getAttribute('data-info');
+        if (!key.startsWith('social_') && data[key] !== undefined) {
+          if (el.tagName === 'A') {
+            if (key === 'email' && el.hasAttribute('href')) el.href = `mailto:${data[key]}`;
+            else if (key === 'phone' && el.hasAttribute('href')) el.href = `tel:${data[key]}`;
+            else if (el.hasAttribute('href')) el.href = data[key];
+            
+            if (!el.querySelector('i')) el.textContent = data[key];
+          } else {
+            el.textContent = data[key];
+          }
+        }
+      });
+
+      // Dynamically Generate Social Links
+      const socialPlatforms = {
+        'social_twitter': { icon: 'bi-twitter-x', class: 'twitter' },
+        'social_facebook': { icon: 'bi-facebook', class: 'facebook' },
+        'social_instagram': { icon: 'bi-instagram', class: 'instagram' },
+        'social_linkedin': { icon: 'bi-linkedin', class: 'linkedin' },
+        'social_youtube': { icon: 'bi-youtube', class: 'youtube' },
+        'social_github': { icon: 'bi-github', class: 'github' },
+        'social_tiktok': { icon: 'bi-tiktok', class: 'tiktok' }
+      };
+
+      document.querySelectorAll('.header-social-links, .social-links').forEach(container => {
+        // Remove ALL existing hardcoded social links (even those without data-info) to prevent duplicates
+        container.querySelectorAll('a').forEach(a => a.remove());
+        
+        // Append active links from JSON
+        Object.keys(socialPlatforms).forEach(key => {
+          if (data[key] && data[key] !== "#" && data[key].trim() !== "") {
+             const a = document.createElement('a');
+             
+             // Smart URL handling: if they just typed "youtube.com", make it "https://youtube.com"
+             let url = data[key].trim();
+             if (!url.startsWith('http') && !url.startsWith('mailto:')) {
+                 url = 'https://' + url;
+             }
+             
+             a.href = url;
+             a.className = socialPlatforms[key].class;
+             a.setAttribute('data-info', key);
+             a.target = '_blank';
+             a.rel = 'noopener noreferrer';
+             
+             const i = document.createElement('i');
+             i.className = `bi ${socialPlatforms[key].icon}`;
+             a.appendChild(i);
+             
+             container.appendChild(a);
+          }
+        });
+      });
+
+    } catch (error) {
+      console.error('Error loading centralized data:', error);
+    }
+  }
+
+  /**
+   * Dynamic Portal/Dashboard link update
+   */
+  function updatePortalLink() {
+    try {
+      if (localStorage.getItem('synchrove_admin_authenticated') === 'true') {
+        const portalLinks = document.querySelectorAll('a[href="portal.html"]');
+        portalLinks.forEach(link => {
+          link.href = 'admin.html';
+          link.textContent = 'Admin Console';
+        });
+      } else if (localStorage.getItem('synchrove_client_authenticated') === 'true') {
+        const portalLinks = document.querySelectorAll('a[href="portal.html"]');
+        portalLinks.forEach(link => {
+          link.href = 'dashboard.html';
+          link.textContent = 'Dashboard';
+        });
+      }
+    } catch (e) {
+      console.error("Error updating portal link:", e);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', loadData);
+  window.addEventListener('DOMContentLoaded', updatePortalLink);
 
 })();
