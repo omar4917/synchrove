@@ -322,6 +322,42 @@
       return 'Client Partner';
     }
 
+    function getStoredRegisteredUsers() {
+      var users = [];
+
+      try {
+        users = JSON.parse(localStorage.getItem('synchrove_registered_users')) || [];
+      } catch (err) {
+        users = [];
+      }
+
+      if (!Array.isArray(users) || users.length === 0) {
+        var legacy = localStorage.getItem('synchrove_registered_user');
+        if (legacy) {
+          try {
+            var parsedLegacy = JSON.parse(legacy);
+            if (parsedLegacy && parsedLegacy.email) {
+              users = [parsedLegacy];
+            }
+          } catch (error) {
+            users = [];
+          }
+        }
+      }
+
+      return users;
+    }
+
+    function saveRegisteredUsers(users) {
+      localStorage.setItem('synchrove_registered_users', JSON.stringify(users));
+
+      if (users.length > 0) {
+        localStorage.setItem('synchrove_registered_user', JSON.stringify(users[0]));
+      } else {
+        localStorage.removeItem('synchrove_registered_user');
+      }
+    }
+
     // Handle Mock Login logic
     function handleLogin(e) {
       e.preventDefault();
@@ -330,17 +366,10 @@
 
       // Check registered users
       var registeredUser = null;
-      var storedUser = localStorage.getItem('synchrove_registered_user');
-      if (storedUser) {
-        try {
-          var parsed = JSON.parse(storedUser);
-          if (parsed.email === email && parsed.password === pass) {
-            registeredUser = parsed;
-          }
-        } catch (err) {
-          console.error(err);
-        }
-      }
+      var registeredUsers = getStoredRegisteredUsers();
+      registeredUser = registeredUsers.find(function(user) {
+        return user.email === email && user.password === pass;
+      }) || null;
 
       // Admin Credentials Check
       if ((email === 'admin@synchrove.com' || email === 'omar@synchrove.com') && (pass === 'admin' || pass === 'password')) {
@@ -401,7 +430,7 @@
             name: registeredUser.name,
             userType: userType,
             role: registeredUser.role || getDisplayRole(userType),
-            project: "Interactive Tracking Workspace",
+            project: registeredUser.project || "Interactive Tracking Workspace",
             avatar: "assets/logo-small.png"
           }));
 
@@ -427,14 +456,18 @@
       var email = document.getElementById('signup-email').value.trim();
       var password = document.getElementById('signup-password').value.trim();
       var userType = document.getElementById('signup-user-type').value;
+      var registeredUsers = getStoredRegisteredUsers().filter(function(user) {
+        return user.email !== email;
+      });
 
-      localStorage.setItem('synchrove_registered_user', JSON.stringify({
+      registeredUsers.push({
         name: name,
         email: email,
         password: password,
         userType: userType,
         role: getDisplayRole(userType)
-      }));
+      });
+      saveRegisteredUsers(registeredUsers);
 
       alert('Registration successful! You can now log in with your credentials.');
       toggleFormView('login');

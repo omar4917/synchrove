@@ -431,6 +431,10 @@
             <i class="bi bi-folder2-open"></i>
             <span>Client Workspaces</span>
           </button>
+          <button type="button" class="sub-nav-tab" onclick="switchAdminTab('users')">
+            <i class="bi bi-people-fill"></i>
+            <span>Users</span>
+          </button>
           <button type="button" class="sub-nav-tab" onclick="switchAdminTab('invoices')">
             <i class="bi bi-receipt-cutoff"></i>
             <span>Invoice Statements</span>
@@ -622,6 +626,151 @@
               </div>
             </div>
 
+          </div>
+        </div>
+
+        <!-- TAB VIEW: USERS MANAGER -->
+        <div id="admin-tab-users" class="dash-tab-content">
+          <div class="row g-4 mb-4">
+            <div class="col-lg-7 col-12">
+              <div class="section-box h-100 mb-0">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                  <div>
+                    <div class="box-title mb-2">
+                      <i class="bi bi-people-fill"></i>
+                      <span>User Directory</span>
+                    </div>
+                    <p class="small opacity-75 mb-0">Manage Super Users, Team Synchrove creators, and client accounts from one place.</p>
+                  </div>
+                  <button type="button" class="btn btn-portal" onclick="resetUserForm()" style="border-radius: 10px;">
+                    <i class="bi bi-plus-circle"></i>
+                    <span>Create User</span>
+                  </button>
+                </div>
+
+                <div class="row g-3 mb-4">
+                  <div class="col-md-6 col-12">
+                    <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Search Users</label>
+                    <input type="text" id="users-search-input" class="form-control" placeholder="Search by name, email, role, or project" oninput="renderUsersDirectory()" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);">
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Filter by User Type</label>
+                    <select id="users-filter-type" class="form-select" onchange="renderUsersDirectory()" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);">
+                      <option value="All">All User Types</option>
+                      <option value="Super User">Super User</option>
+                      <option value="Team Synchrove">Team Synchrove</option>
+                      <option value="Clients">Clients</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row g-3 mb-4">
+                  <div class="col-md-4 col-12">
+                    <div class="p-3 rounded-4 h-100" style="background: color-mix(in srgb, var(--default-color) 3%, transparent); border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);">
+                      <div class="small text-uppercase opacity-50 mb-1">Total Users</div>
+                      <div id="users-stat-total" class="h4 mb-0" style="color: var(--heading-color);">0</div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="p-3 rounded-4 h-100" style="background: color-mix(in srgb, var(--accent-color) 7%, transparent); border: 1px solid color-mix(in srgb, var(--accent-color) 15%, transparent);">
+                      <div class="small text-uppercase opacity-50 mb-1">Team Synchrove</div>
+                      <div id="users-stat-team" class="h4 mb-0" style="color: var(--heading-color);">0</div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-12">
+                    <div class="p-3 rounded-4 h-100" style="background: rgba(46, 196, 182, 0.08); border: 1px solid rgba(46, 196, 182, 0.18);">
+                      <div class="small text-uppercase opacity-50 mb-1">Clients</div>
+                      <div id="users-stat-clients" class="h4 mb-0" style="color: var(--heading-color);">0</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="table-responsive" style="border: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent); border-radius: 16px; overflow: hidden;">
+                  <table class="table mb-0" style="color: var(--default-color); background: transparent; vertical-align: middle;">
+                    <thead>
+                      <tr style="background: color-mix(in srgb, var(--default-color) 5%, transparent); border-bottom: 2px solid color-mix(in srgb, var(--default-color) 8%, transparent); font-size: 13px; font-weight: 700; text-transform: uppercase;">
+                        <th scope="col" style="padding: 15px;">User</th>
+                        <th scope="col" style="padding: 15px;">Type</th>
+                        <th scope="col" style="padding: 15px;">Role / Project</th>
+                        <th scope="col" style="padding: 15px; text-align: right;">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="users-directory-table" style="font-size: 13px;">
+                      <!-- Loaded dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-5 col-12">
+              <div class="section-box h-100 mb-0">
+                <div class="box-title">
+                  <i class="bi bi-person-plus-fill"></i>
+                  <span id="user-form-title">Create New User</span>
+                </div>
+
+                <div id="users-success-msg" style="display: none; background: rgba(46, 196, 182, 0.08); border: 1px solid rgba(46, 196, 182, 0.25); border-radius: 12px; padding: 14px; margin-bottom: 20px; color: #2ec4b6; font-size: 13px; font-weight: 600;">
+                  User account saved successfully.
+                </div>
+
+                <form id="user-management-form" onsubmit="saveManagedUser(event)">
+                  <input type="hidden" id="user-edit-email-original">
+
+                  <div class="row g-3 mb-3">
+                    <div class="col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Full Name</label>
+                      <input type="text" id="user-form-name" class="form-control" required style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. John Larson">
+                    </div>
+                  </div>
+
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Email Address</label>
+                      <input type="email" id="user-form-email" class="form-control" required style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. client@example.com">
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">User Type</label>
+                      <select id="user-form-type" class="form-select" required onchange="syncManagedUserTypeState()" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);">
+                        <option value="Clients">Clients</option>
+                        <option value="Team Synchrove">Team Synchrove</option>
+                        <option value="Super User">Super User</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row g-3 mb-3">
+                    <div class="col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Role / Title / Company</label>
+                      <input type="text" id="user-form-role" class="form-control" required style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. Principal Engineer, Motion Designer, CEO">
+                    </div>
+                  </div>
+
+                  <div class="row g-3 mb-3">
+                    <div class="col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Workspace / Project</label>
+                      <input type="text" id="user-form-project" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="e.g. Interactive Tracking Workspace">
+                    </div>
+                  </div>
+
+                  <div class="row g-3 mb-4">
+                    <div class="col-12">
+                      <label class="small font-weight-bold mb-1" style="color: var(--heading-color);">Password</label>
+                      <input type="text" id="user-form-password" class="form-control" style="background: color-mix(in srgb, var(--background-color) 40%, transparent); border-color: color-mix(in srgb, var(--default-color) 15%, transparent); color: var(--heading-color);" placeholder="Leave blank to keep current password when editing">
+                      <div class="small opacity-50 mt-2">Required for newly created users. Existing demo accounts keep their current password unless you replace it here.</div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-portal flex-grow-1" style="border-radius: 10px;">
+                      <i class="bi bi-save-fill"></i>
+                      <span id="user-form-submit-text">Save User</span>
+                    </button>
+                    <button type="button" class="btn btn-outline-light" onclick="resetUserForm()" style="border-radius: 10px;">Reset</button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1047,6 +1196,381 @@
       return role ? `${userType} | ${role}` : userType;
     }
 
+    function getDefaultRoleForType(userType) {
+      if (userType === 'Super User') {
+        return 'Super User';
+      }
+
+      if (userType === 'Team Synchrove') {
+        return 'Team Synchrove Creator';
+      }
+
+      return 'Client Partner';
+    }
+
+    function getStoredRegisteredUsers() {
+      let users = [];
+
+      try {
+        users = JSON.parse(localStorage.getItem('synchrove_registered_users')) || [];
+      } catch (error) {
+        users = [];
+      }
+
+      if (!Array.isArray(users) || users.length === 0) {
+        const legacy = localStorage.getItem('synchrove_registered_user');
+        if (legacy) {
+          try {
+            const parsedLegacy = JSON.parse(legacy);
+            if (parsedLegacy && parsedLegacy.email) {
+              users = [parsedLegacy];
+            }
+          } catch (error) {
+            users = [];
+          }
+        }
+      }
+
+      return users.map((user) => Object.assign({}, user, {
+        userType: normalizeUserType(user.userType, user.role),
+        role: user.role || getDefaultRoleForType(normalizeUserType(user.userType, user.role))
+      }));
+    }
+
+    function saveRegisteredUsers(users) {
+      localStorage.setItem('synchrove_registered_users', JSON.stringify(users));
+
+      if (users.length > 0) {
+        localStorage.setItem('synchrove_registered_user', JSON.stringify(users[0]));
+      } else {
+        localStorage.removeItem('synchrove_registered_user');
+      }
+    }
+
+    function buildManagedUsers() {
+      const merged = new Map();
+      const registeredUsers = getStoredRegisteredUsers();
+      let adminProfile = null;
+
+      try {
+        adminProfile = JSON.parse(localStorage.getItem('synchrove_admin_profile') || '{}');
+      } catch (error) {
+        adminProfile = {};
+      }
+
+      const adminEmail = (adminProfile && adminProfile.email) || (localStorage.getItem('synchrove_admin_email')) || 'omar@synchrove.com';
+      merged.set(adminEmail, {
+        name: (adminProfile && adminProfile.name) || 'Omar Khayam',
+        email: adminEmail,
+        userType: normalizeUserType(adminProfile && adminProfile.userType, adminProfile && adminProfile.role),
+        role: (adminProfile && adminProfile.role) || 'Principal Engineer & Director (Administrator)',
+        project: 'Admin Console',
+        password: '',
+        avatar: (adminProfile && adminProfile.avatar) || 'assets/logo-v2.png',
+        source: 'admin',
+        canDelete: false
+      });
+
+      workspaces.forEach((ws) => {
+        if (!ws || !ws.email) return;
+        merged.set(ws.email, Object.assign({}, merged.get(ws.email) || {}, {
+          name: ws.name,
+          email: ws.email,
+          userType: normalizeUserType(ws.userType, ws.role),
+          role: ws.role || getDefaultRoleForType(normalizeUserType(ws.userType, ws.role)),
+          project: ws.project || 'Interactive Tracking Workspace',
+          password: (merged.get(ws.email) || {}).password || '',
+          avatar: ws.avatar || 'assets/logo-small.png',
+          source: 'workspace',
+          canDelete: true
+        }));
+      });
+
+      registeredUsers.forEach((user) => {
+        if (!user || !user.email) return;
+        merged.set(user.email, Object.assign({}, merged.get(user.email) || {}, {
+          name: user.name || (merged.get(user.email) || {}).name || 'Synchrove User',
+          email: user.email,
+          userType: normalizeUserType(user.userType, user.role),
+          role: user.role || (merged.get(user.email) || {}).role || getDefaultRoleForType(normalizeUserType(user.userType, user.role)),
+          project: user.project || (merged.get(user.email) || {}).project || '',
+          password: user.password || '',
+          avatar: user.avatar || (merged.get(user.email) || {}).avatar || 'assets/logo-small.png',
+          source: (merged.get(user.email) || {}).source || 'registered',
+          canDelete: user.email !== adminEmail
+        }));
+      });
+
+      return Array.from(merged.values()).sort((a, b) => {
+        const typeWeight = {
+          'Super User': 0,
+          'Team Synchrove': 1,
+          'Clients': 2
+        };
+
+        const aWeight = typeWeight[normalizeUserType(a.userType, a.role)] ?? 9;
+        const bWeight = typeWeight[normalizeUserType(b.userType, b.role)] ?? 9;
+        if (aWeight !== bWeight) {
+          return aWeight - bWeight;
+        }
+
+        return (a.name || '').localeCompare(b.name || '');
+      });
+    }
+
+    function syncManagedUserTypeState() {
+      const typeEl = document.getElementById('user-form-type');
+      const roleEl = document.getElementById('user-form-role');
+      const projectEl = document.getElementById('user-form-project');
+      const emailOriginalEl = document.getElementById('user-edit-email-original');
+
+      if (!typeEl || !roleEl || !projectEl) return;
+
+      if (!emailOriginalEl || !emailOriginalEl.value) {
+        if (!roleEl.value.trim()) {
+          roleEl.value = getDefaultRoleForType(typeEl.value);
+        }
+
+        if (typeEl.value === 'Clients' && !projectEl.value.trim()) {
+          projectEl.value = 'Interactive Tracking Workspace';
+        }
+      }
+    }
+
+    function renderUsersDirectory() {
+      const tbody = document.getElementById('users-directory-table');
+      if (!tbody) return;
+
+      const users = buildManagedUsers();
+      const filterType = document.getElementById('users-filter-type') ? document.getElementById('users-filter-type').value : 'All';
+      const searchTerm = document.getElementById('users-search-input') ? document.getElementById('users-search-input').value.trim().toLowerCase() : '';
+
+      document.getElementById('users-stat-total').innerText = users.length;
+      document.getElementById('users-stat-team').innerText = users.filter((user) => normalizeUserType(user.userType, user.role) === 'Team Synchrove').length;
+      document.getElementById('users-stat-clients').innerText = users.filter((user) => normalizeUserType(user.userType, user.role) === 'Clients').length;
+
+      const filteredUsers = users.filter((user) => {
+        const normalizedType = normalizeUserType(user.userType, user.role);
+        const matchesType = filterType === 'All' || normalizedType === filterType;
+        const haystack = `${user.name || ''} ${user.email || ''} ${user.role || ''} ${user.project || ''}`.toLowerCase();
+        const matchesSearch = !searchTerm || haystack.includes(searchTerm);
+        return matchesType && matchesSearch;
+      });
+
+      if (filteredUsers.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="text-center opacity-75 py-4">No users matched the current filters.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filteredUsers.map((user) => {
+        const normalizedType = normalizeUserType(user.userType, user.role);
+        const badgeColor = normalizedType === 'Super User'
+          ? 'rgba(255, 193, 7, 0.15)'
+          : normalizedType === 'Team Synchrove'
+            ? 'rgba(13, 202, 240, 0.15)'
+            : 'rgba(46, 196, 182, 0.15)';
+        const badgeText = normalizedType === 'Super User'
+          ? '#ffb703'
+          : normalizedType === 'Team Synchrove'
+            ? '#0dcaf0'
+            : '#2ec4b6';
+
+        return `
+          <tr style="border-bottom: 1px solid color-mix(in srgb, var(--default-color) 8%, transparent);">
+            <td style="padding: 15px;">
+              <strong class="d-block" style="color: var(--heading-color);">${user.name || 'Unnamed User'}</strong>
+              <span class="small opacity-75">${user.email}</span>
+            </td>
+            <td style="padding: 15px;">
+              <span class="badge" style="background: ${badgeColor}; color: ${badgeText}; font-size: 11px; padding: 6px 10px; border-radius: 999px;">${normalizedType}</span>
+            </td>
+            <td style="padding: 15px;">
+              <div>${user.role || getDefaultRoleForType(normalizedType)}</div>
+              <div class="small opacity-50">${user.project || 'No active project assigned'}</div>
+            </td>
+            <td style="padding: 15px; text-align: right;">
+              <button type="button" onclick="editManagedUser('${user.email}')" class="btn btn-sm btn-outline-info" style="font-size: 11.5px; border-radius: 6px;">Edit</button>
+              ${user.canDelete === false ? '' : `<button type="button" onclick="deleteManagedUser('${user.email}')" class="btn btn-sm btn-outline-danger ms-2" style="font-size: 11.5px; border-radius: 6px;">Delete</button>`}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function resetUserForm() {
+      const form = document.getElementById('user-management-form');
+      if (form) form.reset();
+      document.getElementById('user-edit-email-original').value = '';
+      document.getElementById('user-form-title').innerText = 'Create New User';
+      document.getElementById('user-form-submit-text').innerText = 'Save User';
+      document.getElementById('user-form-type').value = 'Clients';
+      document.getElementById('user-form-project').value = 'Interactive Tracking Workspace';
+      document.getElementById('user-form-role').value = 'Client Partner';
+    }
+
+    function editManagedUser(email) {
+      const user = buildManagedUsers().find((entry) => entry.email === email);
+      if (!user) return;
+
+      document.getElementById('user-edit-email-original').value = user.email;
+      document.getElementById('user-form-name').value = user.name || '';
+      document.getElementById('user-form-email').value = user.email || '';
+      document.getElementById('user-form-type').value = normalizeUserType(user.userType, user.role);
+      document.getElementById('user-form-role').value = user.role || '';
+      document.getElementById('user-form-project').value = user.project || '';
+      document.getElementById('user-form-password').value = user.password || '';
+      document.getElementById('user-form-title').innerText = `Edit User: ${user.name || user.email}`;
+      document.getElementById('user-form-submit-text').innerText = 'Update User';
+      document.getElementById('admin-tab-users').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function deleteManagedUser(email) {
+      const adminEmail = localStorage.getItem('synchrove_admin_email') || 'omar@synchrove.com';
+      if (email === adminEmail) {
+        alert('The active Super User account cannot be deleted.');
+        return;
+      }
+
+      if (!confirm(`Delete user ${email} from the Synchrove directory?`)) return;
+
+      const registeredUsers = getStoredRegisteredUsers().filter((user) => user.email !== email);
+      saveRegisteredUsers(registeredUsers);
+
+      workspaces = workspaces.filter((ws) => ws.email !== email);
+      localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
+
+      if (localStorage.getItem('synchrove_client_email') === email) {
+        localStorage.removeItem('synchrove_client_authenticated');
+        localStorage.removeItem('synchrove_client_email');
+        localStorage.removeItem('synchrove_client_profile');
+      }
+
+      renderWorkspacesList();
+      renderInvoiceSelectorOptions();
+      renderUsersDirectory();
+      renderProjectsManager();
+      resetUserForm();
+      alert('User removed successfully.');
+    }
+
+    function saveManagedUser(event) {
+      event.preventDefault();
+
+      const originalEmail = document.getElementById('user-edit-email-original').value.trim();
+      const name = document.getElementById('user-form-name').value.trim();
+      const email = document.getElementById('user-form-email').value.trim().toLowerCase();
+      const userType = document.getElementById('user-form-type').value;
+      const role = document.getElementById('user-form-role').value.trim() || getDefaultRoleForType(userType);
+      const project = document.getElementById('user-form-project').value.trim() || (userType === 'Clients' ? 'Interactive Tracking Workspace' : 'Synchrove Workspace');
+      const passwordInput = document.getElementById('user-form-password').value.trim();
+
+      if (!email) {
+        alert('Email address is required.');
+        return;
+      }
+
+      const existingUsers = buildManagedUsers();
+      const duplicate = existingUsers.find((user) => user.email === email && user.email !== originalEmail);
+      if (duplicate) {
+        alert('A user with this email already exists.');
+        return;
+      }
+
+      let registeredUsers = getStoredRegisteredUsers().filter((user) => user.email !== originalEmail && user.email !== email);
+      const existingRegistration = getStoredRegisteredUsers().find((user) => user.email === originalEmail || user.email === email);
+      const resolvedPassword = passwordInput || (existingRegistration && existingRegistration.password) || '';
+
+      if (!resolvedPassword) {
+        alert('Please provide a password for this user.');
+        return;
+      }
+
+      registeredUsers.push({
+        name: name,
+        email: email,
+        password: resolvedPassword,
+        userType: userType,
+        role: role,
+        project: project
+      });
+      saveRegisteredUsers(registeredUsers);
+
+      if (userType === 'Super User') {
+        const currentAdminEmail = localStorage.getItem('synchrove_admin_email') || 'omar@synchrove.com';
+        if (originalEmail === currentAdminEmail || email === currentAdminEmail) {
+          localStorage.setItem('synchrove_admin_profile', JSON.stringify({
+            name: name,
+            email: email,
+            userType: userType,
+            role: role,
+            avatar: (JSON.parse(localStorage.getItem('synchrove_admin_profile') || '{}').avatar) || 'assets/logo-v2.png'
+          }));
+          localStorage.setItem('synchrove_admin_email', email);
+          document.getElementById('admin-header-name').innerText = name;
+          document.getElementById('admin-header-role').innerText = formatUserRole({ userType: userType, role: role });
+        }
+      }
+
+      const existingWorkspace = workspaces.find((ws) => ws.email === originalEmail || ws.email === email);
+      const workspaceAvatar = (existingWorkspace && existingWorkspace.avatar) || 'assets/logo-small.png';
+
+      workspaces = workspaces.filter((ws) => ws.email !== originalEmail && ws.email !== email);
+      if (userType === 'Clients') {
+        workspaces.push({
+          name: name,
+          email: email,
+          userType: userType,
+          role: role,
+          project: project,
+          avatar: workspaceAvatar,
+          progress: (existingWorkspace && existingWorkspace.progress) || 10,
+          phase: (existingWorkspace && existingWorkspace.phase) || 'Discovery',
+          milestone: (existingWorkspace && existingWorkspace.milestone) || 'Detailed Scope Gathering',
+          targetDate: (existingWorkspace && existingWorkspace.targetDate) || 'TBD',
+          deliverables: (existingWorkspace && existingWorkspace.deliverables) || {
+            figma: '',
+            git: '',
+            staging: 'index.html',
+            invoice: ''
+          }
+        });
+      }
+      localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
+
+      if (localStorage.getItem('synchrove_client_email') === originalEmail || localStorage.getItem('synchrove_client_email') === email) {
+        if (userType === 'Clients') {
+          localStorage.setItem('synchrove_client_email', email);
+          localStorage.setItem('synchrove_client_profile', JSON.stringify({
+            name: name,
+            email: email,
+            userType: userType,
+            role: role,
+            project: project,
+            avatar: workspaceAvatar
+          }));
+        } else {
+          localStorage.removeItem('synchrove_client_authenticated');
+          localStorage.removeItem('synchrove_client_email');
+          localStorage.removeItem('synchrove_client_profile');
+        }
+      }
+
+      renderWorkspacesList();
+      renderInvoiceSelectorOptions();
+      renderUsersDirectory();
+      renderProjectsManager();
+      loadActiveWorkspaceIntoEditor();
+      resetUserForm();
+
+      const successMsg = document.getElementById('users-success-msg');
+      if (successMsg) {
+        successMsg.style.display = 'block';
+        setTimeout(() => {
+          successMsg.style.display = 'none';
+        }, 3000);
+      }
+    }
+
     (function () {
       try {
         if (localStorage.getItem('synchrove_admin_authenticated') !== 'true') {
@@ -1107,6 +1631,7 @@
         localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
 
         renderWorkspacesList();
+        renderUsersDirectory();
         renderInvoiceSelectorOptions();
         renderGlobalInvoicesLedger();
         renderTestimonialsQueue();
@@ -1145,6 +1670,7 @@
         document.getElementById('admin-header-avatar').src = adminProfile.avatar;
 
         loadAdminProfileIntoEditor();
+        resetUserForm();
         renderProjectsManager();
 
       } catch (err) {
@@ -1246,6 +1772,7 @@
       if (headerName) headerName.innerText = name;
       if (headerRole) headerRole.innerText = formatUserRole(updatedProfile);
       if (headerAvatar) headerAvatar.src = avatar;
+      renderUsersDirectory();
 
       // Show success message
       const successMsg = document.getElementById('admin-profile-success-msg');
@@ -1356,6 +1883,7 @@
       }, 4000);
 
       renderWorkspacesList();
+      renderUsersDirectory();
     }
 
     // New Workspace Form actions
@@ -1411,6 +1939,7 @@
       hideNewWorkspaceCard();
       renderWorkspacesList();
       renderInvoiceSelectorOptions();
+      renderUsersDirectory();
       loadActiveWorkspaceIntoEditor();
       
       alert(`Client workspace successfully launched for ${name}!`);
@@ -1644,16 +2173,10 @@
       // 1. Populate Creator Dropdown
       const creatorDropdown = document.getElementById("project-edit-creator");
       if (creatorDropdown) {
-        let clientsList = [];
-        try {
-          clientsList = JSON.parse(localStorage.getItem("synchrove_client_workspaces")) || [];
-        } catch(e) {
-          clientsList = [];
-        }
-        
-        let html = `<option value="omar@synchrove.com" data-name="Omar Khayam" data-role="Principal Engineer & Director" data-avatar="assets/logo-v2.png">Omar Khayam (Admin)</option>`;
-        clientsList.forEach(ws => {
-          html += `<option value="${ws.email}" data-name="${ws.name}" data-role="${ws.role}" data-avatar="${ws.avatar}">${ws.name} (${ws.role})</option>`;
+        const usersList = buildManagedUsers();
+        let html = '';
+        usersList.forEach(user => {
+          html += `<option value="${user.email}" data-name="${user.name}" data-role="${user.role}" data-avatar="${user.avatar || 'assets/logo-small.png'}">${user.name} (${normalizeUserType(user.userType, user.role)})</option>`;
         });
         creatorDropdown.innerHTML = html;
       }
