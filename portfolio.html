@@ -177,6 +177,7 @@
 <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
 <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="assets/js/db-sync.js"></script>
 
 <script>
 /* ═══════════════════════════════════════════
@@ -350,13 +351,17 @@ const ALL_CATS = Object.keys(CAT_TYPES);
 let activeCategory = "";
 let grid, pills, typeSelect, techSelect, statusSelect, emptyMsg;
 
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", async function(){
   grid = document.getElementById("pf-grid");
   pills = document.getElementById("pf-category-pills");
   typeSelect = document.getElementById("pf-type-filter");
   techSelect = document.getElementById("pf-tech-filter");
   statusSelect = document.getElementById("pf-status-filter");
   emptyMsg = document.getElementById("pf-empty");
+  
+  // Hydrate from Cloud D1 SQL Database first!
+  await syncFromCloud();
+
   buildCategoryPills();
   applyFilters();
 });

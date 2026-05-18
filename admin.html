@@ -1172,6 +1172,7 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/db-sync.js"></script>
 
   <script>
     // Seeding Client Workspaces & Auth checks
@@ -1316,6 +1317,10 @@
 
       if (users.length > 0) {
         localStorage.setItem('synchrove_registered_user', JSON.stringify(users[0]));
+        // Background sync to Cloud D1 database
+        users.forEach(function(u) {
+          syncUserToCloud(u);
+        });
       } else {
         localStorage.removeItem('synchrove_registered_user');
       }
@@ -1513,6 +1518,12 @@
 
       const registeredUsers = getStoredRegisteredUsers().filter((user) => user.email !== email);
       saveRegisteredUsers(registeredUsers);
+      deleteUserFromCloud(email);
+
+      const targetWS = workspaces.find((ws) => ws.email === email);
+      if (targetWS) {
+        deleteWorkspaceFromCloud(targetWS.workspaceId || `${slugifyWorkspaceValue(targetWS.email)}-${slugifyWorkspaceValue(targetWS.project)}`);
+      }
 
       workspaces = workspaces.filter((ws) => ws.email !== email);
       localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
@@ -1599,7 +1610,7 @@
 
       workspaces = workspaces.filter((ws) => ws.email !== originalEmail && ws.email !== email);
       if (userType === 'Clients') {
-        workspaces.push({
+        const newWs = {
           name: name,
           email: email,
           userType: userType,
@@ -1616,6 +1627,19 @@
             staging: 'index.html',
             invoice: ''
           }
+        };
+        workspaces.push(newWs);
+
+        // Background D1 sync for workspaces
+        syncWorkspaceToCloud({
+          workspace_id: newWs.workspaceId || `${slugifyWorkspaceValue(newWs.email)}-${slugifyWorkspaceValue(newWs.project)}`,
+          name: newWs.name,
+          email: newWs.email,
+          project: newWs.project,
+          user_type: newWs.userType,
+          role: newWs.role,
+          avatar: newWs.avatar,
+          creator_email: 'omar@synchrove.com'
         });
       }
       localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
@@ -1654,12 +1678,15 @@
       }
     }
 
-    (function () {
+    (async function () {
       try {
         if (localStorage.getItem('synchrove_admin_authenticated') !== 'true') {
           window.location.href = 'portal.html';
           return;
         }
+
+        // Hydrate from D1 SQL Cloud Database first!
+        await syncFromCloud();
 
         // Load or seed workspaces
         let stored = localStorage.getItem('synchrove_client_workspaces');
@@ -1949,6 +1976,18 @@
 
       // Save to localStorage
       localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
+
+      // Background D1 Sync
+      syncWorkspaceToCloud({
+        workspace_id: ws.workspaceId || `${slugifyWorkspaceValue(ws.email)}-${slugifyWorkspaceValue(ws.project)}`,
+        name: ws.name,
+        email: ws.email,
+        project: ws.project,
+        user_type: ws.userType,
+        role: ws.role,
+        avatar: ws.avatar,
+        creator_email: 'omar@synchrove.com'
+      });
       
       // If updating the active logged-in client profile, mirror immediately
       const loggedClientEmail = localStorage.getItem('synchrove_client_email');
@@ -2014,6 +2053,18 @@
 
       workspaces.push(newWS);
       localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
+
+      // Background D1 Sync
+      syncWorkspaceToCloud({
+        workspace_id: newWS.workspaceId || `${slugifyWorkspaceValue(newWS.email)}-${slugifyWorkspaceValue(newWS.project)}`,
+        name: newWS.name,
+        email: newWS.email,
+        project: newWS.project,
+        user_type: newWS.userType,
+        role: newWS.role,
+        avatar: newWS.avatar,
+        creator_email: 'omar@synchrove.com'
+      });
 
       // Reset form
       document.getElementById('new-client-name').value = '';
@@ -2083,8 +2134,18 @@
       const chatKey = getWorkspaceScopedKey('synchrove_chats', ws);
       let history = JSON.parse(localStorage.getItem(chatKey)) || [];
 
+      const newChatMsg = {
+        workspace_id: ws.workspaceId || `${slugifyWorkspaceValue(ws.email)}-${slugifyWorkspaceValue(ws.project)}`,
+        sender: "pm",
+        message: text,
+        timestamp: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
+      };
+
       history.push({ sender: "pm", text: text });
       localStorage.setItem(chatKey, JSON.stringify(history));
+
+      // Background D1 Sync
+      syncChatToCloud(newChatMsg);
 
       const scroller = document.getElementById('admin-chat-scroller');
       const bubble = document.createElement('div');
@@ -2178,6 +2239,16 @@
       let clientInvoices = JSON.parse(localStorage.getItem(invoicesKey)) || [];
       clientInvoices.unshift(newInv);
       localStorage.setItem(invoicesKey, JSON.stringify(clientInvoices));
+
+      // Background D1 Sync
+      syncInvoiceToCloud({
+        id: newInv.id,
+        workspace_id: ws.workspaceId || `${slugifyWorkspaceValue(ws.email)}-${slugifyWorkspaceValue(ws.project)}`,
+        invoice_number: newInv.id,
+        amount: parseFloat(newInv.amount),
+        status: newInv.status,
+        date: newInv.date
+      });
 
       // Reset form fields
       document.getElementById('invoice-id').value = '';
@@ -2428,6 +2499,7 @@
 
       projectsList = projectsList.filter(p => p.id !== projectId);
       localStorage.setItem("synchrove_portfolio_projects", JSON.stringify(projectsList));
+      deleteProjectFromCloud(projectId);
 
       renderProjectsManager();
       resetProjectForm();
@@ -2523,6 +2595,26 @@
       }
 
       localStorage.setItem("synchrove_portfolio_projects", JSON.stringify(projectsList));
+
+      // Background D1 Sync for projects
+      const slugify = text => (text || '').toString().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+      const subdomainSlug = creatorEmail.split('@')[0];
+      const techSlug = slugify(category);
+      const projectSlug = slugify(title);
+
+      syncProjectToCloud({
+        id: projectData.id,
+        creator_email: creatorEmail,
+        subdomain_slug: subdomainSlug,
+        tech_slug: techSlug,
+        project_slug: projectSlug,
+        live_url: projectData.details.liveUrl || '#',
+        title: title,
+        category: category,
+        status: status,
+        description: description,
+        image: coverBase64 || ""
+      });
       
       renderProjectsManager();
       resetProjectForm();

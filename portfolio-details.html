@@ -228,6 +228,7 @@
 <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
 <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="assets/js/db-sync.js"></script>
 
 <script>
 /* ═══════════════════════════════════════════
@@ -376,7 +377,10 @@ if(!localStorage.getItem("synchrove_portfolio_projects")){
   localStorage.setItem("synchrove_portfolio_projects", JSON.stringify(SEED_PROJECTS));
 }
 
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", async function(){
+  // Hydrate from Cloud D1 SQL Database first!
+  await syncFromCloud();
+
   let PROJECTS = [];
   try {
     PROJECTS = JSON.parse(localStorage.getItem("synchrove_portfolio_projects")) || SEED_PROJECTS;

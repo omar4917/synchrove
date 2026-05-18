@@ -1418,6 +1418,7 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/db-sync.js"></script>
 
   <script>
     // Client profile and validation checks
@@ -1604,12 +1605,15 @@
       applyActiveWorkspace();
     }
 
-    (function () {
+    (async function () {
       try {
         if (localStorage.getItem('synchrove_client_authenticated') !== 'true') {
           window.location.href = 'portal.html';
           return;
         }
+
+        // Hydrate from Cloud D1 SQL Database first!
+        await syncFromCloud();
 
         clientEmail = localStorage.getItem('synchrove_client_email') || 'client@example.com';
 
@@ -1852,6 +1856,16 @@
       history.push({ sender: "client", text: val });
       localStorage.setItem(chatKey, JSON.stringify(history));
 
+      const newChatMsg = {
+        workspace_id: clientWorkspace.workspaceId || `${slugifyWorkspaceValue(clientWorkspace.email)}-${slugifyWorkspaceValue(clientWorkspace.project)}`,
+        sender: "client",
+        message: val,
+        timestamp: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
+      };
+
+      // Background D1 Sync for client chat message
+      syncChatToCloud(newChatMsg);
+
       const bubble = document.createElement('div');
       bubble.className = 'chat-msg client';
       bubble.innerText = val;
@@ -1873,6 +1887,14 @@
         replyBubble.innerText = replyText;
         scroller.appendChild(replyBubble);
         scroller.scrollTop = scroller.scrollHeight;
+
+        // Background D1 Sync for PM automated reply
+        syncChatToCloud({
+          workspace_id: clientWorkspace.workspaceId || `${slugifyWorkspaceValue(clientWorkspace.email)}-${slugifyWorkspaceValue(clientWorkspace.project)}`,
+          sender: "pm",
+          message: replyText,
+          timestamp: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
+        });
       }, 1500);
     }
 
@@ -2112,6 +2134,18 @@
         localStorage.setItem('synchrove_client_workspaces', JSON.stringify(workspaces));
         clientWorkspaces = workspaces.filter((item) => item.email === clientEmail);
         clientWorkspace = clientWorkspaces.find((item) => item.workspaceId === clientWorkspace.workspaceId) || clientWorkspace;
+
+        // Background D1 sync for workspaces updates
+        syncWorkspaceToCloud({
+          workspace_id: clientWorkspace.workspaceId || `${slugifyWorkspaceValue(clientWorkspace.email)}-${slugifyWorkspaceValue(clientWorkspace.project)}`,
+          name: clientWorkspace.name,
+          email: clientWorkspace.email,
+          project: clientWorkspace.project,
+          user_type: clientWorkspace.userType,
+          role: clientWorkspace.role,
+          avatar: clientWorkspace.avatar,
+          creator_email: 'omar@synchrove.com'
+        });
       }
 
       // Instantly update header widgets
@@ -2304,6 +2338,7 @@
 
       list = list.filter(p => p.id !== projectId);
       localStorage.setItem("synchrove_portfolio_projects", JSON.stringify(list));
+      deleteProjectFromCloud(projectId);
 
       renderClientProjectsManager();
       resetClientProjectForm();
@@ -2401,6 +2436,26 @@
       }
 
       localStorage.setItem("synchrove_portfolio_projects", JSON.stringify(list));
+
+      // Background D1 Sync for projects
+      const slugify = text => (text || '').toString().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+      const subdomainSlug = email.split('@')[0];
+      const techSlug = slugify(category);
+      const projectSlug = slugify(title);
+
+      syncProjectToCloud({
+        id: projectData.id,
+        creator_email: email,
+        subdomain_slug: subdomainSlug,
+        tech_slug: techSlug,
+        project_slug: projectSlug,
+        live_url: projectData.details.liveUrl || '#',
+        title: title,
+        category: category,
+        status: status,
+        description: description,
+        image: coverBase64 || ""
+      });
       
       renderClientProjectsManager();
       resetClientProjectForm();

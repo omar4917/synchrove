@@ -266,8 +266,13 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
-
+  <script src="assets/js/db-sync.js"></script>
   <script>
+    // Initialize Cloud DB Sync on load
+    window.addEventListener('DOMContentLoaded', async function() {
+      await syncFromCloud();
+    });
+
     // Toggle login/signup forms
     function toggleFormView(target) {
       var loginView = document.getElementById('login-view');
@@ -353,10 +358,15 @@
 
       if (users.length > 0) {
         localStorage.setItem('synchrove_registered_user', JSON.stringify(users[0]));
+        // Background sync to Cloud D1 database
+        users.forEach(function(u) {
+          syncUserToCloud(u);
+        });
       } else {
         localStorage.removeItem('synchrove_registered_user');
       }
     }
+
 
     // Handle Mock Login logic
     function handleLogin(e) {
