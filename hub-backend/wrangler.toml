@@ -5,4 +5,4 @@ compatibility_date = "2024-05-16"
 [[d1_databases]]
 binding = "DB"
 database_name = "synchrove"
-database_id = "<PASTE_YOUR_CLOUDFLARE_D1_DATABASE_ID_HERE>"
+database_id = "082285f0-c2ff-4e6f-9eaa-ef11bc434924"
