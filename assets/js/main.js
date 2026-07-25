@@ -438,32 +438,33 @@
       };
 
       document.querySelectorAll('.header-social-links, .social-links').forEach(container => {
-        // Remove ALL existing hardcoded social links (even those without data-info) to prevent duplicates
-        container.querySelectorAll('a').forEach(a => a.remove());
+        const activeKeys = Object.keys(socialPlatforms).filter(key => data[key] && data[key] !== "#" && data[key].trim() !== "");
+        const existingLinks = Array.from(container.querySelectorAll('a'));
+        const existingKeys = existingLinks.map(a => a.getAttribute('data-info')).filter(Boolean);
         
-        // Append active links from JSON
-        Object.keys(socialPlatforms).forEach(key => {
-          if (data[key] && data[key] !== "#" && data[key].trim() !== "") {
-             const a = document.createElement('a');
-             
-             // Smart URL handling: if they just typed "youtube.com", make it "https://youtube.com"
-             let url = data[key].trim();
-             if (!url.startsWith('http') && !url.startsWith('mailto:')) {
-                 url = 'https://' + url;
-             }
-             
-             a.href = url;
-             a.className = socialPlatforms[key].class;
-             a.setAttribute('data-info', key);
-             a.target = '_blank';
-             a.rel = 'noopener noreferrer';
-             
-             const i = document.createElement('i');
-             i.className = `bi ${socialPlatforms[key].icon}`;
-             a.appendChild(i);
-             
-             container.appendChild(a);
+        const matches = activeKeys.length === existingKeys.length && activeKeys.every((k, i) => k === existingKeys[i]);
+        if (matches) return;
+
+        existingLinks.forEach(a => a.remove());
+        
+        activeKeys.forEach(key => {
+          const a = document.createElement('a');
+          let url = data[key].trim();
+          if (!url.startsWith('http') && !url.startsWith('mailto:')) {
+            url = 'https://' + url;
           }
+          
+          a.href = url;
+          a.className = socialPlatforms[key].class;
+          a.setAttribute('data-info', key);
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          
+          const i = document.createElement('i');
+          i.className = `bi ${socialPlatforms[key].icon}`;
+          a.appendChild(i);
+          
+          container.appendChild(a);
         });
       });
 
