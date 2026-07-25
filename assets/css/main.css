@@ -266,40 +266,41 @@ h6 {
 }
 
 .header .theme-toggle {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px;
+  gap: 8px;
+  background: color-mix(in srgb, var(--surface-color), transparent 20%);
+  padding: 6px 12px;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 70%);
-  background: color-mix(in srgb, var(--surface-color), transparent 35%);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-  flex-wrap: wrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .header .theme-toggle .theme-btn {
-  border: none;
-  background: transparent;
-  color: color-mix(in srgb, var(--default-color), transparent 10%);
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 4px 14px;
-  border-radius: 999px;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid transparent;
   cursor: pointer;
-  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.header .theme-toggle .theme-btn[data-theme="peacock"] { background-color: #34b7a7; }
+.header .theme-toggle .theme-btn[data-theme="whale"] { background-color: #5dade2; }
+.header .theme-toggle .theme-btn[data-theme="d1"] { background-color: #3fcad8; }
+.header .theme-toggle .theme-btn[data-theme="d2"] { background-color: #f98d2b; }
+.header .theme-toggle .theme-btn[data-theme="sl1"] { background-color: #6d4bff; }
+
+.header .theme-toggle .theme-btn:hover {
+  transform: scale(1.25);
 }
 
 .header .theme-toggle .theme-btn.active {
-  background: var(--accent-color);
-  color: var(--contrast-color);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
-}
-
-.header .theme-toggle .theme-btn:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--accent-color), transparent 35%);
-  outline-offset: 2px;
+  border-color: #ffffff;
+  box-shadow: 0 0 0 2px var(--accent-color), 0 2px 8px rgba(0, 0, 0, 0.25);
+  transform: scale(1.2);
 }
 
 @media (max-width: 1200px) {
