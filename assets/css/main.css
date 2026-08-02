@@ -401,8 +401,15 @@ h6 {
 --------------------------------------------------------------*/
 /* Desktop Navigation */
 @media (min-width: 1200px) {
+  .header .container-fluid {
+    position: relative;
+  }
+
   .navmenu {
     padding: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .navmenu ul {

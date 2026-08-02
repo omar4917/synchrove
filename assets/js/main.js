@@ -403,74 +403,75 @@
   });
 
   /**
-   * Load Centralized Data from JSON
+   * Dynamic Data & Social Links Loader
    */
+  const socialPlatforms = {
+    'social_twitter': { icon: 'bi-twitter-x', class: 'twitter' },
+    'social_facebook': { icon: 'bi-facebook', class: 'facebook' },
+    'social_instagram': { icon: 'bi-instagram', class: 'instagram' },
+    'social_linkedin': { icon: 'bi-linkedin', class: 'linkedin' },
+    'social_youtube': { icon: 'bi-youtube', class: 'youtube' },
+    'social_github': { icon: 'bi-github', class: 'github' },
+    'social_tiktok': { icon: 'bi-tiktok', class: 'tiktok' }
+  };
+
+  function applyDataToDOM(data) {
+    if (!data) return;
+
+    // Update text and hrefs for standard info
+    document.querySelectorAll('[data-info]').forEach(el => {
+      const key = el.getAttribute('data-info');
+      if (!key.startsWith('social_') && data[key] !== undefined) {
+        if (el.tagName === 'A') {
+          if (key === 'email' && el.hasAttribute('href')) el.href = `mailto:${data[key]}`;
+          else if (key === 'phone' && el.hasAttribute('href')) el.href = `tel:${data[key]}`;
+          else if (el.hasAttribute('href')) el.href = data[key];
+          
+          if (!el.querySelector('i')) el.textContent = data[key];
+        } else {
+          el.textContent = data[key];
+        }
+      }
+    });
+
+    // Dynamically Generate Social Links based on data.json
+    const activeKeys = Object.keys(socialPlatforms).filter(key => data[key] && data[key] !== "#" && data[key].trim() !== "");
+    
+    let generatedHtml = "";
+    activeKeys.forEach(key => {
+      let url = data[key].trim();
+      if (!url.startsWith('http') && !url.startsWith('mailto:')) {
+        url = 'https://' + url;
+      }
+      generatedHtml += `<a href="${url}" class="${socialPlatforms[key].class}" data-info="${key}" target="_blank" rel="noopener noreferrer"><i class="bi ${socialPlatforms[key].icon}"></i></a>`;
+    });
+
+    try {
+      localStorage.setItem('synchrove_social_html', generatedHtml);
+    } catch(e) {}
+
+    document.querySelectorAll('.header-social-links, .social-links').forEach(container => {
+      const existingLinks = Array.from(container.querySelectorAll('a'));
+      existingLinks.forEach(a => a.remove());
+      container.insertAdjacentHTML('beforeend', generatedHtml);
+    });
+  }
+
   async function loadData() {
     try {
-      const response = await fetch('assets/data.json');
+      localStorage.removeItem('synchrove_central_data');
+      const response = await fetch('assets/data.json?t=' + Date.now());
       const data = await response.json();
-      
-      // Update text and hrefs for standard info
-      document.querySelectorAll('[data-info]').forEach(el => {
-        const key = el.getAttribute('data-info');
-        if (!key.startsWith('social_') && data[key] !== undefined) {
-          if (el.tagName === 'A') {
-            if (key === 'email' && el.hasAttribute('href')) el.href = `mailto:${data[key]}`;
-            else if (key === 'phone' && el.hasAttribute('href')) el.href = `tel:${data[key]}`;
-            else if (el.hasAttribute('href')) el.href = data[key];
-            
-            if (!el.querySelector('i')) el.textContent = data[key];
-          } else {
-            el.textContent = data[key];
-          }
-        }
-      });
-
-      // Dynamically Generate Social Links
-      const socialPlatforms = {
-        'social_twitter': { icon: 'bi-twitter-x', class: 'twitter' },
-        'social_facebook': { icon: 'bi-facebook', class: 'facebook' },
-        'social_instagram': { icon: 'bi-instagram', class: 'instagram' },
-        'social_linkedin': { icon: 'bi-linkedin', class: 'linkedin' },
-        'social_youtube': { icon: 'bi-youtube', class: 'youtube' },
-        'social_github': { icon: 'bi-github', class: 'github' },
-        'social_tiktok': { icon: 'bi-tiktok', class: 'tiktok' }
-      };
-
-      document.querySelectorAll('.header-social-links, .social-links').forEach(container => {
-        const activeKeys = Object.keys(socialPlatforms).filter(key => data[key] && data[key] !== "#" && data[key].trim() !== "");
-        const existingLinks = Array.from(container.querySelectorAll('a'));
-        const existingKeys = existingLinks.map(a => a.getAttribute('data-info')).filter(Boolean);
-        
-        const matches = activeKeys.length === existingKeys.length && activeKeys.every((k, i) => k === existingKeys[i]);
-        if (matches) return;
-
-        existingLinks.forEach(a => a.remove());
-        
-        activeKeys.forEach(key => {
-          const a = document.createElement('a');
-          let url = data[key].trim();
-          if (!url.startsWith('http') && !url.startsWith('mailto:')) {
-            url = 'https://' + url;
-          }
-          
-          a.href = url;
-          a.className = socialPlatforms[key].class;
-          a.setAttribute('data-info', key);
-          a.target = '_blank';
-          a.rel = 'noopener noreferrer';
-          
-          const i = document.createElement('i');
-          i.className = `bi ${socialPlatforms[key].icon}`;
-          a.appendChild(i);
-          
-          container.appendChild(a);
-        });
-      });
-
+      applyDataToDOM(data);
     } catch (error) {
       console.error('Error loading centralized data:', error);
     }
+  }
+
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', loadData);
+  } else {
+    loadData();
   }
 
   /**
@@ -496,7 +497,6 @@
     }
   }
 
-  window.addEventListener('DOMContentLoaded', loadData);
   window.addEventListener('DOMContentLoaded', updatePortalLink);
 
 })();
